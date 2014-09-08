@@ -1,4 +1,4 @@
-# ATTENTION: Not merged yet (see [PR2202](https://github.com/libgdx/libgdx/pull/2202))
+# ATTENTION: Not merged yet!
 
 - [Introduction](#introduction)
 - [Characters as Points](#characters-as-points)
