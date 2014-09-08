@@ -66,7 +66,7 @@ All state objects implement the `State` interface which defines the following me
 - `enter(entity)` will execute when the state is entered
 - `update(entity)` is called on the current state of the FSM on each update step
 - `exit(entity)` will execute when the state is exited
-- `onMessage(telegram)` executes if the entity receives a message from the message dispatcher while it is in this state.
+- `onMessage(entity, telegram)` executes if the entity receives a message from the message dispatcher while it is in this state.
 
 Actually, _enter_ and _exit_ methods are only called when the FSM changes state. When a state transition occurs, the StateMachine.changeState method first calls the `exit` method of the current state, then it assigns the new state to the current state, and finishes by calling the `enter` method of the new state (which is now the current state).
 
@@ -174,7 +174,7 @@ public enum TrollState implements State<Troll> {
 	}
 
 	@Override
-	public boolean onMessage(Telegram telegram) {
+	public boolean onMessage(Troll troll, Telegram telegram) {
 		// We don't use messaging in this example
 		return false;
 	}
