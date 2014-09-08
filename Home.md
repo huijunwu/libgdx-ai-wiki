@@ -1,1 +1,5 @@
-Welcome to the gdx-ai wiki!
+# Table of Contents
+
+* [[Message Handling]]
+* [[State Machine]]
+* [[Steering Behaviors]]
