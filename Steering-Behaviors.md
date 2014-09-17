@@ -1,4 +1,4 @@
-# ATTENTION: Not merged yet!
+# ATTENTION: Not merged yet (see [pull request 3](https://github.com/libgdx/gdx-ai/pull/3))
 
 - [Introduction](#introduction)
 - [Characters as Points](#characters-as-points)
@@ -89,7 +89,7 @@ There are two other classes that are heavily used by the steering system:
 - [SteeringAcceleration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringAcceleration.html) is a movement requested by the steering system. It is made up of two components, linear and angular acceleration.
 - [SteeringBehavior](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringBehavior.html) calculates the linear and/or angular accelerations to be applied to its owner.
 
-In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [steer](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringBehavior.html#steer) method
+In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [steer](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringBehavior.html#steer(SteeringAcceleration)) method
 of the SteeringBehavior is invoked a SteeringAcceleration is returned. Notice that only enabled behaviors can return a non-zero acceleration.
 
 It is important to understand that the acceleration just produced is simply a movement request.
@@ -290,8 +290,8 @@ points, it will turn quickly. The target will twitch and jitter around the edge 
 change smoothly.
 
 Our implementation uses the second approach. However, if you don't use independent facing (i.e. you manually align owner's
-orientation to its linear velocity on each time step), Face behavior is redundant. To prevent it from being executed just
-set the [maximum angular acceleration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Wander.html#maxAngularAcceleration) to zero.
+orientation to its linear velocity on each time step), Face behavior is redundant. You can tell Wander whether Face behavior
+should be used or not through the [setFaceEnabled](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Wander.html#setFaceEnabled(boolean)) method.
 
 This steering behavior can be used to produce a whole range of random motion, from very smooth undulating turns to wild
 Strictly Ballroom type whirls and pirouettes depending on the size of the circle, its distance from the agent, and the amount
@@ -427,8 +427,8 @@ there are a couple of limitations you have to take into account:
     significant problems in the mathematics that are best avoided, especially since the vast majority of games are covered.
   * Jump behavior assumes that during the airborne trajectory there is no drag, air resistance, damping, friction or what else.
     Since drag is usually non-existent or negligible for jump trajectory calculations this is, once again, the most common
-    situation. If the character is affected by drag while it moves on the ground, then the developer is responsible for
-    removing and restoring drag when the character jumps and lands respectively.
+    situation. If the character is affected by drag while it moves on the ground, then it's developer's responsibility to
+    remove and restore drag when the character jumps and lands respectively.
 - **Taking Control:** When using Jump behavior as part of an entire steering system, it is important to make sure it can take complete
 control of the character. If Jump behavior is combined with other steering behaviors using a blending algorithm,
 then it will almost certainly fail eventually. A character that is avoiding an enemy at a tangent to the jump will
@@ -519,8 +519,9 @@ that exploit their methods to query the world. Both Bullet and Box2d internally 
 [Separation](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Separation.html)
 is a group behavior producing a steering acceleration repelling from the other neighbors which are the agents within the
 immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
-The acceleration is calculated by iterating through all the neighbors, examining each one. The vector to each agent under
-consideration is normalized, divided by the distance to the neighbor, and accumulated.
+The acceleration is calculated by iterating through all the neighbors, examining each one. The vector to each agent
+under consideration is normalized, multiplied by a strength decreasing according to the inverse square law in relation
+to distance, and accumulated.
 
 ![separation](https://cloud.githubusercontent.com/assets/2366334/3997438/5f2a0adc-293f-11e4-833b-a9ad4439ad91.png)
 
@@ -530,9 +531,9 @@ consideration is normalized, divided by the distance to the neighbor, and accumu
 [Alignment](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Alignment.html)
 is a group behavior producing a linear acceleration that attempts to keep the owner aligned with the agents in its
 immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
-The acceleration is calculated by first iterating through all the neighbors and averaging their normalized linear
-velocity vectors. This value is the desired direction, so we just subtract the owner's normalized linear velocity
-to get the steering output.
+The acceleration is calculated by first iterating through all the neighbors and averaging their linear velocity
+vectors. This value is the desired direction, so we just subtract the owner's linear velocity to get the steering
+output.
 
 ![alignment](https://cloud.githubusercontent.com/assets/2366334/3997427/4fd47edc-293f-11e4-8df1-8f60d2311ce1.png)
 
@@ -546,10 +547,6 @@ is a group behavior producing a linear acceleration that attempts to move the ag
 of the agents in its immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
 The acceleration is calculated by first iterating through all the neighbors and averaging their position vectors.
 This gives us the center of mass of the neighbors, the place the agents wants to get to, so it seeks to that position.
-
-Also, the implementation always returns a normalized linear acceleration (or zero). This is not a problem since usually
-you blend it with other group behaviors like Separation and Alignment so you can give it a proper weight, see
-BlendedSteering.
 
 ![cohesion](https://cloud.githubusercontent.com/assets/2366334/3997430/57ea14ce-293f-11e4-82fe-e6170c66b6f2.png)
 
