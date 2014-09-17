@@ -1,5 +1,3 @@
-# ATTENTION: Not merged yet (see [pull request 3](https://github.com/libgdx/gdx-ai/pull/3))
-
 - [Introduction](#introduction)
 - [Characters as Points](#characters-as-points)
 - [What the hell is 2.5D?](#what-the-hell-is-25d)
