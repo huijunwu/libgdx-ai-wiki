@@ -80,14 +80,14 @@ The API is general enough to be integrated with the specific "engine" the develo
 The SteeringBehaviorTest mentioned above contains a sample integration for scene2d.
 
 Basically, the developer will have to implement the following interfaces:
-- [Steerable](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Steerable.html) gives access to the character's information required by steering behaviors.
-- [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Proximity.html) defines an area that is used by group behaviors to find and process the owner's neighbors.
+- [Steerable](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Steerable.html) gives access to the character's information required by steering behaviors.
+- [Proximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html) defines an area that is used by group behaviors to find and process the owner's neighbors.
 
 There are two other classes that are heavily used by the steering system:
-- [SteeringAcceleration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringAcceleration.html) is a movement requested by the steering system. It is made up of two components, linear and angular acceleration.
-- [SteeringBehavior](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringBehavior.html) calculates the linear and/or angular accelerations to be applied to its owner.
+- [SteeringAcceleration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringAcceleration.html) is a movement requested by the steering system. It is made up of two components, linear and angular acceleration.
+- [SteeringBehavior](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringBehavior.html) calculates the linear and/or angular accelerations to be applied to its owner.
 
-In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [steer](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/SteeringBehavior.html#steer(SteeringAcceleration)) method
+In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [steer](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringBehavior.html#steer-com.badlogic.gdx.ai.steer.SteeringAcceleration-) method
 of the SteeringBehavior is invoked a SteeringAcceleration is returned. Notice that only enabled behaviors can return a non-zero acceleration.
 
 It is important to understand that the acceleration just produced is simply a movement request.
@@ -184,21 +184,21 @@ All other behaviors have a single target.
 
 ### Seek and Flee ###
 
-[Seek](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Seek.html) behavior moves
+[Seek](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Seek.html) behavior moves
 the owner towards the target position. Given a target, this behavior calculates the linear steering acceleration
 which will direct the agent towards the target.
 
-[Flee](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Flee.html) behavior does
+[Flee](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Flee.html) behavior does
 the opposite of Seek. It produces a linear steering force that moves the agent away from a target position.
 
 ### Arrive ###
 
-[Arrive](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html) behavior moves
+[Arrive](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html) behavior moves
 the agent towards a target position. It is similar to Seek but it attempts to arrive at the target position with a zero velocity.
 
-Arrive behavior uses two radii. The [arrival tolerance](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#arrivalTolerance)
+Arrive behavior uses two radii. The [arrival tolerance](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#arrivalTolerance)
 lets the owner get near enough to the target without letting small errors keep it in motion.
-The [deceleration radius](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#decelerationRadius),
+The [deceleration radius](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#decelerationRadius),
 usually much larger than the previous one, specifies when the incoming character will begin to slow down.
 The algorithm calculates an ideal speed for the owner. At the slowing-down radius, this is equal to its maximum speed. At the target point,
 it is zero (we want to have zero speed when we arrive). In between, the desired speed is an interpolated intermediate value, controlled by
@@ -207,28 +207,28 @@ the distance from the target.
 The direction toward the target is calculated and combined with the desired speed to give a target velocity.
 The algorithm looks at the current velocity of the character and works out the acceleration needed to turn it into the target velocity.
 We can't immediately change velocity, however, so the acceleration is calculated based on reaching the target velocity in a fixed time scale
-known as [time to target](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#timeToTarget).
+known as [time to target](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#timeToTarget).
 This is usually a small value; it defaults to 0.1 seconds which is a good starting point.
 
 ### Reach Orientation ###
 
-[ReachOrientation](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html) tries to
+[ReachOrientation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html) tries to
 align the owner to the target. It pays no attention to the position or velocity of the owner or target.
 This steering behavior does not produce any linear acceleration; it only responds by turning.
 
-ReachOrientation behaves in a somewhat similar way to [Arrive](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
+ReachOrientation behaves in a somewhat similar way to [Arrive](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
 since it tries to reach the target orientation and tries to have zero rotation when it gets there.
-Like arrive, it uses two radii: [deceleration radius](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#decelerationRadius)
-for slowing down and [align tolerance](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#alignTolerance)
+Like arrive, it uses two radii: [deceleration radius](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#decelerationRadius)
+for slowing down and [align tolerance](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#alignTolerance)
 to make orientations near the target acceptable without letting small errors keep the owner swinging.
 Because we are dealing with a single scalar value, rather than a 2D or 3D vector, the radius acts as an interval.
 
-Similarly to Arrive, there is a [time to target](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#timeToTarget)
+Similarly to Arrive, there is a [time to target](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html#timeToTarget)
 that defaults to 0.1 seconds.
 
 ### Pursue and Evade ###
 
-[Pursue](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Pursue.html) behavior produces
+[Pursue](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Pursue.html) behavior produces
 a force that steers the agent towards the evader (the target). Actually it predicts where an agent will be in time T and seeks
 towards that point to intercept it. We did this naturally playing tag as children, which is why the most difficult tag players
 to catch were those who kept switching direction, foiling our predictions.
@@ -241,33 +241,33 @@ with its current velocity. This new position is then used as the target of a sta
 
 If the character is moving slowly, or the target is a long way away, the prediction time could be very large. The target is
 less likely to follow the same path forever, so we'd like to set a limit on how far ahead we aim. The algorithm has a
-[maximum prediction time](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Pursue.html#maxPredictionTime)
+[maximum prediction time](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Pursue.html#maxPredictionTime)
 for this reason. If the prediction time is beyond this, then the maximum time is used.
 
-[Evade](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Evade.html) behavior is almost
+[Evade](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Evade.html) behavior is almost
 the same as Pursue except that the agent flees from the estimated future position of the pursuer. Indeed, reversing the acceleration
 is all we have to do.
 
 
 ### Face ###
 
-[Face](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Face.html) behavior makes
-the owner look at its target. It delegates to the [ReachOrientation](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html)
+[Face](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Face.html) behavior makes
+the owner look at its target. It delegates to the [ReachOrientation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html)
 behavior to perform the rotation but calculates the target orientation first based on target and owner position.
  
 ### Look Where You Are Going ###
 
-[LookWhereYouAreGoing](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/LookWhereYouAreGoing.html)
+[LookWhereYouAreGoing](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/LookWhereYouAreGoing.html)
 behavior gives the owner angular acceleration to make it face in the direction it is moving. In this way the owner changes facing gradually,
 which can look more natural, especially for aerial vehicles such as helicopters or for human characters that can move sideways.
 
-This is a process similar to the [Face](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Face.html) behavior.
+This is a process similar to the [Face](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Face.html) behavior.
 The target orientation is calculated using the current velocity of the owner. If there is no velocity, then the target orientation is set to the
 current orientation. We have no preference in this situation for any orientation.
 
 ### Wander ###
 
-[Wander](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Wander.html) behavior is
+[Wander](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Wander.html) behavior is
 designed to produce a steering acceleration that will give the impression of a random walk through
 the agent's environment. You'll often find it a useful ingredient when creating an agent's behavior.
 
@@ -276,10 +276,10 @@ the agent's environment. You'll often find it a useful ingredient when creating 
 There is a circle in front of the owner (where front is determined by its current facing direction) on which the target is
 constrained. Each time the behavior is run, we move the target around the circle a little, by a random amount. Now there are 2
 ways to implement wander behavior:
-- The owner seeks the target, using the [Seek](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Seek.html)
-behavior, and performs a [LookWhereYouAreGoing](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/LookWhereYouAreGoing.html)
+- The owner seeks the target, using the [Seek](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Seek.html)
+behavior, and performs a [LookWhereYouAreGoing](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/LookWhereYouAreGoing.html)
 behavior to correct its orientation.
-- The owner tries to face the target in each frame, using the [Face](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Face.html)
+- The owner tries to face the target in each frame, using the [Face](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Face.html)
 behavior to align to the target, and applies full linear acceleration in the direction of its current orientation.
 
 In either case, the orientation of the owner is retained between calls (so smoothing the changes in orientation). The angles
@@ -289,7 +289,7 @@ change smoothly.
 
 Our implementation uses the second approach. However, if you don't use independent facing (i.e. you manually align owner's
 orientation to its linear velocity on each time step), Face behavior is redundant. You can tell Wander whether Face behavior
-should be used or not through the [setFaceEnabled](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Wander.html#setFaceEnabled(boolean)) method.
+should be used or not through the [setFaceEnabled](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Wander.html#setFaceEnabled-boolean-) method.
 
 This steering behavior can be used to produce a whole range of random motion, from very smooth undulating turns to wild
 Strictly Ballroom type whirls and pirouettes depending on the size of the circle, its distance from the agent, and the amount
@@ -297,13 +297,13 @@ of random displacement each frame.
 
 ### Flow Field Following ###
 
-The [FollowFlowField](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/FollowFlowField.html)
+The [FollowFlowField](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/FollowFlowField.html)
 behavior produces a linear acceleration that tries to align the motion of the owner with the local tangent of a flow field.
 The flow field defines a mapping from a location in space to a flow vector.
 
 ![followflowfield](https://cloud.githubusercontent.com/assets/2366334/4008930/a985046c-29dd-11e4-8ed4-44925cd59bc0.png)
 
-This behavior can work in a predictive manner when [prediction time](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/FollowFlowField.html#predictionTime)
+This behavior can work in a predictive manner when [prediction time](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/FollowFlowField.html#predictionTime)
 is greater than 0.
 
 Any flow field can be used as the basis of this steering behavior, although it is sensitive to discontinuities in the field.
@@ -333,15 +333,15 @@ technique is very efficient when you have to deal with a lot of agents.
 
 ### Path Following ###
 
-[FollowPath](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/FollowPath.html) behavior
+[FollowPath](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/FollowPath.html) behavior
 produces a linear acceleration that moves the agent along the given path. First it calculates the agent location based on the
 specified prediction time. Then it works out the position of the internal target based on the location just calculated and the
-shape of the path. It finally uses [Seek](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Seek.html)
-behavior to move the owner towards the internal target position. However, if the path is open [Arrive](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
-behavior is used to approach path's extremities when they are far less than the [deceleration radius](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#decelerationRadius)
+shape of the path. It finally uses [Seek](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Seek.html)
+behavior to move the owner towards the internal target position. However, if the path is open [Arrive](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
+behavior is used to approach path's extremities when they are far less than the [deceleration radius](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#decelerationRadius)
 from the internal target position.
 
-Like FollowFlowField, this behavior works in a predictive manner when [prediction time](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/FollowPath.html#predictionTime)
+Like FollowFlowField, this behavior works in a predictive manner when [prediction time](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/FollowPath.html#predictionTime)
 is greater than 0.
 
 ![predictivepathfollowing](https://cloud.githubusercontent.com/assets/2366334/4009031/f1423eae-29de-11e4-916d-05ac9b3ba414.png)
@@ -353,18 +353,18 @@ be what you want if, for example, the path represents a patrol route.
 
 ### Interpose ###
 
-[Interpose](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Interpose.html) behavior
+[Interpose](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Interpose.html) behavior
 produces a steering force that moves the owner to a point along the imaginary line connecting two other agents. A bodyguard
 taking a bullet for his employer or a soccer player intercepting a pass are examples of this type of behavior.
 
 ![interpose](https://cloud.githubusercontent.com/assets/2366334/3997417/2f2c26ee-293f-11e4-84b8-8f1376d88085.png)
 
 Like Pursue, the owner must estimate where the two agents are going to be located at a time T in the
-future. It can then steer toward that position using the [Arrive](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
+future. It can then steer toward that position using the [Arrive](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html)
 behavior. But how do we know what the best value of T is to use? The answer is, we don't, so we make a calculated guess instead.
 
 The first step is to determine a point along the imaginary line connecting the positions of the agents at the current time
-step. This point is found taking into account the [interposition ratio](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Interpose.html#interpositionRatio),
+step. This point is found taking into account the [interposition ratio](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Interpose.html#interpositionRatio),
 a number between 0 and 1 where 0 is the position of the first agent (agentA) and 1 is the position of the second agent (agentB).
 Values in between are interpolated intermediate locations.
 
@@ -477,7 +477,7 @@ weaknesses in the approach.
 
 Group behaviors are steering behaviors that take into consideration some or all of the other objects in the game world.
 To determine the steering acceleration for a group behavior, a character will consider all (or some) other characters
-within its immediate area, also known as [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Proximity.html).
+within its immediate area, also known as [Proximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html).
 
 ![proximity](https://cloud.githubusercontent.com/assets/2366334/3997424/46684950-293f-11e4-92b7-c94f6cc10dd8.png)
 
@@ -493,18 +493,18 @@ This way, all the agents keep moving all the time. Tweaking the magnitudes of ea
 different effects such as shoals of fish, loose swirling flocks of birds, or bustling close-knit herds of sheep.
 
 Before a steering acceleration can be calculated for a combination of group behaviors, the neighbors must be determined and
-processed. This is done by the [findNeighbors](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Proximity.html#findNeighbors(ProximityCallback))
+processed. This is done by the [findNeighbors](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html#findNeighbors-com.badlogic.gdx.ai.steer.Proximity.ProximityCallback-)
 method and its callback argument.
 
 **IMPORTANT NOTES:**
 
 - Sharing a Proximity instance among group behaviors having the same owner can save a little time determining the
 neighbors only once from inside the findNeighbors method. Especially, Proximity implementation classes can check
-the [frameId](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/AIUtils#getFrameId()) of the current frame
-in order to calculate neighbors only once per frame.
+the [Gdx.graphics.getFrameId()](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/Graphics.html#getFrameId--)
+of the current frame in order to calculate neighbors only once per frame.
 - If you want to make sure a Proximity doesn't use as a neighbor a given agent, for example the evader or the
 owner itself, you have to implement a callback that prevents it from being considered by returning `false` from the method
-[reportNeighbor](@link http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Proximity.ProximityCallback.html#reportNeighbor(Steerable)).
+[reportNeighbor](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.ProximityCallback.html#reportNeighbor-com.badlogic.gdx.ai.steer.Steerable-).
 - If there is some efficient way of pruning potential neighbors before they are processed, the overall performance in time
 will improve. Spatial data structures such as multi-resolution maps, quad-trees, oct-trees, and binary space partition (BSP)
 trees can be used to get potential neighbors more efficiently. Spatial partitioning techniques are crucial when you have to
@@ -514,9 +514,9 @@ that exploit their methods to query the world. Both Bullet and Box2d internally 
 
 ### Separation ###
 
-[Separation](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Separation.html)
+[Separation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Separation.html)
 is a group behavior producing a steering acceleration repelling from the other neighbors which are the agents within the
-immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
+immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html).
 The acceleration is calculated by iterating through all the neighbors, examining each one. The vector to each agent
 under consideration is normalized, multiplied by a strength decreasing according to the inverse square law in relation
 to distance, and accumulated.
@@ -526,9 +526,9 @@ to distance, and accumulated.
 
 ### Alignment ###
 
-[Alignment](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Alignment.html)
+[Alignment](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Alignment.html)
 is a group behavior producing a linear acceleration that attempts to keep the owner aligned with the agents in its
-immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
+immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html).
 The acceleration is calculated by first iterating through all the neighbors and averaging their linear velocity
 vectors. This value is the desired direction, so we just subtract the owner's linear velocity to get the steering
 output.
@@ -540,9 +540,9 @@ keep a minimum distance from each other.
 
 ### Cohesion ###
 
-[Cohesion](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Cohesion.html)
+[Cohesion](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Cohesion.html)
 is a group behavior producing a linear acceleration that attempts to move the agent towards the center of mass
-of the agents in its immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/Proximity.html).
+of the agents in its immediate area defined by the given [Proximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.html).
 The acceleration is calculated by first iterating through all the neighbors and averaging their position vectors.
 This gives us the center of mass of the neighbors, the place the agents wants to get to, so it seeks to that position.
 
@@ -552,7 +552,7 @@ A sheep running after its flock is demonstrating cohesive behavior. Use this beh
 
 ### Hide ###
 
-[Hide](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Hide.html) behavior
+[Hide](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Hide.html) behavior
 attempts to position a owner so that an obstacle is always between itself and the agent (the hunter) it's trying
 to hide from. First the distance to each of these obstacles is determined. Then the owner uses the arrive behavior to steer
 toward the closest one. If no appropriate obstacles can be found, no steering is returned.
@@ -564,12 +564,12 @@ find cover when fired at, but also in situations where you would like an NPC to 
 create an NPC capable of stalking a player through a gloomy forest, darting from tree to tree.
 
 It's worth mentioning that since this behavior can produce no steering acceleration it is commonly used with
-[PrioritySteering](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/PrioritySteering.html).
+[PrioritySteering](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/PrioritySteering.html).
 For instance, to make the owner go away from the target if there are no obstacles nearby to hide
 behind, just use Hide and Evade behaviors with this priority order.
 
 There are a few interesting modifications you might want to make to this behavior:
-- With [FieldOfViewProximity](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/proximities/FieldOfViewProximity.html)
+- With [FieldOfViewProximity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/proximities/FieldOfViewProximity.html)
 you can allow the owner to hide only if the target is within its field of view.
 This tends to produce unsatisfactory performance though, because the owner starts to act like a child hiding from monsters beneath
 the bed sheets, something like "if you can't see it, then it can't see you" effect making the owner look dumb. This can be
@@ -578,13 +578,13 @@ target within the last N seconds. This gives it a sort of memory and produces re
 - The same as above, but this time the owner only tries to hide if the owner can see the target and the target can see the owner.
 - It might be desirable to produce a force that steers the owner so that it always favors hiding positions that are to the
 side or rear of the pursuer. This can be achieved easily using the dot product to bias the distances returned from the method
- [getHidingPosition](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/Hide.html#getHidingPosition).
+ [getHidingPosition](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Hide.html#getHidingPosition-T-float-T-).
 - At the beginning of any of the methods a check can be made to test if the target is within a "threat distance" before
 proceeding with any further calculations. If the target is not a threat, then the method can return immediately with zero steering.
 
 ### Collision Avoidance ###
 
-[CollisionAvoidance](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/CollisionAvoidance.html)
+[CollisionAvoidance](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/CollisionAvoidance.html)
 behavior steers the owner to avoid obstacles lying in its path. An obstacle is any object that can be approximated by a circle
 (or sphere, if you are working in 3D).
 
@@ -599,7 +599,7 @@ radius.
 
 ### Raycast Obstacle Avoidance ###
 
-With the [RaycastObstacleAvoidance](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/RaycastObstacleAvoidance.html)
+With the [RaycastObstacleAvoidance](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/RaycastObstacleAvoidance.html)
 the moving agent (the owner) casts one or more rays out in the direction of its motion. If these rays collide with an obstacle,
 then a target is created that will avoid the collision, and the owner does a basic seek on this target. Typically, the rays
 extend a short distance ahead of the character (usually a distance corresponding to a few seconds of movement).
@@ -608,11 +608,11 @@ extend a short distance ahead of the character (usually a distance corresponding
 
 This behavior is especially suitable for large-scale obstacles like walls.
 
-You should use the [RayConfiguration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/RaycastObstacleAvoidance#RayConfiguration.html)
+You should use the [RayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/RaycastObstacleAvoidance#RayConfiguration.html)
 more suitable for your game environment. Some basic ray configurations are provided by the framework:
-[SingleRayConfiguration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/rays/SingleRayConfiguration.html),
-[ParallelSideRayConfiguration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/rays/ParallelSideRayConfiguration.html),
-and [CentralRayWithWhiskersConfiguration](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/rays/CentralRayWithWhiskersConfiguration.html).
+[SingleRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/SingleRayConfiguration.html),
+[ParallelSideRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/ParallelSideRayConfiguration.html),
+and [CentralRayWithWhiskersConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/CentralRayWithWhiskersConfiguration.html).
 There are no hard and fast rules as to which configuration is better. Each has its own particular idiosyncrasies. A central ray with
 short whiskers is often the best initial configuration to try but can make it impossible for the character to move down tight passages.
 The single ray configuration is useful in concave environments but grazes convex obstacles. The parallel configuration works well in
@@ -655,7 +655,7 @@ at once. This section explains you how to accomplish this combination.
 
 ### Blended Steering ###
 
-[BlendedSteering](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/BlendedSteering.html)
+[BlendedSteering](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/BlendedSteering.html)
 is a combination behavior that simply sums up all the active behaviors, applies their weights, and truncates the result before
 returning. There are no constraints on the blending weights; they don't have to sum to one, for example, and rarely do. Don't
 think of BlendedSteering as a weighted mean, because it's not.
@@ -674,7 +674,7 @@ finds itself alone and next to a wall.
 
 ### Priority Steering ###
 
-[PrioritySteering](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/ai/steer/behaviors/PrioritySteering.html)
+[PrioritySteering](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/PrioritySteering.html)
 behavior iterates through the active behaviors and returns the first non zero steering. It makes
 sense since certain steering behaviors only request an acceleration in particular conditions. Unlike Seek or
 Evade, which always produce an acceleration, RaycastObstacleAvoidance, CollisionAvoidance, Separation, Hide and Arrive will
