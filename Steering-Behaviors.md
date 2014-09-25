@@ -27,7 +27,7 @@ Some behaviors may involve heavy manual tweaking, while others have to be carefu
 When combining behaviors, care usually must be taken to avoid the possibility that two or more of them may cancel
 each other out. There are means and ways around most of these problems though (except for the tweaking), and most often the benefits of steering behaviors far outweigh any disadvantages.
 
-**Because manual tweaking is so ineluctable, it's recommended that you experiment with the [SteeringBehaviorTest](https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/SteeringBehaviorTest.java)
+**Because manual tweaking is so ineluctable, it's recommended that you experiment with the [SteeringBehaviorTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/SteeringBehaviorTest.java)
 to get familiar with steering behaviors and their parameters. Especially, play with parameter values and see
 what happens. Such experimentation really speaks more than 1000 words.**
 
@@ -132,6 +132,16 @@ public class SteeringAgent implements Steerable<Vector2> {
 		if (steeringBehavior != null) {
 			// Calculate steering acceleration
 			steeringBehavior.steer(steeringOutput);
+
+			/*
+			 * Here you might want to add a motor control layer filtering steering accelerations.
+			 * 
+			 * For instance, a car in a driving game has physical constraints on its movement:
+			 * - it cannot turn while stationary
+			 * - the faster it moves, the slower it can turn (without going into a skid)
+			 * - it can brake much more quickly than it can accelerate
+			 * - it only moves in the direction it is facing (ignoring power slides)
+			 */
 
 			// Apply steering acceleration to move this agent
 			applySteering(steeringOutput, delta);
