@@ -73,7 +73,6 @@ The following call
 ````
 **must be placed in the game's main update loop** to facilitate the correct and timely dispatch of any delayed messages.
 
-
 ## Receiving a Message ##
 
 When a telegram is received by an agent, its method handleMessage(telegram) is invoked.
@@ -83,9 +82,33 @@ This method returns a boolean value indicating whether the message has been hand
 - **Pooling:**
 Keep in mind that telegrams are pooled so to limit garbage collection. Also any telegram is automatically released to the pool as soon as it has been dispatched and the handleMessage method of the recipient agent has returned. This means that **you should never keep a reference to the telegram**.
 
-
 ## Telegram Providers ##
 
-T.B.D.
+In event driven games, new agents might want to gather informations of specific types as soon as they are created (or as soon as they start listening to that type of event) as well as during their whole lifecycle. When registering, a `Telegraph` cannot access some informations without hard references to the sources of those informations :
+  - informations carried by `Telegram` dispatched before its registration
+  - informations held by other agents 
 
+`TelegramProviders` allow the `MessageDispatcher` to provide newly registered `Telegraph` with immediate `Telegram`. 
+Providers can register and unregister their ability to provide informations for specific message types. The following methods allow you to manage provider's abilities :
+````java
+// Lets the provider respond when a new Telegraph listen to msgCode
+MessageDispatcher.getInstance().addProvider (provider, msgCode);
 
+// Lets the provider respond when a new Telegraph listen to msgCode1 or msgCode1 ...
+MessageDispatcher.getInstance().addProviders (provider, msgCode1, msgCode2, ...);
+
+// Removes all the providers
+MessageDispatcher.getInstance().clearProviders ();
+
+// Removes all the providers responding to new Telegraph listening to msgCode1 or msgCode1 ...
+MessageDispatcher.getInstance().clearProviders (msgCode1, msgCode2, ...);
+
+// Removes all the providers responding to new Telegraph listening to msgCode
+MessageDispatcher.getInstance().clearProviders (int msgCode);
+````
+
+When a new `Telegraph` start listening to a specific type of message, the `TelegramProvider` can decide to provide or not extra information that will be **immediately** delivered to the `Telegraph` by the `MessageDispatcher`.
+````java
+	Object provideMessageInfo (int msg, Telegraph receiver);
+````
+... when returning `null`, there's no `Telegram` dispatch to the `Telegraph` by the `TelegramProvider`.
