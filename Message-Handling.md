@@ -32,17 +32,26 @@ where _delay_ is expressed in seconds. The MessageDispatcher uses this informati
 If you send a message without specifying the recipient the message will be dispatched to all the agents listening to that message type. Agents can register and unregister their interest in specific message types.
 The following methods allow you to manage agent's interest.
 ````java
-// Lets the agent listent to msgType
-MessageDispatcher.getInstance().addListener(msgType, agent);
+// Lets the agent listent to msgCode
+MessageDispatcher.getInstance().addListener(agent, msgCode);
 
-// Removes msgType from the interests of the agent
-MessageDispatcher.getInstance().removeListener(msgType, agent);
+// Lets the agent listent to the given selection of msgCodes
+MessageDispatcher.getInstance().addListener(agent, msgCode1, msgCode2, ...);
 
-// Removes all the agents listening to msgType
-MessageDispatcher.getInstance().clearListener(msgType);
+// Removes msgCode from the interests of the agent
+MessageDispatcher.getInstance().removeListener(agent, msgCode);
+
+// Removes the given msgCodes from the interests of the agent
+MessageDispatcher.getInstance().removeListener(agent, msgCode1, msgCode2, ...);
+
+// Removes all the agents listening to msgCode
+MessageDispatcher.getInstance().clearListeners(msgCode);
+
+// Removes all the agents listening to the given selection of msgCodes
+MessageDispatcher.getInstance().clearListeners(msgCode1, msgCode2, ...);
 
 // Removes all the agents listening to any message type
-MessageDispatcher.getInstance().clearListener();
+MessageDispatcher.getInstance().clearListeners();
 ````
 
 ### Time Granularity ###
@@ -73,4 +82,10 @@ This method returns a boolean value indicating whether the message has been hand
 **IMPORTANT NOTE:**
 - **Pooling:**
 Keep in mind that telegrams are pooled so to limit garbage collection. Also any telegram is automatically released to the pool as soon as it has been dispatched and the handleMessage method of the recipient agent has returned. This means that **you should never keep a reference to the telegram**.
+
+
+## Telegram Providers ##
+
+T.B.D.
+
 
