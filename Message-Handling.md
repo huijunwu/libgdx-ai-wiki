@@ -15,9 +15,9 @@ For example, if a character strikes an enemy, the message `Attacked` could be se
 
 ## Dispatching a Message ##
 
-The creation, dispatch, and management of telegrams is handled by the singleton class MessageDispatcher.
+The creation, dispatch, and management of telegrams is handled by the singleton class [MessageDispatcher](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html).
 
-Whenever an agent needs to send a message, it calls MessageDispatcher.dispatchMessage() like that
+Whenever an agent needs to send a message, it calls `MessageDispatcher.dispatchMessage()` like that
 ````java
 	MessageDispatcher.getInstance().dispatchMessage(
 			delay,
@@ -26,7 +26,7 @@ Whenever an agent needs to send a message, it calls MessageDispatcher.dispatchMe
 			messageType,
 			extraInfo);
 ````
-where _delay_ is expressed in seconds. The MessageDispatcher uses this information to create a Telegram, which it either dispatches immediately (if the given delay is <= 0) or stores in a queue (when the given delay is > 0) ready to be dispatched at the correct time.
+where _delay_ is expressed in seconds. The MessageDispatcher uses this information to create a [Telegram](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html), which it either dispatches immediately (if the given delay is <= 0) or stores in a queue (when the given delay is > 0) ready to be dispatched at the correct time.
 
 ### Multiple Recipients ###
 If you send a message without specifying the recipient the message will be dispatched to all the agents listening to that message type. Agents can register and unregister their interest in specific message types.
@@ -54,28 +54,18 @@ MessageDispatcher.getInstance().clearListeners(msgCode1, msgCode2, ...);
 MessageDispatcher.getInstance().clearListeners();
 ````
 
-### Time Granularity ###
-To prevent many similar telegrams bunching up in the queue and being delivered en masse, thus flooding an agent with identical messages, you can control **time granularity**.
-Delayed telegrams having the same sender, recipient and message type are considered identical when they belong to the same time slot. If time granularity is greater than 0 identical telegrams are not doubled into the queue.
-The following code sets the time granularity to 1 second.
-````java
-	MessageDispatcher.getInstance().setTimeGranularity(1.0f);
-````
-Of course, the time granularity will vary according to your game. Games with lots of actions producing a high frequency of messages will probably require a smaller slot.
-The default granularity is 0.25, i.e. a quarter of a second.
-To eliminate time granularity just set it to 0.
-
 ### Updating the Dispatcher ###
-The queued telegrams are examined each update step by the method MessageDispatcher.dispatchDelayedMessages() which checks the front of the message queue to see if any telegrams have expired time stamps. If so, they are dispatched to their recipient and removed from the queue.
+The queued telegrams are examined each update step by the method [MessageDispatcher.update(deltaTime)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#update-float-) which checks the front of the message queue to see if any telegrams have expired time stamps. If so, they are dispatched to their recipient and removed from the queue.
 The following call
 ````java
-	MessageDispatcher.getInstance().dispatchDelayedMessages();
+	// deltaTime is the time span between the current frame and the last frame in seconds
+	MessageDispatcher.getInstance().update(deltaTime);
 ````
 **must be placed in the game's main update loop** to facilitate the correct and timely dispatch of any delayed messages.
 
 ## Receiving a Message ##
 
-When a telegram is received by an agent, its method handleMessage(telegram) is invoked.
+When a telegram is received by an agent (actually a Telegraph), its method [handleMessage(telegram)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegraph.html#handleMessage-com.badlogic.gdx.ai.msg.Telegram-) is invoked.
 This method returns a boolean value indicating whether the message has been handled successfully.
 
 **IMPORTANT NOTE:**
@@ -84,30 +74,30 @@ Keep in mind that telegrams are pooled so to limit garbage collection. Also any 
 
 ## Telegram Providers ##
 
-In event driven games, new agents might want to gather informations of specific types as soon as they are created (or as soon as they start listening to that type of event) as well as during their whole lifecycle. When registering, a `Telegraph` cannot access some informations without hard references to the sources of those informations :
-  - informations carried by `Telegram` dispatched before its registration
-  - informations held by other agents 
+In event driven games, new agents might want to gather informations of specific types as soon as they are created (or as soon as they start listening to that type of event) as well as during their whole lifecycle. When registering, a `Telegraph` cannot access some informations without hard references to the sources of those informations:
+- informations carried by `Telegram` dispatched before its registration
+- informations held by other agents 
 
-`TelegramProviders` allow the `MessageDispatcher` to provide newly registered `Telegraph` with immediate `Telegram`. 
-Providers can register and unregister their ability to provide informations for specific message types. The following methods allow you to manage provider's abilities :
+A [TelegramProvider](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/TelegramProvider.html) allows the `MessageDispatcher` to provide newly registered `Telegraph` with immediate `Telegram`. 
+Providers can register and unregister their ability to provide informations for specific message types. The following methods allow you to manage provider's abilities:
 ````java
-// Lets the provider respond when a new Telegraph listen to msgCode
-MessageDispatcher.getInstance().addProvider (provider, msgCode);
+// Lets the provider respond when a new Telegraph starts listening to msgCode
+MessageDispatcher.getInstance().addProvider(provider, msgCode);
 
-// Lets the provider respond when a new Telegraph listen to msgCode1 or msgCode1 ...
-MessageDispatcher.getInstance().addProviders (provider, msgCode1, msgCode2, ...);
+// Lets the provider respond when a new Telegraph starts listening to msgCode1, msgCode2, ...
+MessageDispatcher.getInstance().addProviders(provider, msgCode1, msgCode2, ...);
 
 // Removes all the providers
-MessageDispatcher.getInstance().clearProviders ();
-
-// Removes all the providers responding to new Telegraph listening to msgCode1 or msgCode1 ...
-MessageDispatcher.getInstance().clearProviders (msgCode1, msgCode2, ...);
+MessageDispatcher.getInstance().clearProviders();
 
 // Removes all the providers responding to new Telegraph listening to msgCode
-MessageDispatcher.getInstance().clearProviders (int msgCode);
+MessageDispatcher.getInstance().clearProviders(msgCode);
+
+// Removes all the providers responding to new Telegraph listening to msgCode1, msgCode2, ...
+MessageDispatcher.getInstance().clearProviders(msgCode1, msgCode2, ...);
 ````
 
-When a new `Telegraph` start listening to a specific type of message, the `TelegramProvider` can decide to provide or not extra information that will be **immediately** delivered to the `Telegraph` by the `MessageDispatcher`.
+When a new `Telegraph` starts listening to a specific type of message, the `TelegramProvider` can decide to provide or not extra information that will be **immediately** delivered to the `Telegraph` by the `MessageDispatcher`.
 ````java
 	Object provideMessageInfo (int msg, Telegraph receiver);
 ````
