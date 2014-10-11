@@ -55,7 +55,7 @@ Basically, branches keep track of a collection of child tasks (conditions, actio
 Especially, the composite tasks consist of *selectors*, *sequences*, *parallels* and *decorators* that will be described in the next subsessions.
 
 ### Selector ###
-A selector runs each of its child behaviors in turn. It will return immediately with a success status code when one of its children runs successfully. As long as its children are failing, it will keep on trying. If it runs out of children completely, it will return a failure status code.
+A selector is a branch task that runs each of its child behaviors in turn. It will return immediately with a success status code when one of its children runs successfully. As long as its children are failing, it will keep on trying. If it runs out of children completely, it will return a failure status code.
 
 Selectors are used to choose the first of a set of possible actions that is successful.
 For instance, a selector might represent a character wanting to reach safety. There may be multiple ways to do that: take cover, leave a dangerous area, and find backup. Such a selector will first try to take cover; if that fails, it will leave the area. If that succeeds, it will stop since there's no point also finding backup, as we've solved the character's goal of reaching safety. If we exhaust all options without success, then the selector itself has failed.
@@ -64,7 +64,7 @@ A selector node is graphically represented by a question mark.
 ![selector](https://cloud.githubusercontent.com/assets/2366334/4603480/5f2d3274-516d-11e4-80c5-8e5df55f9fd1.png)
 
 ### Sequence ###
-A sequence runs each of its child behaviors in turn. It will return immediately with a failure status code when one of its children fails. As long as its children are succeeding, it will keep going. If it runs out of children, it will return in success. 
+A sequence is a branch task that runs each of its child behaviors in turn. It will return immediately with a failure status code when one of its children fails. As long as its children are succeeding, it will keep going. If it runs out of children, it will return in success. 
 
 Sequences represent a series of tasks that need to be undertaken. Each of our reaching-safety actions in the slector example above may consist of a sequence. To find cover we'll need to choose a cover point, move to it, and, when we're in range, play a roll animation to arrive behind it. If any of the steps in the sequence fails, then the whole sequence has failed: if we can't reach our desired cover point, then we haven't reached safety. Only if all the tasks in the sequence are successful we can consider the sequence as a whole to be successful.
 
@@ -74,7 +74,10 @@ A sequence node is graphically represented by an arrow.
 ### Decorator ###
 The name "decorator" is taken from object-oriented software engineering. The decorator pattern refers to a class that wraps another class, modifying its behavior. If the decorator has the same interface as the class it wraps, then the rest of the software doesn't need to know if it is dealing with the original class or the decorator.
 
-In the context of a behavior tree, a decorator is a task that has one single child task and modifies its behavior in some way. You could think of it like a composite task with a single child. 
+In the context of a behavior tree, a decorator is a task that has one single child task and modifies its behavior in some way. You could think of it like a composite task with a single child.
+
+![decorator](https://cloud.githubusercontent.com/assets/2366334/4604011/2bc98188-5183-11e4-952c-fc780e597794.png)
+
 There are many different types of useful decorators:
 - **AlwaysFail** will always fail no matter the wrapped task fails or succeeds.
 - **AlwaysSucceed** will always succeed no matter the wrapped task succeeds or fails.
@@ -89,7 +92,11 @@ There are many more decorators you might want to use, but I think these are enou
 
 
 ### Parallel ###
-T.B.D.
+A parallel is a special branch task that starts or resumes all children every single time. The parallel task will succeed if all the children succeed, fail if one of the children fail. Note that this is the same policy as the sequence task.
+
+One common use of the parallel task is continually check whether certain conditions are met while carrying out an action. The typical use case: make the game entity react on event while sleeping or wandering.
+
+T.B.C.
 
 # A Simple Example #
 T.B.D.
