@@ -7,6 +7,7 @@
     - [Decorator](#decorator)
     - [Parallel](#parallel)
 - [A Simple Example](#a-simple-example)
+- [Behavior Tree API](#behavior-tree-api)
 
 # Introduction #
 
@@ -74,12 +75,25 @@ A sequence node is graphically represented by an arrow.
 The name "decorator" is taken from object-oriented software engineering. The decorator pattern refers to a class that wraps another class, modifying its behavior. If the decorator has the same interface as the class it wraps, then the rest of the software doesn't need to know if it is dealing with the original class or the decorator.
 
 In the context of a behavior tree, a decorator is a task that has one single child task and modifies its behavior in some way. You could think of it like a composite task with a single child. 
-There are many different types of useful decorators.
+There are many different types of useful decorators:
+- **AlwaysFail** will always fail no matter the wrapped task fails or succeeds.
+- **AlwaysSucceed** will always succeed no matter the wrapped task succeeds or fails.
+- **Include** grafts an external subtree. This decorator enhances behavior trees with modularity and reusability.
+- **Invert** will succeed if the wrapped task fails and will fail if the wrapped task succeeds.
+- **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
+- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task. This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource. Imagine you have three monsters and you want one of them to chase the player and the rest to taunt the player.
+- **UntilFail** will repeat the wrapped task until that task fails.
+- **UntilSucceed** will repeat the wrapped task until that task succeeds.
 
-T.B.C.
+There are many more decorators you might want to use, but I think these are enough for now.
+
 
 ### Parallel ###
 T.B.D.
 
 # A Simple Example #
 T.B.D.
+
+# Behavior Tree API #
+T.B.D.
+
