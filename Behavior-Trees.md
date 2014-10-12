@@ -8,6 +8,9 @@
     - [Parallel](#parallel)
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
+    - [Task Class Hierarchy](#task-class-hierarchy)
+    - [Behavior Tree Library](#behavior-tree-library)
+    - [Including Subtrees](#including-subtrees)
 
 # Introduction #
 
@@ -104,3 +107,11 @@ T.B.D.
 # Behavior Tree API #
 T.B.D.
 
+## Task Class Hierarchy ##
+![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
+
+## Behavior Tree Library ##
+T.B.D.
+
+## Including Subtrees ##
+T.B.D.
