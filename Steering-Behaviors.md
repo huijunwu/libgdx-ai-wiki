@@ -27,7 +27,7 @@ Some behaviors may involve heavy manual tweaking, while others have to be carefu
 When combining behaviors, care usually must be taken to avoid the possibility that two or more of them may cancel
 each other out. There are means and ways around most of these problems though (except for the tweaking), and most often the benefits of steering behaviors far outweigh any disadvantages.
 
-**Because manual tweaking is so ineluctable, it's recommended that you experiment with the [SteeringBehaviorTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/SteeringBehaviorTest.java)
+**Because manual tweaking is so ineluctable, it's recommended that you experiment with the [SteeringBehaviorsTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/SteeringBehaviorsTest.java)
 to get familiar with steering behaviors and their parameters. Especially, play with parameter values and see
 what happens. Such experimentation really speaks more than 1000 words.**
 
