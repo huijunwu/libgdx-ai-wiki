@@ -87,7 +87,7 @@ There are two other classes that are heavily used by the steering system:
 - [SteeringAcceleration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringAcceleration.html) is a movement requested by the steering system. It is made up of two components, linear and angular acceleration.
 - [SteeringBehavior](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringBehavior.html) calculates the linear and/or angular accelerations to be applied to its owner.
 
-In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [steer](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringBehavior.html#steer-com.badlogic.gdx.ai.steer.SteeringAcceleration-) method
+In short, each SteeringBehavior takes as input a Steerable and some behavior-specific parameters. When the [calculateSteering](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/SteeringBehavior.html#calculateSteering-com.badlogic.gdx.ai.steer.SteeringAcceleration-) method
 of the SteeringBehavior is invoked a SteeringAcceleration is returned. Notice that only enabled behaviors can return a non-zero acceleration.
 
 It is important to understand that the acceleration just produced is simply a movement request.
@@ -131,7 +131,7 @@ public class SteeringAgent implements Steerable<Vector2> {
 	public void update (float delta) {
 		if (steeringBehavior != null) {
 			// Calculate steering acceleration
-			steeringBehavior.steer(steeringOutput);
+			steeringBehavior.calculateSteering(steeringOutput);
 
 			/*
 			 * Here you might want to add a motor control layer filtering steering accelerations.
