@@ -66,7 +66,7 @@ A selector node is graphically represented by a question mark.
 ### Sequence ###
 A sequence is a branch task that runs each of its child behaviors in turn. It will return immediately with a failure status code when one of its children fails. As long as its children are succeeding, it will keep going. If it runs out of children, it will return in success. 
 
-Sequences represent a series of tasks that need to be undertaken. Each of our reaching-safety actions in the slector example above may consist of a sequence. To find cover we'll need to choose a cover point, move to it, and, when we're in range, play a roll animation to arrive behind it. If any of the steps in the sequence fails, then the whole sequence has failed: if we can't reach our desired cover point, then we haven't reached safety. Only if all the tasks in the sequence are successful we can consider the sequence as a whole to be successful.
+Sequences represent a series of tasks that need to be undertaken. Each of our reaching-safety actions in the selector example above may consist of a sequence. To find cover we'll need to choose a cover point, move to it, and, when we're in range, play a roll animation to arrive behind it. If any of the steps in the sequence fails, then the whole sequence has failed: if we can't reach our desired cover point, then we haven't reached safety. Only if all the tasks in the sequence are successful we can consider the sequence as a whole to be successful.
 
 A sequence node is graphically represented by an arrow.
 ![sequence](https://cloud.githubusercontent.com/assets/2366334/4603496/61776ee0-516e-11e4-810a-cdc1a333d50d.png)
@@ -84,11 +84,11 @@ There are many different types of useful decorators:
 - **Include** grafts an external subtree. This decorator enhances behavior trees with modularity and reusability.
 - **Invert** will succeed if the wrapped task fails and will fail if the wrapped task succeeds.
 - **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
-- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task. This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource. Imagine you have three monsters and you want one of them to chase the player and the rest to taunt the player.
+- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource. Imagine you have three monsters and you want one of them to chase the player and the rest to taunt the player.
 - **UntilFail** will repeat the wrapped task until that task fails.
 - **UntilSucceed** will repeat the wrapped task until that task succeeds.
 
-There are many more decorators you might want to use, but I think these are enough for now.
+There are many more decorators you might want to use when building behavior trees, but I think these are enough for now.
 
 
 ### Parallel ###
