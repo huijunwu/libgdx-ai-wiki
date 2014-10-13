@@ -175,7 +175,9 @@ root
       enterRoom
     enterRoom
 ```` 
-Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name con not contain the `?` because its use is illegal in Java class names. Also, notice that the '?' character is not required for conditions, you might want to use a different convention such as `isDoorLocked` or `doorLockedCondition`. it's totally up to you.
+Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name can not contain the `?` because its use is illegal in Java class names. Also, notice that the `?` character is not required for conditions, you might want to use a different convention such as `isDoorLocked` or `doorLockedCondition`. it's totally up to you.
+
+You can look into the [ParseAndRunTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/ParseAndRunTest.java) class for a simple example of how to load a behavior tree into memory from a file.
 
 ## Task Attributes and Metadata ##
 T.B.D.
