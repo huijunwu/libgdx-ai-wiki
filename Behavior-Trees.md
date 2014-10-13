@@ -115,12 +115,14 @@ As you can notice from the figure below, everything is a [Task](http://libgdx.ba
 ![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
 
 ## Behavior Tree Libraries ##
-A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from a source (usually a file in your application).
+A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application).
 
 It's important to understand that a library contains behavior tree instances known as *archetypes*. You should never use an archetype to run any behaviors on. Any time you need an instance of that behavior tree you ask the library for a copy of the archetype and use the copy. That way you're getting all of the configuration of the tree, but you're getting your own copy. In order to achieve this capability, each task have a [cloneTask](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#cloneTask--) method that makes a new copy of itself by invoking the protected abstract method [copyTo(Task)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#copyTo-com.badlogic.gdx.ai.btree.Task-). The library can then ask the behavior tree or its root task for a clone of itself and have it recursively build us a copy. This presents a simple and effective API. The main advantage of this approach is that if you have a lot of agents having the same behavior (or common sub-behaviors) the source file doesn't have to be parsed again and again (parsing a tree is something slow producing garbage into memory). On the other hand, the drawback is that you'll have to properly implement the copyTo() method in all your leaf tasks in order to preserve the task configuration on cloning. The good news is that very often the leaf tasks don't require configuration parameters, meaning that you don't have to deal with the actual implementation of the method copyTo().
 
 However, you're not forced to use any behavior tree library, unless you want to exploit the include sub-tree capability.
 Simple applications whose behavior trees exist as a single instance and not needing a high modularity level can simply parse and run their trees directly.
+
+Actually, you're not even forced to load behavior trees from an external source. You can create them programmatically, but mostly for maintenance reasons this is not the recommended approach.
 
 ## Including Subtrees ##
 T.B.D.
