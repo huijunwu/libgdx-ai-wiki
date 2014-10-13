@@ -8,11 +8,12 @@
     - [Parallel](#parallel)
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
-    - [Task Class Hierarchy](#task-class-hierarchy)
-    - [Text Format](#text-format)
-    - [Task Attributes and Metadata](#task-attributes-and-metadata)
-    - [Behavior Tree Libraries](#behavior-tree-libraries)
-    - [Including Subtrees](#including-subtrees)
+  * [Task Class Hierarchy](#task-class-hierarchy)
+  * [Using Data for Inter-Task Communication](#using-data-for-inter-task-communication)
+  * [Text Format](#text-format)
+  * [Task Attributes and Metadata](#task-attributes-and-metadata)
+  * [Behavior Tree Libraries](#behavior-tree-libraries)
+  * [Including Subtrees](#including-subtrees)
 
 # Introduction #
 
@@ -116,8 +117,17 @@ As you can notice from the figure below, everything is a [Task](http://libgdx.ba
 
 ![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
 
+## Using Data for Inter-Task Communication ##
+To be effective the behavior tree API must allow tasks to share data with one another. The most sensible approach is to decouple the data that behaviors need from the tasks themselves.The API does this by using an external data store for all the data that the behavior tree needs. In AI literature such a store object is known as *blackboard*. Using this external blackboard, we can write tasks that are still independent of one another but can communicate when needed.
+
+In a squad-based game, for example, we might have a collaborative AI that can autonomously engage the enemy. We could write one task to select an enemy (based on proximity or a tactical analysis, for example) and another task or sub-tree to engage that enemy. The task that selects the enemy writes down the selection it has made onto the blackboard. The task or tasks that engage the enemy query the blackboard for a current enemy.
+
+In most games we'll want some characters to have the same behavior, i.e. different instances (or clones as we'll see) of the same behavior tree. In this case each behavior tree instance will require its own blackboard.
+
+At the API level, all the classes in the task hierarchy above are characterized by a generic type parameter `<T>` which is the type of the blackboard. All the tasks of a behavior tree instance have the same generic type, so sharing the same blackboard instance.
+
 ## Text Format ##
-The behavior tree text format is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
+The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
 
 All lines in the format have the following syntax (elements within `[` and `]` are optional):
 ```` 
