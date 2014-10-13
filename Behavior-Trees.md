@@ -10,6 +10,7 @@
 - [Behavior Tree API](#behavior-tree-api)
     - [Task Class Hierarchy](#task-class-hierarchy)
     - [Text Format](#text-format)
+    - [Task Attributes and Metadata](#task-attributes-and-metadata)
     - [Behavior Tree Libraries](#behavior-tree-libraries)
     - [Including Subtrees](#including-subtrees)
 
@@ -131,7 +132,7 @@ where:
 
 As you can notice, everything is optional, meaning that an empty line is legal.
 
-Here is a sample behavior tree expressed in out text format:
+Here is a sample behavior tree expressed in our text format:
 ````
 #
 # Dog tree
@@ -156,9 +157,28 @@ root
       com.badlogic.gdx.ai.tests.btree.dog.BarkTask # fully qualified task
       mark
 ````
-And the equivalent tree in graphical form:
+And the equivalent tree in a graphical form:
 
 ![dog tree](https://cloud.githubusercontent.com/assets/2366334/4617800/190bc6c4-5303-11e4-8c52-07470f9a36d7.png)
+
+We have previously mentioned the possibility to use the `?` character in the text format. The question mark is just a syntactic sugar; it gives the user the opportunity to improve readability by making it clear when a leaf task is a condition or an action. For instance, take a look at the tree below.
+````
+import doorLocked?:"packageName.DoorLockedCondition"
+import unlockDoor:"packageName.UnlockDoorAction"
+import enterRoom:"packageName.EnterRoomAction"
+
+root
+  selector
+    sequence
+      doorLocked?
+      unlockDoor
+      enterRoom
+    enterRoom
+```` 
+Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name con not contain the `?` because its use is illegal in Java class names. Also, notice that the '?' character is not required for conditions, you might want to use a different convention such as `isDoorLocked` or `doorLockedCondition`. it's totally up to you.
+
+## Task Attributes and Metadata ##
+T.B.D.
 
 ## Behavior Tree Libraries ##
 A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application). You can also use it to store named sub-trees that you intend to use in multiple contexts.
