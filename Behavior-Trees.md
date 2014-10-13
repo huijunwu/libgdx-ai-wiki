@@ -9,6 +9,7 @@
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
     - [Task Class Hierarchy](#task-class-hierarchy)
+    - [Text Format](#text-format)
     - [Behavior Tree Libraries](#behavior-tree-libraries)
     - [Including Subtrees](#including-subtrees)
 
@@ -113,6 +114,51 @@ As you can notice from the figure below, everything is a [Task](http://libgdx.ba
 [LeafTask](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/LeafTask.html) is the class that you'll have to extend more often in order to implement your actions and conditions.
 
 ![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
+
+## Text Format ##
+The behavior tree text format is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
+
+All lines in the format have the following syntax (elements within `[` and `]` are optional):
+```` 
+[[indent] [name [attr:value [...]]] [comment]]
+````
+where:
+- indent is a sequence of spaces/tabs defining the depth of that task in tree
+- name is in the form of a Java fully qualified class augmented with the possibility to use the character `?`
+- attr is in the form of Java identifier augmented with the possibility to use the character `?`
+- value must be a boolean, a number or a quoted string accepting JSON-like escape sequences
+- comment starts with `#` and extends up to the first newline character
+
+As you can notice, everything is optional, meaning that an empty line is legal.
+
+Here is a sample behavior tree expressed in out text format:
+````
+#
+# Dog tree
+#
+
+# Alias definitions
+import bark:"com.badlogic.gdx.ai.tests.btree.dog.BarkTask"
+import care:"com.badlogic.gdx.ai.tests.btree.dog.CareTask"
+import mark:"com.badlogic.gdx.ai.tests.btree.dog.MarkTask"
+import walk:"com.badlogic.gdx.ai.tests.btree.dog.WalkTask"
+
+# Tree definition (note that root is optional)
+root
+  selector
+    parallel
+      care urgentProb:0.8
+      alwaysFail
+        com.badlogic.gdx.ai.tests.btree.dog.RestTask # fully qualified task
+    sequence
+      bark times:2
+      walk
+      com.badlogic.gdx.ai.tests.btree.dog.BarkTask # fully qualified task
+      mark
+````
+And the equivalent tree in graphical form:
+
+![dog tree](https://cloud.githubusercontent.com/assets/2366334/4617800/190bc6c4-5303-11e4-8c52-07470f9a36d7.png)
 
 ## Behavior Tree Libraries ##
 A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application). You can also use it to store named sub-trees that you intend to use in multiple contexts.
