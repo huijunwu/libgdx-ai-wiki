@@ -9,7 +9,7 @@
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
     - [Task Class Hierarchy](#task-class-hierarchy)
-    - [Behavior Tree Library](#behavior-tree-library)
+    - [Behavior Tree Libraries](#behavior-tree-libraries)
     - [Including Subtrees](#including-subtrees)
 
 # Introduction #
@@ -115,14 +115,25 @@ As you can notice from the figure below, everything is a [Task](http://libgdx.ba
 ![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
 
 ## Behavior Tree Libraries ##
-A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application).
+A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application). You can also use it to store named sub-trees that you intend to use in multiple contexts.
 
-It's important to understand that a library contains behavior tree instances known as *archetypes*. You should never use an archetype to run any behaviors on. Any time you need an instance of that behavior tree you ask the library for a copy of the archetype and use the copy. That way you're getting all of the configuration of the tree, but you're getting your own copy. In order to achieve this capability, each task have a [cloneTask](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#cloneTask--) method that makes a new copy of itself by invoking the protected abstract method [copyTo(Task)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#copyTo-com.badlogic.gdx.ai.btree.Task-). The library can then ask the behavior tree or its root task for a clone of itself and have it recursively build us a copy. This presents a simple and effective API. The main advantage of this approach is that if you have a lot of agents having the same behavior (or common sub-behaviors) the source file doesn't have to be parsed again and again (parsing a tree is something slow producing garbage into memory). On the other hand, the drawback is that you'll have to properly implement the copyTo() method in all your leaf tasks in order to preserve the task configuration on cloning. The good news is that very often the leaf tasks don't require configuration parameters, meaning that you don't have to deal with the actual implementation of the method copyTo().
+It's important to understand that a library contains behavior tree instances known as *archetypes*. You should never use an archetype to run any behaviors on. Any time you need an instance of that behavior tree you ask the library for a copy of the archetype and use the copy. That way you're getting all of the configuration of the tree, but you're getting your own copy. In order to achieve this capability, each task has a [cloneTask](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#cloneTask--) method that makes a new copy of itself by invoking the protected abstract method [copyTo(Task)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#copyTo-com.badlogic.gdx.ai.btree.Task-). The library can then ask the behavior tree or its root task for a clone of itself and have it recursively build us a copy. This would normally be done during the loading of the level, making sure that only the trees that might be needed in that level are loaded and instantiated into archetypes.
+
+This technique presents a simple and effective API. The main advantage of this approach is that if you have a lot of agents having the same behavior (or many common sub-behaviors) the source file doesn't have to be parsed again and again (parsing a tree is something slow producing garbage into memory). On the other hand, the drawback is that you'll have to properly implement the copyTo() method in your leaf tasks in order to preserve the task configuration on cloning. The good news is that very often the leaf tasks have no configuration at all (neither children nor parameters), meaning that you don't have to deal with the actual implementation of the method copyTo().
 
 However, you're not forced to use any behavior tree library, unless you want to exploit the include sub-tree capability.
-Simple applications whose behavior trees exist as a single instance and not needing a high modularity level can simply parse and run their trees directly.
+Simple applications whose behavior trees exist as a single instance and not needing a high modularity level can just parse and run their trees directly.
 
 Actually, you're not even forced to load behavior trees from an external source. You can create them programmatically, but mostly for maintenance reasons this is not the recommended approach.
 
 ## Including Subtrees ##
-T.B.D.
+As previously said, the [Include](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html) task is a decorator that allows you to graft a subtree into another behavior tree instance. This is very useful for reusability when you identify behavioral patterns in your trees.
+
+Internally, the include decorator makes use of the singleton [BehaviorTreeLibraryManager](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibraryManager.html) to get a fresh new instance of the required subtree.
+
+Basically, there are two types of inclusion:
+- **Eager inclusion:** It happens when the [lazy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html#lazy) attribute of the include decorator is set to `false`. The archetype behavior tree contains these reference nodes, but as soon as we instantiate our full tree it replaces itself with a copy of the sub-tree, built by the library. Notice that the sub-tree is instantiated when the behavior tree is created, ready for a character's use.
+- **Lazy inclusion:** It happens when the [lazy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html#lazy) attribute of the include decorator is set to `true`. In memory-constrained platforms, or for games with hundreds of AI characters, it may be worth holding off on creating the sub-tree until it is needed, saving memory in cases where parts of a large behavior tree are rarely used. This may be particularly the case where the behavior tree has a lot of branches for special cases: how to use a particular rare weapon, for example. These highly specific sub-trees don't need to be created for every character, wasting memory; instead, they can be created on
+demand if the rare situation arises. Actually, the lazy include task creates its child sub-tree at execution time when it is first needed.
+
+Notice that both eager and lazy inclusion are an anomalous decorator that has no child at the archetype level (usually decorators have exactly one child). Especially, the eager include will never execute since it will be replaced by the grafted sub-tree at clone-time, while the lazy include can execute but its child is created and added the first time it executes.
