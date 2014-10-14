@@ -14,6 +14,7 @@
   * [Task Attributes and Metadata](#task-attributes-and-metadata)
   * [Behavior Tree Libraries](#behavior-tree-libraries)
   * [Including Subtrees](#including-subtrees)
+- [Limitations of Behavior Trees](#limitations-of-behavior-trees)
 
 # Introduction #
 
@@ -219,3 +220,14 @@ demand if the rare situation arises. Actually, the lazy include task creates its
 Notice that both eager and lazy inclusion are an anomalous decorator that has no child at the archetype level (usually decorators have exactly one child). Especially, the eager include will never execute since it will be replaced by the grafted sub-tree at clone-time, while the lazy include can execute but its child is created and added the first time it executes.
 
 Please, look into the [IncludeSubtreeTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/IncludeSubtreeTest.java) class for a simple example of lazy and eager inclusion.
+
+# Limitations of Behavior Trees #
+Behavior trees on their own have been a big win for game AI, but you should not consider them as a solution to almost every problem you can imagine in game AI.
+As we have seen, behavior trees work great if your character transitions between types of behavior based on the success or failure of certain actions. However, behavior trees make it more difficult to think and design in terms of states. Actually, they tend to be reasonably clunky when representing state-based behaviors such as:
+- a character who needs to respond to external events, for example, interrupting a patrol route to suddenly go into hiding or to raise an alarm
+- a character that needs to switch strategies when its ammo is looking low
+
+We're not claiming those behaviors can't be implemented in behavior trees, just that it would be cumbersome to do so.
+
+Of course, you can build a hybrid system where characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running. Using the approach of having behavior tree libraries that we saw above, this provides the best of both worlds. Unfortunately, it also adds considerable extra burden to the AI authors and toolchain developers, since they now need to support two kinds of authoring: state machines and behavior
+trees.
