@@ -49,7 +49,7 @@ These actions and conditions form the definitions of behavior tasks. For example
              +--------------+
                /         \
 +----------------+     +----------+
-| Enemy visible? |     | Run avay |
+| Enemy visible? |     | Run away |
 +----------------+     +----------+
 ````
 The root task is decomposed into two child tasks, the left child being a condition that an enemy is visible, and the right child being an action which makes the NPC run away.
@@ -124,7 +124,9 @@ In a squad-based game, for example, we might have a collaborative AI that can au
 
 In most games we'll want some characters to have the same behavior, i.e. different instances (or clones as we'll see) of the same behavior tree. In this case each behavior tree instance will require its own blackboard.
 
-At the API level, all the classes in the task hierarchy above are characterized by a generic type parameter `<T>` which is the type of the blackboard. All the tasks of a behavior tree instance have the same generic type, so sharing the same blackboard instance.
+At the API level, all the classes in the task hierarchy above are characterized by a generic type parameter `<T>` which is the type of the blackboard. All the tasks of a behavior tree instance have the same generic type argument, `<Blackboard>` for example, so sharing the same blackboard instance.
+
+The [Dog](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/dog/Dog.java) class is a simple example of a blackboard. The action tasks in the same package extend `LeafTask<Dog>`, see the [CareTask](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/dog/CareTask.java) class for example. 
 
 ## Text Format ##
 The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
@@ -185,7 +187,7 @@ root
       enterRoom
     enterRoom
 ```` 
-Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name can not contain the `?` because its use is illegal in Java class names. Also, notice that the `?` character is not required for conditions, you might want to use a different convention such as `isDoorLocked` or `doorLockedCondition`. it's totally up to you.
+Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name can not contain the `?` because its use is illegal in Java class names. Also, notice that the `?` character is not required for conditions, you might want to use a different naming convention such as `isDoorLocked` or the more verbose `doorLockedCondition`. It's totally up to you. Personally, I prefer the final `?` but it's just a matter of taste.
 
 You can look into the [ParseAndRunTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/ParseAndRunTest.java) class for a simple example of how to load a behavior tree into memory from a file.
 
