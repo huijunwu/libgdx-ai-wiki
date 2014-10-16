@@ -183,7 +183,7 @@ They don't need to check and clip the current velocity; the drag (applied in the
 of parameters required to accomplish their work. Some parameters are strictly behavior-specific, such as the target to pursue or evade, the path for a path following behavior, the ray configuration
 for raycast obstacle avoidance, the forward offset of the wander circle, and so on.
 Some other parameters, such as the maximum linear speed and acceleration, can be considered as character's properties or behavior's properties depending on the situation.
-The `Limiter` interface allow you to decide where are those maximum values taken from. You can optionally specify a limiter for any steering behavior. If you don't provide one then the owner itself
+The [Limiter](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Limiter.html) interface allow you to decide where are those maximum values taken from. You can optionally specify a limiter for any steering behavior. If you don't provide one then the owner itself
 will be used (notice that `Steerable` extends `Limiter`).
 
 ## Individual Behaviors ##
@@ -389,7 +389,7 @@ predicted positions is determined and finally the owner uses the Arrive behavior
 So far we have encountered some behaviors that try to match position with a target, such as Seek and Flee.
 This behavior does the same with velocity. But if you stop and think you'll realize that we have already seen a behavior
 that tries to match a velocity. Arrive calculates a target velocity based on the distance to its target then tries
-to achieve the target velocity. MatchVelocity is a stripped down version of Arrive indeed.
+to achieve the target velocity. [MatchVelocity](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/MatchVelocity.html) is a stripped down version of Arrive indeed.
 
 Unfortunately, MatchVelocity on its own is seldom useful. It could be used to make a character mimic the motion of a
 target, but normally this isn't very useful. Where it does become handy is when a character needs to jump. 
@@ -411,7 +411,7 @@ By contrast, standard steering behaviors effectively distribute their thinking o
 is very simple, but because they are constantly reconsidering the decision, the overall effect is competent.
 Jumping is a one-time, fail-sensitive decision.
 
-A good approach to address a jump is to use a *jump descriptor* object that pairs a *jump point* with a *landing pad*.
+A good approach to address a jump is to use a [jump descriptor](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Jump.JumpDescriptor.html) object that pairs a *jump point* with a *landing pad*.
 These are special locations that need to be manually placed by the game level designer. 
 Here are the steps to achieve the jump:
 
@@ -420,7 +420,7 @@ on the other side of the gap, or else it may be using a simple steering behavior
 2. **Recognizing which jump to make.** This will normally happen automatically if you're using pathfinding
 (see jump links, below). If you're using a local steering behavior, then you have to determine that a
 jump is ahead in enough time to make it. A reasonable lookahead is required.
-3. **Taking a run up.** It's time for the Jump steering behavior to take over:
+3. **Taking a run up.** It's time for the [Jump](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Jump.html) steering behavior to take over:
   - it first calculates the velocity required to land exactly on the landing pad when taking off from the jump point.
   - then it uses the calculated velocity as the target of the MatchVelocity behavior to take a run up toward
     the jump point with the correct speed and direction.
@@ -618,11 +618,11 @@ extend a short distance ahead of the character (usually a distance corresponding
 
 This behavior is especially suitable for large-scale obstacles like walls.
 
-You should use the [RayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/RaycastObstacleAvoidance#RayConfiguration.html)
+You should use the [RayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/utils/RayConfiguration.html)
 more suitable for your game environment. Some basic ray configurations are provided by the framework:
-[SingleRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/SingleRayConfiguration.html),
-[ParallelSideRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/ParallelSideRayConfiguration.html),
-and [CentralRayWithWhiskersConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/rays/CentralRayWithWhiskersConfiguration.html).
+[SingleRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/utils/rays/SingleRayConfiguration.html),
+[ParallelSideRayConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/utils/rays/ParallelSideRayConfiguration.html),
+and [CentralRayWithWhiskersConfiguration](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/utils/rays/CentralRayWithWhiskersConfiguration.html).
 There are no hard and fast rules as to which configuration is better. Each has its own particular idiosyncrasies. A central ray with
 short whiskers is often the best initial configuration to try but can make it impossible for the character to move down tight passages.
 The single ray configuration is useful in concave environments but grazes convex obstacles. The parallel configuration works well in
