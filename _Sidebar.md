@@ -4,7 +4,7 @@
 * [[Getting started with gdxAI]]
 * [[Infrastructure]]
   - [[Message Handling]]
-* Movement AI
+* [[Movement AI]]
   - [[Steering Behaviors]]
 * Decision Making
   - [[State Machine]]
