@@ -2,7 +2,7 @@
 
 * [[Home]]
 * [[Getting started with gdxAI]]
-* Infrastructure
+* [[Infrastructure]]
   - [[Message Handling]]
 * Movement AI
   - [[Steering Behaviors]]
