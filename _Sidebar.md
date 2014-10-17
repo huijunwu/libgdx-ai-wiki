@@ -1,7 +1,11 @@
 # Table of Contents
 
+* [[Home]]
 * [[Getting started with gdxAI]]
-* [[Message Handling]]
-* [[State Machine]]
-* [[Steering Behaviors]]
-* [[Behavior Trees]]
+* Infrastructure
+  - [[Message Handling]]
+* Movement AI
+  - [[Steering Behaviors]]
+* Decision Making
+  - [[State Machine]]
+  - [[Behavior Trees]]
