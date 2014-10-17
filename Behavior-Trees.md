@@ -109,7 +109,17 @@ T.B.C.
 T.B.D.
 
 # Behavior Tree API #
-T.B.D.
+Behavior trees are made up of independent tasks, each with its own algorithm and implementation.
+At the API level, all of them conform to a basic interface which allows them to call one another without knowing
+how they are implemented, see the [Task Class Hierarchy](#task-class-hierarchy) section below.
+
+The API allows you to create behavior tree instances in four different ways:
+- from external resources in a simple [text format](#text-format)
+- from [libraries](#behavior-tree-libraries)
+- by cloning another tree
+- programmatically, see [javadoc](http://libgdx.badlogicgames.com/gdx-ai/docs/index.html?com/badlogic/gdx/ai/btree/package-summary.html)
+
+You can freely choose the technique you prefer, but the first two options are recommended as we will see.
 
 ## Task Class Hierarchy ##
 As you can notice from the figure below, everything is a [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html). Even a [BehaviorTree](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/BehaviorTree.html) is a task. This allows us to easily support the inclusion of sub-trees, as we will see shortly.
