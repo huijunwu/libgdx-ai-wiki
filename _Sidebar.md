@@ -6,6 +6,6 @@
   - [[Message Handling]]
 * [[Movement AI]]
   - [[Steering Behaviors]]
-* Decision Making
+* [[Decision Making]]
   - [[State Machine]]
   - [[Behavior Trees]]
