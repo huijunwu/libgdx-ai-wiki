@@ -1,3 +1,6 @@
+![gdxai logo](https://cloud.githubusercontent.com/assets/2366334/4677025/64ae592a-55e2-11e4-8a31-31c2941ff995.png)
+
+
 ## What is gdxAI?
 
 It's an artificial intelligence framework, written in Java, for game development with [libGDX](https://github.com/libgdx/libgdx).
