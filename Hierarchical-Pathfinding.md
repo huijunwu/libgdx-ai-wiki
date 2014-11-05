@@ -37,17 +37,29 @@ planning). The [HierarchicalTiledAStarTest](https://github.com/libgdx/gdx-ai/blo
 The connections between higher level
 nodes need to reflect the ability to move between grouped areas. If any low-level node in one group is connected to any low-level node in another group, then a character can move between the groups, and the two groups should have a connection.
 
-{--Picture needed--}
-
 The **cost of a connection** between two groups should reflect the difficulty of traveling between them. This can be specified manually, or it can be calculated from the cost of the low-level connections between those groups.
+````
+                   +--+--+      
+                   |A1|C1|      
+                   +--+--+      
+                      |C2|      
+    A                 +--+      
+     \                |C3|      
+      C-D             +--+--+--+
+     /                |C4|C5|D1|
+    B                 +--+--+--+
+                   +--+--+--+--+
+                   |B1|C6|C7|D2|
+                   +--+--+--+--+
+                                
+   Level 1           Level 0   
+````
+The figure below shows that the cost of moving from group C to group D depends on whether you entered group C from group A (a cost of 5) or from group B (a cost of 2). In general, the grouping should be chosen to minimize this problem, but it cannot be resolved easily.
 
 For the sake of simplicity, the `HierarchicalTiledAStarTest` uses a cost of 1 for all the connections between groups.
 However, there are three heuristics that are commonly used, straight or blended, to calculate the connection
 cost between groups:
-- **Minimum Distance:** ...
-- **Maximin Distance:** ...
-- **Average Minimum Distance:** ...
-
-T.B.C
-
+- **Minimum Distance:** This heuristic says that the cost of moving between two groups is the cost of the cheapest link between any nodes in those groups. This makes sense because the pathfinder will try to find the shortest route between two locations. In the example above, the cost of moving from C to D would be 1. Note that if you entered C from either A or B, it would take more than one move to get to D. The value of 1 is almost certainly too low. Actually, this heuristic assumes that there will never be any cost to moving around the nodes within a group, thus it's very optimistic.
+- **Maximin Distance:** For each incoming link, the minimum distance to any suitable outgoing link is calculated. This calculation is usually done with a pathfinder. The largest of these values is then added to the cost of the outgoing link and used as the cost between groups. In the example, to calculate the cost of moving from C to D, two costs are calculated: the minimum cost from C1 to C5 (4) and the minimum cost from C6 to C7 (1). The largest of these (C1 to C5) is then added to the cost of moving from C5 to D1 (1). This leaves a final cost from C to D of 5. To get from C to D from anywhere other than C1, this value will be too high. Actually, this heuristic finds one of the largest possible costs and always uses that, thus it's rather pessimistic.
+- **Average Minimum Distance:** This heuristic is calculated in the same way as the maximin distance, but the values are averaged, rather than simply selecting the largest. In our example, to get from C to D coming from B (i.e., via C6 and C7), the cost is 2, and when coming from A (via C2 to C5) it is 5. So the average cost of moving from C to D is 3.5. Actually, this heuristic gives the average cost you'll pay over lots of different pathfinding requests, thus it's pragmatic and can be a good general choice.
 
