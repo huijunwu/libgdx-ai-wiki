@@ -8,6 +8,7 @@
   - [[Steering Behaviors]]
 * [[Pathfinding]]
   - A*
+  - [[Hierarchical Pathfinding]]
 * [[Decision Making]]
   - [[State Machine]]
   - [[Behavior Trees]]
