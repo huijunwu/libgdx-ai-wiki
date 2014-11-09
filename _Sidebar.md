@@ -9,6 +9,7 @@
 * [[Pathfinding]]
   - A*
   - [[Hierarchical Pathfinding]]
+  - [[Path Smoothing]]
 * [[Decision Making]]
   - [[State Machine]]
   - [[Behavior Trees]]
