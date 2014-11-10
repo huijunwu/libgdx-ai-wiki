@@ -4,6 +4,7 @@
 * [[Getting started with gdxAI]]
 * [[Infrastructure]]
   - [[Message Handling]]
+  - [[Scheduling]]
 * [[Movement AI]]
   - [[Steering Behaviors]]
 * [[Pathfinding]]
