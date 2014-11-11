@@ -1,3 +1,14 @@
+# Introduction #
+Processor resources are limited and can easily get eaten up by some AI techniques such as pathfinding or complex decision making. Sometimes a frame may need a lot of AI elaboration, and sometimes you may have hundreds of frames where nothing much is happening to the AI.
+
+Scheduling systems try to solve this kind of problems in order to keep the frame rate at acceptable values. There are three main ingredients to make the best use of the limited processing time available.
+- dividing up the execution time among the AI that needs it
+- having algorithms that can work a bit at a time over several frames
+- giving preferential treatment to important characters and areas.
+
+Scheduling systems were originally designed for AI and in the case of an extremely simple or light AI they are not essential. But when you have a good AI scheduling system you can use it for many other purposes: incremental loading of new areas of the level, game logic, audio scheduling, and so on.
+
+# The API #
 A [Scheduler](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/sched/Scheduler.html) works by assigning a pot of execution time among a variety of tasks, based on which ones need the time. A task must implement the [Schedulable](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/sched/Schedulable.html) interface in order to be scheduled. 
 
 Different AI tasks can and should be run at different frequencies. You can simply schedule some tasks to run every few frames and other tasks to run more frequently, slicing up the overall AI and distributing it over time. It is a powerful technique for making sure that the game doesn't take too much AI time overall.
