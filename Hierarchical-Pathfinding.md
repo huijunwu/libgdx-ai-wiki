@@ -7,6 +7,8 @@ This is a very efficient way of pathfinding. To start with, we plan the abstract
 
 The plan at each level is typically simple, and we split the pathfinding problem over a long period of time, only doing the next bit when the current bit is complete.
 
+Also, for many real-time pathfinding applications, the complete path is not needed. Knowing the first few moves of a valid path often suffices, allowing an agent to start moving in the right direction. Subsequent events may result in the agent having to change its plan, obviating the need for the rest of the path. The obvious advantage here is that no effort has been wasted on computing a path to a goal node that was never needed.
+
 As we'll see, with hierarchical pathfinding you gain performance at the possible cost of path optimality. However, in games, missing the optimal path is not a real problem most of the times, as long as the calculated path looks reasonable.
 
 ## The API ##
