@@ -1,3 +1,12 @@
+- [The Concept of Messages](#the-concept-of-messages)
+- [Dispatching a Message](#dispatching-a-message)
+- [Multiple Recipients](#multiple-recipients)
+- [Updating the Dispatcher](#updating-the-dispatcher)
+- [Receiving a Message](#receiving-a-message)
+- [Telegram Providers](#telegram-providers)
+- [Saving and Restoring Pending Messages](#saving-and-restoring-pending-messages)
+
+
 Well-designed games tend to be event driven.  With event handling, entities can make their usual business until an event message is broadcast to them. Then, if that message is pertinent, they can act upon it.
 Intelligent agents can use this technique to communicate to each other.
 
@@ -65,7 +74,7 @@ The following call
 
 ## Receiving a Message ##
 
-When a telegram is received by an agent (actually a Telegraph), its method [handleMessage(telegram)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegraph.html#handleMessage-com.badlogic.gdx.ai.msg.Telegram-) is invoked.
+When a telegram is received by an agent (actually a [Telegraph](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegraph.html)), its method [handleMessage(telegram)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegraph.html#handleMessage-com.badlogic.gdx.ai.msg.Telegram-) is invoked.
 This method returns a boolean value indicating whether the message has been handled successfully.
 
 **IMPORTANT NOTE:**
@@ -102,3 +111,20 @@ When a new `Telegraph` starts listening to a specific type of message, the `Tele
 	Object provideMessageInfo (int msg, Telegraph receiver);
 ````
 ... when returning `null`, there's no `Telegram` dispatch to the `Telegraph` by the `TelegramProvider`.
+
+
+## Saving and Restoring Pending Messages ##
+Some games need to save a snapshot of the level at a given time `T` so it can be loaded later. In this situation you have to serialize and deserialize the status of the queue at time `T`, i.e. its pending messages. 
+
+You can save pending messages with the following code
+````java
+	MessageDispatcher md = MessageDispatcher.getInstance();
+	md.scanQueue(new PendingMessageCallback() {
+		@Override
+		public void report (float delay, Telegraph sender, Telegraph receiver, int message, Object extraInfo) {
+			// Here you can serialize the pending message.
+			// Notice that pending messages are reported in any particular order.
+		}
+	});
+````
+To restore pending messages on deserialization you can simply add them to the queue through the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-) method as usual. 
