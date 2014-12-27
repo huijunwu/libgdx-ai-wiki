@@ -93,7 +93,7 @@ There are many different types of useful decorators:
 - **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
 - **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource. Imagine you have three monsters and you want one of them to chase the player and the rest to taunt the player.
 - **UntilFail** will repeat the wrapped task until that task fails.
-- **UntilSucceed** will repeat the wrapped task until that task succeeds.
+- **UntilSuccess** will repeat the wrapped task until that task succeeds.
 
 There are many more decorators you might want to use when building behavior trees, but I think these are enough for now.
 
