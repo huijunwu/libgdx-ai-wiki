@@ -297,7 +297,7 @@ that the edges of the circle subtend to the owner determine how fast it will tur
 points, it will turn quickly. The target will twitch and jitter around the edge of the circle, but the owner's orientation will
 change smoothly.
 
-Our implementation uses the second approach. However, if you don't use independent facing (i.e. you manually align owner's
+Our implementation uses the second approach. However, if you don't use [independent facing](#independent-facing) (i.e. you manually align owner's
 orientation to its linear velocity on each time step), Face behavior is redundant. You can tell Wander whether Face behavior
 should be used or not through the [setFaceEnabled](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Wander.html#setFaceEnabled-boolean-) method.
 
