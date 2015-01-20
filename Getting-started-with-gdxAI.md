@@ -73,3 +73,7 @@ If you already have a Libgdx project and want to use gdxAI you need to add the a
 		}
 	}
 ```
+Don't forget to update your GdxDefinition.gwt.xml and GdxDefinitionSuperdev.gwt.xml with the proper inheitance:
+```
+    <inherits name='com.badlogic.gdx.ai' />
+```
