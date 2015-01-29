@@ -24,11 +24,13 @@ For example, if a character strikes an enemy, the message `Attacked` could be se
 
 ## Dispatching a Message ##
 
-The creation, dispatch, and management of telegrams is handled by the singleton class [MessageDispatcher](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html).
+The creation, dispatch, and management of telegrams is handled by the class [MessageDispatcher](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html).
 
-Whenever an agent needs to send a message, it calls `MessageDispatcher.dispatchMessage()` like that
+You can instantiate and use how many dispatchers you want at the same time, but if you need just one in your application you can use the singleton class [MessageManager](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageManager.html) instead. This means that all occurrences of `messageDispatcher` below can be replaced with `MessageManager.getInstance()` that returns the singleton instance of the dispatcher.
+
+Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-)` like that
 ````java
-	MessageDispatcher.getInstance().dispatchMessage(
+	messageDispatcher.dispatchMessage(
 			delay,
 			sender,
 			recipient,
@@ -37,30 +39,32 @@ Whenever an agent needs to send a message, it calls `MessageDispatcher.dispatchM
 ````
 where _delay_ is expressed in seconds. The MessageDispatcher uses this information to create a [Telegram](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html), which it either dispatches immediately (if the given delay is <= 0) or stores in a queue (when the given delay is > 0) ready to be dispatched at the correct time.
 
+Note that there are a lot of overloaded versions of the `dispatchMessage` method that can be used for convenience.
+
 ### Multiple Recipients ###
 If you send a message without specifying the recipient the message will be dispatched to all the agents listening to that message type. Agents can register and unregister their interest in specific message types.
 The following methods allow you to manage agent's interest.
 ````java
 // Lets the agent listent to msgCode
-MessageDispatcher.getInstance().addListener(agent, msgCode);
+messageDispatcher.addListener(agent, msgCode);
 
 // Lets the agent listent to the given selection of msgCodes
-MessageDispatcher.getInstance().addListener(agent, msgCode1, msgCode2, ...);
+messageDispatcher.addListener(agent, msgCode1, msgCode2, ...);
 
 // Removes msgCode from the interests of the agent
-MessageDispatcher.getInstance().removeListener(agent, msgCode);
+messageDispatcher.removeListener(agent, msgCode);
 
 // Removes the given msgCodes from the interests of the agent
-MessageDispatcher.getInstance().removeListener(agent, msgCode1, msgCode2, ...);
+messageDispatcher.removeListener(agent, msgCode1, msgCode2, ...);
 
 // Removes all the agents listening to msgCode
-MessageDispatcher.getInstance().clearListeners(msgCode);
+messageDispatcher.clearListeners(msgCode);
 
 // Removes all the agents listening to the given selection of msgCodes
-MessageDispatcher.getInstance().clearListeners(msgCode1, msgCode2, ...);
+messageDispatcher.clearListeners(msgCode1, msgCode2, ...);
 
 // Removes all the agents listening to any message type
-MessageDispatcher.getInstance().clearListeners();
+messageDispatcher.clearListeners();
 ````
 
 ### Updating the Dispatcher ###
@@ -68,7 +72,7 @@ The queued telegrams are examined each update step by the method [MessageDispatc
 The following call
 ````java
 	// deltaTime is the time span between the current frame and the last frame in seconds
-	MessageDispatcher.getInstance().update(deltaTime);
+	messageDispatcher.update(deltaTime);
 ````
 **must be placed in the game's main update loop** to facilitate the correct and timely dispatch of any delayed messages.
 
@@ -91,19 +95,19 @@ A [TelegramProvider](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gd
 Providers can register and unregister their ability to provide informations for specific message types. The following methods allow you to manage provider's abilities:
 ````java
 // Lets the provider respond when a new Telegraph starts listening to msgCode
-MessageDispatcher.getInstance().addProvider(provider, msgCode);
+messageDispatcher.addProvider(provider, msgCode);
 
 // Lets the provider respond when a new Telegraph starts listening to msgCode1, msgCode2, ...
-MessageDispatcher.getInstance().addProviders(provider, msgCode1, msgCode2, ...);
+messageDispatcher.addProviders(provider, msgCode1, msgCode2, ...);
 
 // Removes all the providers
-MessageDispatcher.getInstance().clearProviders();
+messageDispatcher.clearProviders();
 
 // Removes all the providers responding to new Telegraph listening to msgCode
-MessageDispatcher.getInstance().clearProviders(msgCode);
+messageDispatcher.clearProviders(msgCode);
 
 // Removes all the providers responding to new Telegraph listening to msgCode1, msgCode2, ...
-MessageDispatcher.getInstance().clearProviders(msgCode1, msgCode2, ...);
+messageDispatcher.clearProviders(msgCode1, msgCode2, ...);
 ````
 
 When a new `Telegraph` starts listening to a specific type of message, the `TelegramProvider` can decide to provide or not extra information that will be **immediately** delivered to the `Telegraph` by the `MessageDispatcher`.
@@ -118,8 +122,7 @@ Some games need to save a snapshot of the level at a given time `T` so it can be
 
 You can save pending messages with the following code
 ````java
-	MessageDispatcher md = MessageDispatcher.getInstance();
-	md.scanQueue(new PendingMessageCallback() {
+	messageDispatcher.scanQueue(new PendingMessageCallback() {
 		@Override
 		public void report (float delay, Telegraph sender, Telegraph receiver, int message, Object extraInfo) {
 			// Here you can serialize the pending message.
