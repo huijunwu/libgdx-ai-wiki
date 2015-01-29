@@ -28,7 +28,7 @@ The creation, dispatch, and management of telegrams is handled by the class [Mes
 
 You can instantiate and use how many dispatchers you want at the same time, but if you need just one in your application you can use the singleton class [MessageManager](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageManager.html) instead. This means that all occurrences of `messageDispatcher` below can be replaced with `MessageManager.getInstance()` that returns the singleton instance of the dispatcher.
 
-Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-)` like that
+Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-) method like that
 ````java
 	messageDispatcher.dispatchMessage(
 			delay,
