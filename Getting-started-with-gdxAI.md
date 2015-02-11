@@ -45,7 +45,7 @@ Add the dependency to the `dependencies` element.
 If you want the most bleeding edge version of gdxAI or prefer to make your own modifications, working from sources might be the best option. Follow these steps.
 
 1. Install [Gradle](http://www.gradle.org/downloads)
-2. Clone the Git repository `git clone git@github.com:libgdx/gdx-ai.git`
+2. Clone the Git repository `git clone https://github.com/libgdx/gdx-ai.git`
 3. Import the `gdx-ai` and `tests` projects into the IDE of your choice. Using the command line is also an option.
 4. Now you can either:
   * Run the `uploadArchives` task and generate three jar files: bytecode, sources and javadocs. They will be in your local Maven repository.
