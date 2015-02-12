@@ -22,7 +22,7 @@ Then you need to add the gdxAI dependency.
 	<dependency>
 		<groupId>com.badlogicgames.gdx</groupId>
 		<artifactId>gdx-ai</artifactId>
-		<version>1.4.0</version>
+		<version>1.5.0</version>
 	</dependency>
 ```
 ### Gradle
@@ -37,7 +37,7 @@ Add the Maven repositories to your `gradle.build` file.
 Add the dependency to the `dependencies` element.
 ```groovy
     dependencies {
-        compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
+        compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
     }
 ```
 ## Working from sources
@@ -57,19 +57,19 @@ If you already have a Libgdx project and want to use gdxAI you need to add the a
 ```groovy
 	project(":core") {
 		dependencies {
-			compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
+			compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
 		}
 	}
 
 	project(":android") {
 		dependencies {
-			compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
+			compile "com.badlogicgames.gdx:gdx-ai:1.5.0"
 		}
 	}
 
 	project(":html") {
 		dependencies {
-			compile "com.badlogicgames.gdx:gdx-ai:1.4.0:sources"
+			compile "com.badlogicgames.gdx:gdx-ai:1.5.0:sources"
 		}
 	}
 ```
