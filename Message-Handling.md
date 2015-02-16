@@ -31,15 +31,15 @@ You can instantiate and use how many dispatchers you want at the same time, but 
 Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-) method like that
 ````java
 	messageDispatcher.dispatchMessage(
-			delay,
-			sender,
-			recipient,
-			messageType,
-			extraInfo);
+			delay,        // Immediate message if <= 0; delayed otherwise
+			sender,       // It can be null
+			recipient,    // It can be null, see the "Multiple Recipients" section below
+			messageType,  // Any user-defined int code
+			extraInfo);   // Optional data accompanying the message
 ````
 where _delay_ is expressed in seconds. The MessageDispatcher uses this information to create a [Telegram](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html), which it either dispatches immediately (if the given delay is <= 0) or stores in a queue (when the given delay is > 0) ready to be dispatched at the correct time.
 
-Note that there are a lot of overloaded versions of the `dispatchMessage` method that can be used for convenience.
+Note that there are a lot of overloaded versions of the `dispatchMessage` method that can be used for convenience. Just one argument is indeed mandatory, the `messageType`. 
 
 ### Multiple Recipients ###
 If you send a message without specifying the recipient the message will be dispatched to all the agents listening to that message type. Agents can register and unregister their interest in specific message types.
