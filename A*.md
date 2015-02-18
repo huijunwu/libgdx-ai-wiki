@@ -3,6 +3,8 @@ A* is a fundamental heuristic search algorithm for finding a path through a grap
 
 A* searches for a path over a discrete [state space](https://en.wikipedia.org/wiki/State_space). Hence, in many implementations the first step is to apply a coarse discretization over some continuous domain. For example, by applying a grid, [Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation), or other quickly-computed (i.e. [polynomial time](http://mathworld.wolfram.com/PolynomialTime.html)) abstraction over the state space. 
 
+![A-star search](http://www.entangledloops.com/img/a-star-search-1.png)
+
 In a game, the discrete graph is almost always a pre-sized grid applied over a 2D or 3D map. The search is performed on the grid by selecting a grid node closest to the agent (PC or NPC) and then progressively searching through the graph for a node closest to some goal location (for example, where the user has clicked). The grid may initially be aligned to the agent, the goal, or neither for performance reasons, such as in repeated search. Several techniques exist to remediate the situation where a path cannot be found through the graph _even though a path exists_ in the complete continuous space. Common techniques employ refining or relocating the graph's position.
 
 A* is **not** inherently a multi-agent path-finding algorithm. Multi-agent path-planning is a separate, more complex topic that requires discussion of stochastic processes and reliability of the available information. Other algorithms and adaptations of A* exist specifically for handling those situations.
@@ -77,7 +79,7 @@ Sorting is critical to the performance and behavior of A*. Note that _[tie-break
 
 An interactive javascript demo (with some minor terminology errors) can be found [here](https://qiao.github.io/PathFinding.js/visual).
 
-A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8).
+A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8). Another can be seen [here](https://www.youtube.com/watch?v=J-ilgA_XNI0).
 
 The fastest known implementation was written in C by Google engineer [Ethan Burns](https://eatoasts.appspot.com). His site contains links to a [codebase](https://github.com/eaburns/search) with more advanced implementations, including parallelization.
 
