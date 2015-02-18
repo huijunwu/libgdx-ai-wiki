@@ -51,7 +51,7 @@ Note that the _makePath_ function simply reconstructs the path from goal to the 
 
 ## Performance & Complexity ##
 
-In the worst case, A* devolves into a [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) with complexity big O(b^d), where b is the branching factor and d is the depth of the goal.
+In the worst case, A* devolves into a [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) with complexity O(b^d), where b is the branching factor and d is the depth of the goal.
 
 The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table, and the 
 The performance of A* depends heavily on
