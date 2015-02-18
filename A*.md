@@ -25,7 +25,7 @@ The **open list** or simply "open", is the list of all available un-expanded nod
 
 The **closed list** is an optional record of all expanded nodes. It is used to prevent repeated search and infinite loops.
 
-##### Heuristic Function `h(n)` #####
+#### Heuristic Function `h(n)` ####
 The purpose of the heuristic function is to return an estimate of the distance from a node `n` to the goal node.  It is not expected to be (and shouldn't be) a perfect heuristic, meaning a function that knows the precise distance from any location to the goal. If a perfect heuristic were used--or for that matter, even existed--then the problem of search would be solved outright! That is, if you have a magic function that always knows the correct, true distance through the graph from any point, then there is no reason to search for a path in the first place. In that case, you could simply reverse engineer such a function and use it directly without needing A*. However, no such general heuristic is known, nor is likely to ever be known for all domains. The alternative is using a distance-estimator `h(n)`, and then making the best local decision possible at each point of the search.
 
 The exact heuristic function used will determine the output and could also affect the time complexity.
