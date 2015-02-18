@@ -1,0 +1,62 @@
+## Introduction ##
+A* is a fundamental heuristic search algorithm for finding a path through a graph. Originally described in 1968, it has undergone many domain- and use-dependent improvements since its initial publication. Users unfamiliar with AI and specifically search-related terminology are encouraged to push through the technical-sounding definitions that are outlined next, as it is followed by a friendlier breakdown and discussion.
+
+A* searches for a path over a discrete [state space](https://en.wikipedia.org/wiki/State_space). Hence, in many implementations the first step is to apply a coarse discretization over some continuous domain. For example, by applying a grid, [Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation), or other quickly-computed (i.e. [polynomial time](http://mathworld.wolfram.com/PolynomialTime.html)) abstraction over the state space. 
+
+In a game, the discrete graph is almost always a pre-sized grid applied over a 2D or 3D map. The search is performed on the grid by selecting a grid node closest to the agent (PC or NPC) and then progressively searching through the graph for a node closest to some goal location (for example, where the user has clicked). The grid may initially be aligned to the agent, the goal, or neither for performance reasons, such as in repeated search. Several techniques exist to remediate the situation where a path cannot be found through the graph _even though a path exists_ in the complete continuous space. Common techniques employ refining or relocating the graph's position.
+
+A* is **not** inherently a multi-agent path-finding algorithm. Multi-agent path-planning is a separate, more complex topic that requires discussion of stochastic processes and reliability of the available information. Other algorithms and adaptations of A* exist specifically for handling those situations.
+
+A* is only guaranteed to find the _shortest possible path_ in a graph if two conditions are unquestionably met:
+- **Consistency** - A consistent heuristic never violates the [triangle inequality](https://en.wikipedia.org/wiki/Triangle_inequality). In laymen's terms, this means it never returns mutually incompatible distance estimates from two different nodes. This will be expounded below with an example.
+- **Admissibility** - An admissible heuristic is **complete** and **optimal**. Respectively, these mean that
+    - if a path exists, it will be found, and
+    - it will be the shortest path.
+
+We will now delve deeper and elaborate on this introduction.
+
+## The Algorithm ##
+### Description ###
+
+#### Definitions ####
+This description will use common game terminology to reduce the amount of prerequisite knowledge or further reading required to fully grasp the algorithm and its readily accessible variants.
+
+A **node** in the graph represents a possible map location. In this discussion, we will treat a node as a single point with an (x, y) coordinate. The output of A* is either nil (the empty set), or a **path**--an ordered set of nodes. The input is a start node, a **goal test** function, an **expansion** function, and a **heuristic** function.
+
+The **open list** or simply "open", is the list of all available un-expanded nodes. It is usually implemented as a priority queue.
+
+The **closed list** is an optional record of all expanded nodes. It is used to prevent repeated search and infinite loops.
+
+##### Heuristic Function `h(n)` #####
+The purpose of the heuristic function is to return an estimate of the distance from a node `n` to the goal node.  It is not expected to be (and shouldn't be) a perfect heuristic, meaning a function that knows the precise distance from any location to the goal. If a perfect heuristic were used--or for that matter, even existed--then the problem of search would be solved outright! That is, if you have a magic function that always knows the correct, true distance through the graph from any point, then there is no reason to search for a path in the first place. In that case, you could simply reverse engineer such a function and use it directly without needing A*. However, no such general heuristic is known, nor is likely to ever be known for all domains. The alternative is using a distance-estimator `h(n)`, and then making the best local decision possible at each point of the search.
+
+The exact heuristic function used will determine the output and could also affect the time complexity.
+For example, if a nonconsistent `h(n)` is chosen, the path returned is not guaranteed to be optimal. If a complex `h(n)` is used, then the time consumed at each call might bring A* to a grinding halt. The idea is to choose `h(n)` so that it is well-balanced and reflects the domain, while not draining too heavily on available resources. If is also possible to use multiple heuristics, although doing so effectively will not be discussed here.
+
+#### Mechanics ####
+A* works in the following manner:
+- Removing the first node `n` from open
+- *Expand* `n` into its children (usually proximal neighbors in the search graph)
+- Goal check
+- Add `n` to closed
+- Compute `f(n) = g(n) + h(n)` for each child node
+- Add each child to open
+
+So far, the only part we don't know is `g(n)`, which is simply the **cost** of reaching `n`. It is usually an integer value that is simply incremented once for each step taken since departing the start node.
+
+### Pseudocode ###
+![A* Pseudocode](http://www.entangledloops.com/img/a-star.png)
+
+Note that the _makePath_ function simply reconstructs the path from goal to the start by following parent pointers backwards, then reversing the list.
+
+## Performance & Complexity ##
+
+In the worst case, A* devolves into a [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) with complexity big O(b^d), where b is the branching factor and d is the depth of the goal.
+
+The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table, and the 
+The performance of A* depends heavily on
+- The underlying data structures used
+- How duplicate detection is performed
+- The heuristic function(s)
+
+Also notice that A* must perform an exhaustive search and find the goal before any plan is returned. This is because vanilla A* is not an **anytime algorithm** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
