@@ -46,7 +46,7 @@ A* works in the following manner:
 So far, the only part we don't know is `g(n)`, which is simply the **cost** of reaching `n`. It is usually an integer value that is simply incremented once for each step taken since departing the start node.
 
 ### Pseudocode ###
-![A* Pseudocode](http://www.entangledloops.com/img/a-star.png)
+![A* Pseudocode](http://www.entangledloops.com/img/a-star-pseudocode.png)
 
 Note that the _makePath_ function simply reconstructs the path from goal to the start by following parent pointers backwards, then reversing the list.
 
