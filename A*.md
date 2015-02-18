@@ -35,7 +35,7 @@ For example, if a nonconsistent `h(n)` is chosen, the path returned is not guara
 
 #### Mechanics ####
 A* works in the following manner:
-- sort open
+- sort open on `n.f`
 - Removing the first node `n` from open
 - *Expand* `n` into its children (usually proximal neighbors in the search graph)
 - Goal check
@@ -54,19 +54,24 @@ Note that the _makePath_ function simply reconstructs the path from goal to the 
 
 In the worst case, A* devolves into a [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) with complexity O(b^d), where b is the branching factor and d is the depth of the goal.
 
-The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table, and the 
-The performance of A* depends heavily on
+The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table and search could be performed in parallel (advanced, see [further reading](#demos-and-further-reading)). Overall, the performance of A* depends heavily on
 - How and how often sorting is performed
 - The underlying data structures used
 - How duplicate detection is performed
 - The heuristic function(s)
+- Whether optimality is required
 
 Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **anytime algorithm** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
 
 ## Demos and Further Reading ##
 
+Sorting is critical to the performance and behavior of A*. Note that _tie-breaking_ should be done on `h`, since it more accurately captures the available goal information.
+
+[Weighted A*](https://www.cs.cmu.edu/~motionplanning/lecture/Asearch_v8.pdf) is a simple approach to improve performance when optimality is not required, like in most games. It requires you to multiply the value of `h(n)` by some constant, which you should determine by experimenting.
 An interactive javascript demo (with some minor terminology errors) can be found [here](https://qiao.github.io/PathFinding.js/visual).
 
 A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8).
 
 The fastest known implementation was written in C by Google engineer [Ethan Burns](https://eatoasts.appspot.com). His site contains links to a [codebase](https://github.com/eaburns/search) with more advanced implementations, including parallelization.
+
+You can find other variants of A* [here](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html).
