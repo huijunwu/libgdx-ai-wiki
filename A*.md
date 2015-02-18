@@ -57,8 +57,8 @@ In the worst case, A* devolves into a [breadth-first search](https://en.wikipedi
 The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table and search could be performed in parallel (advanced, see [further reading](#demos-and-further-reading)). Overall, the performance of A* depends heavily on
 - How and how often sorting is performed
 - The underlying data structures used
-- How duplicate detection is performed
-- The heuristic function(s)
+- Complexity of the heuristic function(s)
+- Whether duplicate detection is performed
 - Whether optimality is required
 
 Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **anytime algorithm** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
