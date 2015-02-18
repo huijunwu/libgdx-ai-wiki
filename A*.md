@@ -60,3 +60,11 @@ The performance of A* depends heavily on
 - The heuristic function(s)
 
 Also notice that A* must perform an exhaustive search and find the goal before any plan is returned. This is because vanilla A* is not an **anytime algorithm** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
+
+## Demos and Further Reading ##
+
+An interactive javascript demo (with some minor terminology errors) can be found [here](https://qiao.github.io/PathFinding.js/visual).
+
+A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8).
+
+The fastest known implementation was written in C by Google engineer [Ethan Burns](https://eatoasts.appspot.com). His site contains links to a [codebase](https://github.com/eaburns/search) with more advanced implementations, including parallelization.
