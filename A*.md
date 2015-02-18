@@ -35,6 +35,7 @@ For example, if a nonconsistent `h(n)` is chosen, the path returned is not guara
 
 #### Mechanics ####
 A* works in the following manner:
+- sort open
 - Removing the first node `n` from open
 - *Expand* `n` into its children (usually proximal neighbors in the search graph)
 - Goal check
@@ -45,7 +46,7 @@ A* works in the following manner:
 So far, the only part we don't know is `g(n)`, which is simply the **cost** of reaching `n`. It is usually an integer value that is simply incremented once for each step taken since departing the start node.
 
 ### Pseudocode ###
-![A* Pseudocode](http://www.entangledloops.com/img/astar.png)
+![A* Pseudocode](http://www.entangledloops.com/img/a-star.png)
 
 Note that the _makePath_ function simply reconstructs the path from goal to the start by following parent pointers backwards, then reversing the list.
 
@@ -55,6 +56,7 @@ In the worst case, A* devolves into a [breadth-first search](https://en.wikipedi
 
 The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table, and the 
 The performance of A* depends heavily on
+- How and how often sorting is performed
 - The underlying data structures used
 - How duplicate detection is performed
 - The heuristic function(s)
