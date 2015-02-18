@@ -81,6 +81,6 @@ An interactive javascript demo (with some minor terminology errors) can be found
 
 A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8). Another can be seen [here](https://www.youtube.com/watch?v=J-ilgA_XNI0).
 
-The fastest known implementation was written in C by Google engineer [Ethan Burns](https://eatoasts.appspot.com). His site contains links to a [codebase](https://github.com/eaburns/search) with more advanced implementations, including parallelization.
+The fastest known implementation was written in C++ by Google engineer [Ethan Burns](https://eatoasts.appspot.com). His site contains links to a [codebase](https://github.com/eaburns/search) with more advanced implementations, including parallelization.
 
 You can find other variants of A* [here](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html).
