@@ -69,11 +69,11 @@ The simplistic pseudocode above does not include explicit reference to many perf
 - Whether duplicate detection is performed
 - Whether optimality is required
 
-Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **anytime algorithm** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
+Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **[anytime algorithm](https://en.wikipedia.org/wiki/Anytime_algorithm)** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
 
 ## Demos and Further Reading ##
 
-Sorting is critical to the performance and behavior of A*. Note that _[tie-breaking](http://movingai.com/astar.html)_ should be done on `h`, since it more accurately captures the available goal information.
+Sorting is critical to the performance and behavior of A*. Note that [tie-breaking](http://movingai.com/astar.html) should be done on `h`, since it more accurately captures the available goal information.
 
 [Weighted A*](https://www.cs.cmu.edu/~motionplanning/lecture/Asearch_v8.pdf) is a simple approach to improve performance when optimality is not required, like in most games. It requires you to multiply the value of `h(n)` by some constant, which you should determine by experimenting.
 
