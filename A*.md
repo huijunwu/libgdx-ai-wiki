@@ -68,6 +68,7 @@ Also notice that A* must perform an exhaustive search and obtain a result before
 Sorting is critical to the performance and behavior of A*. Note that _tie-breaking_ should be done on `h`, since it more accurately captures the available goal information.
 
 [Weighted A*](https://www.cs.cmu.edu/~motionplanning/lecture/Asearch_v8.pdf) is a simple approach to improve performance when optimality is not required, like in most games. It requires you to multiply the value of `h(n)` by some constant, which you should determine by experimenting.
+
 An interactive javascript demo (with some minor terminology errors) can be found [here](https://qiao.github.io/PathFinding.js/visual).
 
 A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8).
