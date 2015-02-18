@@ -31,6 +31,14 @@ The purpose of the heuristic function is to return an estimate of the distance f
 The exact heuristic function used will determine the output and could also affect the time complexity.
 For example, if a nonconsistent `h(n)` is chosen, the path returned is not guaranteed to be optimal. If a complex `h(n)` is used, then the time consumed at each call might bring A* to a grinding halt. The idea is to choose `h(n)` so that it is well-balanced and reflects the domain, while not draining too heavily on available resources. If is also possible to use multiple heuristics, although doing so effectively will not be discussed here.
 
+##### Examples #####
+
+Some standard domain-independent heuristic functions include:
+- [Manhattan distance](https://en.wiktionary.org/wiki/Manhattan_distance) from node to goal (ignoring obstacles)
+- [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) (generalization of Pythagorean)
+- [Chebyshev distance](https://en.wikipedia.org/wiki/Chebyshev_distance) (max of vector components)
+- Octile distance (allows diagonal grid movement)
+
 #### Mechanics ####
 A* works in the following manner:
 - sort open on `n.f`
@@ -63,7 +71,7 @@ Also notice that A* must perform an exhaustive search and obtain a result before
 
 ## Demos and Further Reading ##
 
-Sorting is critical to the performance and behavior of A*. Note that _tie-breaking_ should be done on `h`, since it more accurately captures the available goal information.
+Sorting is critical to the performance and behavior of A*. Note that _[tie-breaking](http://movingai.com/astar.html)_ should be done on `h`, since it more accurately captures the available goal information.
 
 [Weighted A*](https://www.cs.cmu.edu/~motionplanning/lecture/Asearch_v8.pdf) is a simple approach to improve performance when optimality is not required, like in most games. It requires you to multiply the value of `h(n)` by some constant, which you should determine by experimenting.
 
