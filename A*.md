@@ -13,8 +13,6 @@ A* is only guaranteed to find the _shortest possible path_ in a graph if two con
     - if a path exists, it will be found, and
     - it will be the shortest path.
 
-We will now delve deeper and elaborate on this introduction.
-
 ## The Algorithm ##
 ### Description ###
 
