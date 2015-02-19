@@ -15,7 +15,7 @@ A more complex implementation might calculate the cost only when it is required,
 
 The [DefaultConnection](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/pfa/DefaultConnection.html) class implements a very simple connection with constant cost of 1.
 
-Notice that there is no specific data type for a node in this API, because we don't need to specify one. We simply use generics to represent a node, which makes the API more versatile. In many cases it is sufficient just to give nodes a unique number (we will see that this is a particularly powerful implementation because it opens up some specific, very fast optimizations of the A* algorithm, see Indexed A*. In other situations nodes can be as complex as an entire subgraph, see the Hierarchical Pathfinding section for example.
+Notice that there is no specific data type for a node in this API, because we don't need to specify one. We simply use generics to represent a node, which makes the API more flexible. In many cases it is sufficient just to give nodes a unique number (we will see that this is a particularly powerful implementation because it opens up some specific, fast optimizations of the A* algorithm, see [[Indexed A*]]. In other situations, for example, nodes can be as complex as an entire subgraph, see the [[Hierarchical Pathfinding]] section.
 
 
 ### Finding a Path ###
