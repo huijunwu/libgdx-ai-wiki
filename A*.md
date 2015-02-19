@@ -27,7 +27,9 @@ A* is only guaranteed to find the _shortest possible path_ in a graph if two con
 #### Definitions ####
 This description will use common game terminology to reduce the amount of prerequisite knowledge or further reading required to fully grasp the algorithm and its readily accessible variants.
 
-A **node** in the graph represents a possible map location. In this discussion, we will treat a node as a single point with an (x, y) coordinate. The output of A* is either nil (the empty set), or a **path**--an ordered set of nodes. The input is a start node, a **goal test** function, an **expansion** function, and a **heuristic** function.
+A **node** in the graph represents a possible map location. In this discussion, we will imagine a node `n` as a single point with an (x, y) coordinate. However, it should be noted that a node can be any abstract notion, so long as a distance-to-goal function can be defined for it. For example, A* can be used for DNA sequence alignment, where the distance function `h(n)` represents the number of mismatched base pairs in the alignment. A perfect alignment would have 0 mismatched base pairs, and thus have a "distance" of 0 to the goal. 
+
+The output of A* is either nil (the empty set), or a **path**--an ordered set of nodes. The input is a start node, a **goal test** function, an **expansion** function, and a **heuristic** function.
 
 The **open list** or simply "open", is the list of all available un-expanded nodes. It is usually implemented as a priority queue.
 
@@ -83,7 +85,7 @@ Sorting is critical to the performance and behavior of A*. Note that [tie-breaki
 
 [Weighted A*](https://www.cs.cmu.edu/~motionplanning/lecture/Asearch_v8.pdf) is a simple approach to improve performance when optimality is not required, like in most games. It requires you to multiply the value of `h(n)` by some constant, which you should determine by experimenting.
 
-An interactive javascript demo (with some minor terminology errors) can be found [here](https://qiao.github.io/PathFinding.js/visual).
+An interactive javascript demo (with some minor bugs) can be found [here](https://qiao.github.io/PathFinding.js/visual).
 
 A video that shows all expanded nodes in white can be seen [here](https://www.youtube.com/watch?v=19h1g22hby8). Another can be seen [here](https://www.youtube.com/watch?v=J-ilgA_XNI0).
 
