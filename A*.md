@@ -1,3 +1,9 @@
+- [Introduction](#introduction)
+- [The Algorithm](#the-algorithm)
+- [Performance & Complexity](#performance--complexity)
+- [Demos and Further Reading](#demos-and-further-Reading)
+
+
 ## Introduction ##
 A* is a fundamental heuristic search algorithm for finding a path through a graph. Originally described in 1968, it has undergone many domain- and use-dependent improvements since its initial publication. Users unfamiliar with AI and specifically search-related terminology are encouraged to push through the technical-sounding definitions that are outlined next, as it is followed by a friendlier breakdown and discussion.
 
