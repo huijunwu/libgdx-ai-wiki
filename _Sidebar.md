@@ -8,6 +8,7 @@
 * [[Movement AI]]
   - [[Steering Behaviors]]
 * [[Pathfinding]]
+  - [[Pathfinding API]]
   - [[A*]]
   - [[Hierarchical Pathfinding]]
   - [[Path Smoothing]]
