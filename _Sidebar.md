@@ -10,6 +10,7 @@
 * [[Pathfinding]]
   - [[Pathfinding API]]
   - [[A*: A Little Bit of Theory|A*]]
+  - [[Indexed A*]]
   - [[Hierarchical Pathfinding]]
   - [[Path Smoothing]]
 * [[Decision Making]]
