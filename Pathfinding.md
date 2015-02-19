@@ -5,6 +5,7 @@ For each of these characters the AI must be able to calculate a suitable route t
 This is pathfinding, sometimes called path planning, and it is everywhere in game AI. Pathfinding sits on the border between [[Decision Making]] and [[Movement AI]]. Typically, the goal is decided by some decision making techninque, then the pathfinder works out how to get there and finally the movement control system moves the character along the path.
 
 In this section we'll look at 
-- [[A*]]
+- [[Pathfinding API]]
+- [[A*: A Little Bit of Theory|A*]]
 - [[Hierarchical Pathfinding]]
 - [[Path Smoothing]]
