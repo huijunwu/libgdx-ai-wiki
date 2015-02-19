@@ -3,7 +3,7 @@
 - [The StateMachine Interface](#the-statemachine-interface)
 - [A Simple Example](#a-simple-example)
 - [A Complete Example with Messaging](#a-complete-example-with-messaging)
-- [Divide and Rule](#divide-and-rule)
+- [Divide and Conquer](#divide-and-conquer)
 
 
 ## Introduction ##
@@ -197,7 +197,7 @@ Of course Bob and Elsa will communicate in certain situations. They only have tw
 - _HI_HONEY_I_M_HOME_ used by Bob to let Elsa know he's back at the shack.
 - _STEW_READY_ used by Elsa to let herself know when to take dinner out of the oven and for her to communicate to Bob that food is on the table.
 
-To run the example you have to launch the StateMachineTest class from libgdx tests. The other classes of the example are inside the package `com.badlogic.gdx.tests.ai.fsm`.
+To run the example you have to launch the [StateMachineTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/StateMachineTest.java) class from gdxAI tests. The other classes of the example are inside the package [com.badlogic.gdx.tests.ai.fsm](https://github.com/libgdx/gdx-ai/tree/master/tests/src/com/badlogic/gdx/ai/tests/fsm).
 Here is a sample of the output from the test program.
 ````
 Bob: All mah fatigue has drained away. Time to find more gold!
@@ -281,7 +281,7 @@ Elsa: Makin' the bed
 As you have seen, the use of messaging combined with state machines gives you the illusion of intelligence and the output of the program looks like the interactions of two real people. What's more, this is only a very simple example.
 
 
-## Divide and Rule ##
+## Divide and Conquer ##
 
 The unbounded growth of states is one of the main problems plaguing state machines. Using a global state reduces this problem greatly, but the real solution is to be disciplined and not let too many states exist within a single FSM. This can be achieved by using 2 techniques:
 - **Hierarchical State Machines**: 
