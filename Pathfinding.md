@@ -7,5 +7,6 @@ This is pathfinding, sometimes called path planning, and it is everywhere in gam
 In this section we'll look at 
 - [[Pathfinding API]]
 - [[A*: A Little Bit of Theory|A*]]
+- [[Indexed A*]]
 - [[Hierarchical Pathfinding]]
 - [[Path Smoothing]]
