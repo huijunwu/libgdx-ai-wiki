@@ -9,7 +9,7 @@
   - [[Steering Behaviors]]
 * [[Pathfinding]]
   - [[Pathfinding API]]
-  - [[A*]]
+  - [[A*: A Little Bit of Theory|A*]]
   - [[Hierarchical Pathfinding]]
   - [[Path Smoothing]]
 * [[Decision Making]]
