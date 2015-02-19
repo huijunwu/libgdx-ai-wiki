@@ -44,7 +44,7 @@ Some standard domain-independent heuristic functions include:
 #### Mechanics ####
 A* works in the following manner:
 - sort open on `n.f`
-- Removing the first node `n` from open
+- Removing the first node `n` from open (lowest f, closest to goal)
 - *Expand* `n` into its children (usually proximal neighbors in the search graph)
 - Goal check
 - Add `n` to closed
