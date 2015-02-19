@@ -49,7 +49,7 @@ Some standard domain-independent heuristic functions include:
 
 #### Mechanics ####
 A* works in the following manner:
-- sort open on `n.f`
+- Sort open on `n.f`
 - Removing the first node `n` from open (lowest `n.f`, closest to goal)
 - Expand `n` by generating its children (usually proximal neighbors in the search graph)
 - Goal check
@@ -75,7 +75,7 @@ The simplistic pseudocode above does not include explicit reference to many perf
 - Whether duplicate detection is performed
 - Whether optimality is required
 
-Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **[anytime algorithm](https://en.wikipedia.org/wiki/Anytime_algorithm)** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to libgdx in the near future.
+Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **[anytime algorithm](https://en.wikipedia.org/wiki/Anytime_algorithm)** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to gdxAI in the near future.
 
 ## Demos and Further Reading ##
 
