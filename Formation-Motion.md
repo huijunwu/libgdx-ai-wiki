@@ -3,7 +3,7 @@
 - [Scalable Formations](#scalable-formations)
 - [Two-Level Formation Motion](#two-level-formation-motion)
 - [Multi-Level Formation Motion](#multi-level-formation-motion)
-- [Slot Roles and Slot Assignment](#slot-roles-and-slot-assignment)
+- [Slot Assignment Strategies](#slot-assignment-strategies)
 - [The API](#the-api)
 
 
@@ -24,11 +24,11 @@ The simplest kind of formation movement uses fixed geometric formations. A forma
 
 One slot is marked as the leader's slot. All the other slots in the formation are defined relative to this slot. Effectively, it defines the "zero" for position and orientation in the formation.
 
-The character at the leader's location moves through the world like any non-formation character would. It can be controlled by any steering behavior, it may follow a fixed path, or whatelse. Whatever the mechanism, it does not take into account the fact that it is positioned in the formation.
+The character at the leader's location moves through the world like any non-formation character would. It can be controlled by any steering behavior, it may follow a fixed path, or whatever else. Whatever the mechanism, it does not take into account the fact that it is positioned in the formation.
 
 The formation pattern is positioned and oriented in the game so as that the leader is located in its slot, facing the appropriate direction. As the leader moves, the pattern also moves and turns in the game. In turn, each of the slots in the pattern move and turn in unison. The position and orientation of each character is determined directly from the formation geometry, without requiring a steering system of its own.
 
-The leader must have limits on the speed it can turn (to avoid outlying characters sweeping round at implausible speeds), and any collision or obstacle avoidance behaviors should take into account the size of the whole formation. In effect, fixed formations are samewhat too rigid and these constraints on the leader's movement make it difficult to use them for anything but very simple formation requirements.
+The leader must have limits on the speed it can turn (to avoid outlying characters sweeping round at implausible speeds), and any collision or obstacle avoidance behaviors should take into account the size of the whole formation. In effect, fixed formations are somewhat too rigid and these constraints on the leader's movement make it difficult to use them for anything but very simple formation requirements.
 
 The framework does not support fixed formations because they are so rudimentary and their use in practical use cases is much too limited.
  
@@ -73,12 +73,12 @@ Usually it is necessary to set a very high maximum acceleration and maximum velo
 
 ## Multi-Level Formation Motion ##
 
-The two-level steering systemcan be extended to more levels, giving the ability to create formations of formations. This is becomingly increasingly important in military simulation games with lots of units; real armies are organized in this way.
+The two-level steering system can be extended to more levels, giving the ability to create formations of formations. This is becomingly increasingly important in military simulation games with lots of units; real armies are organized in this way.
 
 We can just extend the concept to support any depth of formation. Each formation has its own anchor point whose steering is managed in turn by another formation. The anchor point is trying to stay in a slot position of a higher level formation.
 
 
-## Slot Roles and Slot Assignment ##
+## Slot Assignment Strategies ##
 
 T.B.D.
 
@@ -87,7 +87,12 @@ T.B.D.
 
 The system consists of a [Formation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html) class that processes a [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) and generates targets for the characters occupying its slots. Slots are assigned to the members through a [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html). 
 
-A Character joining a formation must implement the [FormationMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationMember.html) interface that allows him to know the target location of his slot.
+##### Patterns #####
+The [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) interface generates the slot offsets for a pattern, relative to its anchor point through the method [calculateSlotLocation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html#calculateSlotLocation-com.badlogic.gdx.ai.utils.Location-int-). It does this after being asked for its drift offset, given a set of assignments. In calculating the drift offset, the pattern works out which slots are needed. If the formation is scalable and returns different slot locations depending on the number of slots occupied, it can use the slot assignments passed into the (calculateDriftOffset)[http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html#calculateDriftOffset-com.badlogic.gdx.ai.utils.Location-com.badlogic.gdx.utils.Array-] method to work out how many slots are used and therefore what locations each slot should occupy.
 
-Since formations are scalable you can add and remove members by using the methods [addMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#addMember-com.badlogic.gdx.ai.fma.FormationMember-) and [removeMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#removeMember-com.badlogic.gdx.ai.fma.FormationMember-) respectively.
+Each particular pattern (such as a V, wedge, circle) needs its own instance of a class that implements the `FormationPattern` interface.
 
+##### Formation Members #####
+A Character joining a formation must implement the [FormationMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationMember.html) interface that allows him to know the target [Location](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/Location.html) of his slot.
+
+Since formations are scalable you can add and remove members by using the methods [addMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#addMember-com.badlogic.gdx.ai.fma.FormationMember-) and [removeMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#removeMember-com.badlogic.gdx.ai.fma.FormationMember-) respectively. Slots are reassigned after you add or remove a member.
