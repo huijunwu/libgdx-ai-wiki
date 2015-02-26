@@ -80,7 +80,25 @@ We can just extend the concept to support any depth of formation. Each formation
 
 ## Slot Assignment Strategies ##
 
-T.B.D.
+So far we have assumed that any character can occupy each slot. While this is normally the case, some formations are explicitly designed to give each character a different role.
+
+Slots in a formation can have roles so that only certain characters can fill certain slots. When a formation is assigned to a group of characters (this can even be done by the player), the characters need to be assigned to their most appropriate slots. Whether using slot roles or not, this should not be a haphazard process, with lots of characters scrabbling over each other to reach the formation.
+
+I real world applications, assigning characters to the slots of a formation with roles can become a complex problem. In game applications, a simplification can be used that gives good enough performance.
+
+##### Hard and Soft Roles #####
+
+Imagine a formation of characters in a fantasy RPG game. As they explore a dungeon, the party needs to be ready for action. Magicians and missile weapon users should be in the middle of the formation, surrounded by characters who fight hand to hand.
+
+We can support this by creating a formation with roles. We have three roles: magicians, missile weapon users, and melee (hand to hand) weapon users. Each character has one or more roles that it can fulfill. Characters are only allowed to fill a slot if they can fulfill the role associated with that slot. This is known as a **hard role**.
+
+With hard roles problems can arise when a party is assigned to the formation. For example, if the player wants to create a formation made up of magicians only you don't have enough slots (i.e. roles) to place them and some of them will remain unassigned. We could solve this problem by having many different formations for different compositions of the party. In fact, this would be the optimal solution. Unfortunately, it requires lots of different formations to be designed. If the player can switch formation, this could multiply up to several hundred different designs.
+
+A simpler compromise approach uses **soft roles**: roles that can be broken. Rather than a character having a list of roles it can fulfill, it has a set of values representing how difficult it would find it to fulfill every role. The value is known as the slot cost. To make a slot impossible for a character to fill, its slot cost should be infinite. Normally, this is just a very large value. The algorithm below works better if the values aren't near to the upper limit of the data type (such as `Float.MAX_VALUE`) because several costs will be added. To make a slot ideal for a character, its slot cost should be zero. We can have different levels of unsuitable assignment for one character. For example, magicians might have a very high slot cost for occupying a melee role but a slightly lower cost for missile slots.
+
+We would like to assign characters to slots in such a way that the total cost is minimized. If there are no ideal slots left for a character, then it can still be placed in a non-suitable slot. The total cost will be higher, but at least characters won't be left stranded with nowhere to go.
+
+Notice that soft roles act just like hard roles when the formation can be sensibly filled but don't fail when the wrong characters are available.
 
 
 ## The API ##
@@ -96,3 +114,13 @@ Each particular pattern (such as a V, wedge, circle) needs its own instance of a
 A Character joining a formation must implement the [FormationMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationMember.html) interface that allows him to know the target [Location](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/Location.html) of his slot.
 
 Since formations are scalable you can add and remove members by using the methods [addMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#addMember-com.badlogic.gdx.ai.fma.FormationMember-) and [removeMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#removeMember-com.badlogic.gdx.ai.fma.FormationMember-) respectively. Slots are reassigned after you add or remove a member.
+
+##### Slot Assignment Strategies #####
+
+As you could expect any slot assignment strategy must implement the [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html) interface mentioned above.
+ 
+The framework supports two kind of strategies:
+- without roles through the [FreeSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FreeSlotAssignmentStrategy.html)
+- with soft roles through the [SoftRoleSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.html)
+
+Currently  hard roles are not supported and likely will never be. 
