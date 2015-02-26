@@ -7,6 +7,7 @@
   - [[Scheduling]]
 * [[Movement AI]]
   - [[Steering Behaviors]]
+  - [[Formation Motion]]
 * [[Pathfinding]]
   - [[Pathfinding API]]
   - [[A*: A Little Bit of Theory|A*]]
