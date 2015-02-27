@@ -135,7 +135,7 @@ Notice that soft roles act just like hard roles when the formation can be sensib
 
 ## The API ##
 
-The system consists of a [Formation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html) class that processes a [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) and generates targets for the characters occupying its slots. Slots are assigned to the members through a [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html). 
+The system consists of a [Formation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html) class that processes a [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) and generates targets for the characters occupying its slots. Slots are assigned to the members through a [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html). Formation motion can be moderated by a [FormationMotionModerator](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationMotionModerator.html) if needed.
 
 ##### Patterns #####
 The [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) interface generates the slot offsets for a pattern, relative to its anchor point through the method [calculateSlotLocation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html#calculateSlotLocation-com.badlogic.gdx.ai.utils.Location-int-). It does this after being asked for its drift offset, given a set of assignments. In calculating the drift offset, the pattern works out which slots are needed. If the formation is scalable and returns different slot locations depending on the number of slots occupied, it can use the slot assignments passed into the [calculateDriftOffset](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html#calculateDriftOffset-com.badlogic.gdx.ai.utils.Location-com.badlogic.gdx.utils.Array-) method to work out how many slots are used and therefore what locations each slot should occupy.
@@ -148,7 +148,6 @@ A Character joining a formation must implement the [FormationMember](http://libg
 Since formations are scalable you can add and remove members by using the methods [addMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#addMember-com.badlogic.gdx.ai.fma.FormationMember-) and [removeMember](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html#removeMember-com.badlogic.gdx.ai.fma.FormationMember-) respectively. Slots are reassigned after you add or remove a member.
 
 ##### Slot Assignment Strategies #####
-
 As you could expect any slot assignment strategy must implement the [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html) interface mentioned above.
  
 The framework supports two kind of strategies:
