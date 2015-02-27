@@ -76,7 +76,7 @@ An offset is generally used to move the anchor point a small distance ahead of t
 ````
         Pa = Pc + K * Vc
 ````
-where `Pa` is the position of the anchor point, `Pc` and `Vc` are the position and the velocity of the center of mass respectively, and K is a moltiplicative factor.
+where `Pa` is the position of the anchor point, `Pc` and `Vc` are the position and the velocity of the center of mass respectively, and K is a coefficient determined by experimentation.
 
 It is also necessary to set a very high maximum acceleration and maximum velocity for the anchor point. The formation will not actually achieve this acceleration or velocity because it is being held back by the actual movement of its characters.
 
@@ -84,7 +84,7 @@ It is also necessary to set a very high maximum acceleration and maximum velocit
 Moderating the formation motion requires that the anchor point of the formation always be at the center of mass of its slots (i.e., its average position Otherwise, if the formation is supposed to be stationary, the anchor point will be reset to the average point, which will not be where it was in the last frame. The slots will all be updated based on the new anchor point and will again move
 the anchor point, causing the whole formation to drift across the level.
 
-It is relatively easy, however, to recalculate the offsets of each slot based on a calculation of the center of mass of a formation (the average position of occupied slots). Changing fromthe old to the new anchor point involves changing
+It is relatively easy, however, to recalculate the offsets of each slot based on a calculation of the center of mass of a formation (the average position of occupied slots). Changing from the old to the new anchor point involves changing
 each slot coordinate according to:
 ````
         Ps[i] = Ps[i] - Pc
