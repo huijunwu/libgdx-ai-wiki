@@ -64,11 +64,43 @@ Having a separate steering system for the formation typically simplifies impleme
 ##### Moderating the Formation Movement #####
 So far information has flowed in only one direction: from the formation to its members. With a two-level steering system, this causes problems. The formation could be steering ahead, oblivious to the fact that its members are having problems keeping up. When the formation was being led by a leader, this was less of a problem, because difficulties faced by the other characters in the formation were likely to also be faced by the leader.
 
-When we steer the anchor point directly, it is usually allowed to disregard small-scale obstacles and formation's members. However the characters in the formation may take considerably longer to move than expected because they are having to navigate these obstacles. This can lead to the formation and its characters getting a long way out of synch.
+When we steer the anchor point directly, it is usually allowed to disregard small-scale obstacles and other characters. However formation's members may take considerably longer to move than expected because they are having to navigate these obstacles. This can lead to the formation and its characters getting a long way out of synch.
 
-A simple solution is to moderate the movement of the formation based on the average position and average orientation of the characters in its slots: in effect to keep the anchor point on a leash. If the characters in the slots are having trouble reaching their targets, then the formation as a whole is held back to give them a chance to catch up. This is done internally by the framework.
+A simple solution is to moderate the movement of the formation based on the current positions of the characters in its slots: in effect to keep the anchor point on a leash. If the characters in the slots are having trouble reaching their targets, then the formation as a whole should be held back to give them a chance to catch up.
 
-Usually it is necessary to set a very high maximum acceleration and maximum velocity for the anchor point. The formation will not actually achieve this acceleration or velocity because it is being held back by the actual movement of its characters.
+This can be simply achieved by resetting the steering data of the anchor point at each frame. Its position, orientation, velocity, and rotation are all set to the average of those properties for the characters in its slots. If the anchor point's steering system gets to run first, it will move forward a little, moving the slots forward and forcing the characters to move also. After the slot characters are moved, the anchor point is reined back so that it doesn't move too far ahead.
+
+Because the position is reset at every frame, the target slot position will only be a little way ahead of the character when it comes to steer toward it. Using the arrive behavior will mean that each character is fairly nonchalant about moving such a small distance, and the speed for the slot characters will decrease. This, in turn, will mean that the speed of the formation decreases (because it is being calculated as the average of the movement speeds for the slot characters). On the following frame the formation's velocity will be even less. Over a handful of frames it will slow to a halt.
+
+An offset is generally used to move the anchor point a small distance ahead of the center of mass. The simplest solution is to move it a fixed distance forward, as given by the velocity of the formation:
+````
+        Pa = Pc + K * Vc
+````
+where `Pa` is the position of the anchor point, `Pc` and `Vc` are the position and the velocity of the center of mass respectively, and K is a moltiplicative factor.
+
+It is also necessary to set a very high maximum acceleration and maximum velocity for the anchor point. The formation will not actually achieve this acceleration or velocity because it is being held back by the actual movement of its characters.
+
+##### Drift #####
+Moderating the formation motion requires that the anchor point of the formation always be at the center of mass of its slots (i.e., its average position Otherwise, if the formation is supposed to be stationary, the anchor point will be reset to the average point, which will not be where it was in the last frame. The slots will all be updated based on the new anchor point and will again move
+the anchor point, causing the whole formation to drift across the level.
+
+It is relatively easy, however, to recalculate the offsets of each slot based on a calculation of the center of mass of a formation (the average position of occupied slots). Changing fromthe old to the new anchor point involves changing
+each slot coordinate according to:
+````
+        Ps[i] = Ps[i] - Pc
+````
+where `Ps[i]` is the position of slot `i`.
+
+For efficiency, this should be done once and the new slot coordinates stored, rather than being repeated every frame. It may not be possible, however, to perform the calculation offline. Different combinations of slots may be occupied at different times. When a character in a slot gets killed, for example, the slot coordinates will need to be recalculated because the center of mass will have changed.
+
+Drift also occurs when the anchor point is not at the average orientation of the occupied slots in the pattern. In this case, rather than drifting across the level, the formation will appear to spin on the spot. We can again use an offset for all the orientations based on the average orientation of the occupied slots.
+As before, changing from the old to the new anchor point involves changing each slot orientation according to:
+````
+        Os[i] = Os[i] - Oc
+````
+where `Os[i]` is the orientation of slot `i` and `Oc` is the orientation of the center of mass.
+
+This should also be done as infrequently as possible, being cached internally until the set of occupied slots changes.
 
 
 ## Multi-Level Formation Motion ##
