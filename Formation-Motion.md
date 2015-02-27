@@ -153,6 +153,6 @@ As you could expect any slot assignment strategy must implement the [SlotAssignm
  
 The framework supports two kind of strategies:
 - without roles through the [FreeSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FreeSlotAssignmentStrategy.html)
-- with soft roles through the [SoftRoleSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.html)
+- with soft roles through the [SoftRoleSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.html). This strategy uses a [SlotCostProvider](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.SlotCostProvider.html) that exposes methods to calculate the costs and get the cost for a given pair member/slot.
 
 Currently hard roles are not supported and likely will never be. 
