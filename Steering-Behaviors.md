@@ -220,6 +220,8 @@ We can't immediately change velocity, however, so the acceleration is calculated
 known as [time to target](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Arrive.html#timeToTarget).
 This is usually a small value; it defaults to 0.1 seconds which is a good starting point.
 
+Make sure your decelarationRadius gives enough time to stop at the target or you will overshoot it, finish deceleration and start moving toward the target with acceleration to get to it again.
+
 ### Reach Orientation ###
 
 [ReachOrientation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/ReachOrientation.html) tries to
