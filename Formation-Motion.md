@@ -169,6 +169,14 @@ Characters that can only occupy a few slots will have lots of high slot costs an
 
 The list of characters is sorted according to their ease of assignment values, and the most awkward characters are assigned first. This approach works in the vast majority of cases and is the standard approach for formation assignment.
 
+##### Generalized Slot Costs #####
+
+Slot costs do not necessarily have to depend only on the character and the slot roles. They can be generalized to include any difficulty a character might have in taking up a slot.
+
+If a formation is spread out, for example, a character may choose a slot that is close by over a more distant slot. 
+
+Notice that we're using a slot cost, rather than a slot score (i.e. high is bad and low is good, rather than the other way around). This means that distance can be directly used as a slot cost.
+
 ## The API ##
 
 The system consists of a [Formation](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/Formation.html) class that processes a [FormationPattern](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationPattern.html) and generates targets for the characters occupying its slots. Slots are assigned to the members through a [SlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SlotAssignmentStrategy.html). Formation motion can be moderated by a [FormationMotionModerator](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FormationMotionModerator.html) if needed.
