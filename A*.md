@@ -1,7 +1,7 @@
 - [Introduction](#introduction)
 - [The Algorithm](#the-algorithm)
 - [Performance & Complexity](#performance--complexity)
-- [Demos and Further Reading](#demos-and-further-Reading)
+- [Demos and Further Reading](#demos-and-further-reading)
 
 
 ## Introduction ##
