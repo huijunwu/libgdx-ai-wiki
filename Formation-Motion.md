@@ -5,6 +5,8 @@
 - [Multi-Level Formation Motion](#multi-level-formation-motion)
 - [Slot Assignment Strategies](#slot-assignment-strategies)
 - [The API](#the-api)
+- [Dynamic Slots and Plays](#dynamic-slots-and-plays)
+
 
 
 ## Introduction ##
@@ -156,14 +158,10 @@ So gdxAI simplifies the problem by using a heuristic. We won't be guaranteed to 
 We run the risk of leaving a member until last and having nowhere sensible to put it. GdxAI improves the solution by considering highly constrained members first and flexible members last. The characters are given an ease of assignment value which reflects how difficult it is to find slots for them.
 
 The ease of assignment value is given by:
-````
-       N     /
-      ---    |   1 / (1 + Ci)         if Ci < K
-      >     < 
-      ---    |   0                    otherwise
-      i=1    \
-````
-where `Ci` is the cost of occupying slot `i`, `N` is the number of possible slots, and `K` is a slot-cost limit, beyond which a slot is considered to be too expensive to consider occupying.
+
+![ease of assignment formula](https://cloud.githubusercontent.com/assets/2366334/6507482/83180068-c352-11e4-92b7-00eb5ac02968.png)
+
+where `Ci` is the cost of occupying slot `i`, `n` is the number of possible slots, and `k` is a slot-cost limit, beyond which a slot is considered to be too expensive to consider occupying.
 
 Characters that can only occupy a few slots will have lots of high slot costs and therefore a low ease rating. 
 
@@ -198,4 +196,24 @@ The framework supports two kind of strategies:
 - without roles through the [FreeSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FreeSlotAssignmentStrategy.html)
 - with soft roles through the [SoftRoleSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.html). This strategy uses a [SlotCostProvider](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.SlotCostProvider.html) to get the cost of a given pair member/slot.
 
-Currently hard roles are not supported and likely will never be. 
+Currently hard roles are not supported by the framework. 
+
+## Dynamic Slots and Plays ##
+So far we have assumed that the slots in a formation pattern are fixed relative to the anchor point. A formation is a fixed pattern that can move around the game level.
+
+The framework can be extended to support dynamic formations that change shape over time. Slots in a pattern can be dynamic, moving relative to the anchor point of the formation.
+
+This is useful for introducing a degree of movement when the formation itself isn't moving, for implementing set plays in some sports games, and for using as the basis of tactical movement.
+
+A simple play can be implemented as a pattern whose slots dynamically jump to new locations and the characters use their arrive behaviors to move there. However, in more complex plays where the route taken by the characters is not direct, the slots might need to move along a path.
+
+To support dynamic formations, an element of time needs to be introduced. You should modify the `FormationPattern` interface to take a time value representing the time elapsed since the formation began. 
+
+Unfortunately, this can cause problems with drift, since the formation will have its slots changing position over time. You could extend the system to recalculate the drift offset in each frame to make sure it is accurate. However, Many games that use dynamic slots and set plays do not use two-level steering. For example, the movement of slots in a baseball game is fixed with respect to the field, and in a football game, the plays are often fixed with respect to the line of scrimmage. In this case, there is no need for two-level steering (the anchor point of the formation is fixed), and drift is not an issue, since there's no need to moderate formation motion.
+
+Often, sports titles use techniques similar to formation motion to manage the coordinated movement of players on the field. Some care does need to be taken to ensure that the players do not merely follow their formation oblivious to what's actually happening on the field.
+
+There is nothing to say that the moving slot positions have to be completely pre-defined. The slot movement can be determined dynamically by a coordinating AI routine. At the extreme, this gives complete flexibility to move players anywhere in response to the tactical situation in the game.
+
+In practical use some intermediate solution is sensible. For instance, in a set soccer play for a corner kick, you may decide that only three of the players have pre-defined play motions. The movement of the remaining offensive players will be calculated in response to the movement of the defending team, while the key set play players will be relatively fixed, so the player taking the corner knows where to place the ball. The player taking the corner may wait until just
+before he kicks to determine which of the three potential scorers he will cross to. This again will be in response to the actions of the defense. You could, for example, look at the opposing players in the shot cone of each potential scorer and pass to the one with the largest free angle to aim for.
