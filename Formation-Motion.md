@@ -132,6 +132,42 @@ We would like to assign characters to slots in such a way that the total cost is
 
 Notice that soft roles act just like hard roles when the formation can be sensibly filled but don't fail when the wrong characters are available.
 
+##### Slot Assignment Algorithm #####
+
+Slot assignment needs to happen relatively rarely in a game. Most of the time a group of characters will simply be following their slots around. Assignment usually occurs when
+- a group of previously disorganized characters are assigned to a formation
+- the formation changes its pattern
+- formation's members are added or removed
+
+For large numbers of character and slots, the assignment can be done in many different ways. We could simply check each possible assignment and use the one with the lowest slot cost.
+
+Unfortunately, the number of assignments to check gets huge  very quickly. The number of possible assignments of `k` members to `n` slots is given by the permutations formula: 
+
+````
+      P(k,n) = n! / (n − k)!
+````
+
+For a formation of 20 slots and 20 members, this gives nearly 2500 trillion different possible assignments. Clearly, no matter how infrequently we need to do it, we can't check every possible assignment. 
+
+The assignment problem is an example of a non-polynomial time complete (NP-complete) problem; it cannot be properly solved in a reasonable amount of time by any algorithm.
+
+So gdxAI simplifies the problem by using a heuristic. We won't be guaranteed to get the best assignment, but we will usually get a decent assignment very quickly. The heuristic assumes that a member will end up in a slot best suited to it. We can therefore look at each member in turn and assign it to a slot with the lowest slot cost.
+
+We run the risk of leaving a member until last and having nowhere sensible to put it. GdxAI improves the solution by considering highly constrained members first and flexible members last. The characters are given an ease of assignment value which reflects how difficult it is to find slots for them.
+
+The ease of assignment value is given by:
+````
+       N     /
+      ---    |   1 / (1 + Ci)         if Ci < K
+      >     < 
+      ---    |   0                    otherwise
+      i=1    \
+````
+where `Ci` is the cost of occupying slot `i`, `N` is the number of possible slots, and `K` is a slot-cost limit, beyond which a slot is considered to be too expensive to consider occupying.
+
+Characters that can only occupy a few slots will have lots of high slot costs and therefore a low ease rating. 
+
+The list of characters is sorted according to their ease of assignment values, and the most awkward characters are assigned first. This approach works in the vast majority of cases and is the standard approach for formation assignment.
 
 ## The API ##
 
