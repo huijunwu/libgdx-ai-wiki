@@ -59,7 +59,13 @@ A* works in the following manner:
 - Compute `f(n) = g(n) + h(n)` for each child node
 - Add each child to open
 
-So far, the only part we don't know is `g(n)`, which is simply the **cost** of reaching `n`. It is usually an integer value that is simply incremented once for each step taken since departing the start node.
+So far, the only mysterious function is `g(n)`, which is simply the **cost** of reaching `n`. The cost is usually an integer value that is simply incremented once for each step taken since departing the start node. It is meant to be a measurement that takes into account the work done by the agent in traversing the solution. 
+
+Contrast this with a greedy approach, which would only look at `h(n)` before selecting a child node to expand (best-first-search or BFS). Such behavior inevitably leads to situations of poor performance, poor plans, or both in certain situations. For example, consider the following pathological map: 
+
+![A-star search](http://www.entangledloops.com/img/greedy-solution-1.png)
+
+Here the green tile represents the start, red is the goal, grey are walls, and blue are nodes on open (or have been expanded). In the bottom left-hand corner some statistics can be seen. Notice that the this search returns the sub-optimal path, and also does so in more time than A*, which--on the same map--found the optimal solution of length 28.41 in 4.0000 ms.
 
 ### Pseudocode ###
 ![A* Pseudocode](http://www.entangledloops.com/img/a-star-pseudocode.png)
@@ -71,11 +77,11 @@ Note that the _makePath_ function simply reconstructs the path from goal to the 
 In the worst case, A* devolves into a [breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) (BFS) with complexity O(b^d), where b is the branching factor and d is the depth of the goal.
 
 The simplistic pseudocode above does not include explicit reference to many performance-enhancing possibilities. For example, closed should be tracked as a hash table and search could be performed in parallel (advanced, see [further reading](#demos-and-further-reading)). Overall, the performance of A* depends heavily on
-- How and how often sorting is performed
-- The underlying data structures used
-- Complexity of the heuristic function(s)
-- Whether duplicate detection is performed
-- Whether optimality is required
+- how and how often sorting is performed,
+- the underlying data structures used,
+- complexity of the heuristic function(s),
+- whether duplicate detection is performed, and
+- whether optimality is required.
 
 Also notice that A* must perform an exhaustive search and obtain a result before any plan is returned. This is because vanilla A* is not an **[anytime algorithm](https://en.wikipedia.org/wiki/Anytime_algorithm)** and therefore cannot return partial plans--a significant weakness for most games. An anytime adaptation can be found [here](http://papers.nips.cc/paper/2382-ara-anytime-a-with-provable-bounds-on-sub-optimality.pdf). A **realtime adaptive** improvement can be found [here](https://www.cs.cmu.edu/~motionplanning/papers/sbp_papers/integrated2/koenig_realtime_adaptive_astar_aamas06.pdf). Hopefully implementations of these algorithms will be added to gdxAI in the near future.
 
