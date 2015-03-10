@@ -65,7 +65,7 @@ Contrast this with a greedy approach, which would only look at `h(n)` before sel
 
 ![A-star search](http://www.entangledloops.com/img/greedy-solution-1.png)
 
-Here the green tile represents the start, red is the goal, grey are walls, and blue are nodes on open (or have been expanded). In the bottom left-hand corner some statistics can be seen. Notice that the this search returns the sub-optimal path, and also does so in more time than A*, which--on the same map--found the optimal solution of length 28.41 in 4.0000 ms.
+Here the dark green tile represents the start, red is the goal, grey are walls, blue are expanded nodes, and light green are nodes still on open. In the bottom left-hand corner some statistics can be seen. Notice that the this search returns the sub-optimal path, and also does so in more time than A*, which--on the same map--found the optimal solution of length 28.41 in 4.0000 ms.
 
 ### Pseudocode ###
 ![A* Pseudocode](http://www.entangledloops.com/img/a-star-pseudocode.png)
