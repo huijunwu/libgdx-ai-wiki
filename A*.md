@@ -61,7 +61,7 @@ A* works in the following manner:
 
 So far, the only mysterious function is `g(n)`, which is simply the **cost** of reaching `n`. The cost is usually an integer value that is simply incremented once for each step taken since departing the start node. It is meant to be a measurement that takes into account the work done by the agent in traversing the solution. 
 
-Contrast this with a greedy approach, which would only look at `h(n)` before selecting a child node to expand (best-first-search or BFS). Such behavior inevitably leads to situations of poor performance, poor plans, or both in certain situations. For example, consider the following pathological map: 
+Contrast this with a greedy approach, which would only look at `h(n)` before selecting a child node to expand (best-first-search or BFS). Such behavior can lead to poor performance, poor plans, or both in certain situations. For example, consider the following pathological map: 
 
 ![A-star search](http://www.entangledloops.com/img/greedy-solution-1.png)
 
