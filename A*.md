@@ -16,8 +16,8 @@ In a game, the discrete graph is almost always a pre-sized grid applied over a 2
 A* is **not** inherently a multi-agent path-finding algorithm. Multi-agent path-planning is a separate, more complex topic that requires discussion of stochastic processes and reliability of the available information. Other algorithms and adaptations of A* exist specifically for handling those situations.
 
 A* is only guaranteed to find the _shortest possible path_ in a graph if two conditions are unquestionably met by the heuristic function:
-- **Consistency** - A consistent heuristic never violates the [triangle inequality](https://en.wikipedia.org/wiki/Triangle_inequality). In laymen's terms, this means it never returns mutually incompatible distance estimates from two different nodes.
-- **Admissibility** - An admissible heuristic is **complete** and **optimal**. Respectively, these mean that
+- **Consistency** - A consistent (**monotone**) heuristic never violates the [triangle inequality](https://en.wikipedia.org/wiki/Triangle_inequality). In laymen's terms, this means it never returns mutually incompatible distance estimates from two different nodes.
+- **Admissibility** - An admissible heuristic never overestimates the distance to the goal. It is both **complete** and **optimal**. Respectively, these mean that
     - if a path exists, it will be found, and
     - it will be the shortest path.
 
