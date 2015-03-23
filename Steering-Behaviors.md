@@ -61,7 +61,7 @@ You can easily calculate the updated orientation with something along those line
 ````java
 	public static float calculateOrientationFromLinearVelocity (Steerable<T> character) {
 		// If we haven't got any velocity, then we can do nothing.
-		if (character.getLinearVelocity().isZero(MathUtils.FLOAT_ROUNDING_ERROR))
+		if (character.getLinearVelocity().isZero(character.getZeroLinearSpeedThreshold()))
 			return character.getOrientation();
 
 		return character.vectorToAngle(character.getLinearVelocity());
