@@ -3,7 +3,7 @@
 gdxAI is available in Maven. The easiest way of going about this is to add the framework as a dependency of an existing [Maven](http://maven.apache.org/) or [Gradle](http://www.gradle.org/) project. There are two kinds of gdxAI releases.
 
 * **Official**: well tested, stable packages that get released periodically. Its URL is: https://oss.sonatype.org/content/repositories/releases
-* **Snapshots**: the result of nightly builds, they are more likely to break in unexpected ways. It's URL is: https://oss.sonatype.org/content/repositories/snapshots
+* **Snapshots**: the result of nightly builds, they are more likely to break in unexpected ways. Its URL is: https://oss.sonatype.org/content/repositories/snapshots
 
 ### Maven
 
