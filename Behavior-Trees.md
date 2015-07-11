@@ -11,7 +11,7 @@
   * [Task Class Hierarchy](#task-class-hierarchy)
   * [Using Data for Inter-Task Communication](#using-data-for-inter-task-communication)
   * [Text Format](#text-format)
-  * [Task Attributes and Metadata](#task-attributes-and-metadata)
+  * [Task Attributes and Constraints](#task-attributes-and-constraints)
   * [Behavior Tree Libraries](#behavior-tree-libraries)
   * [Including Subtrees](#including-subtrees)
 - [Limitations of Behavior Trees](#limitations-of-behavior-trees)
@@ -202,8 +202,10 @@ Notice that you can use the `?` character only inside the alias of an imported t
 
 You can look into the [ParseAndRunTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/ParseAndRunTest.java) class for a simple example of how to load a behavior tree into memory from a file.
 
-## Task Attributes and Metadata ##
-T.B.D.
+## Task Attributes and Constraints ##
+The framework provides two annotations to define attributes and constraints in task classes, respectively [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html) and [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html).
+
+These annotations are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to recognize task attributes and check task constraints.
 
 ## Behavior Tree Libraries ##
 A [BehaviorTreeLibrary](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibrary.html) is a collection of behavior trees loaded into memory from an external source (usually a file in your application). You can also use it to store named sub-trees that you intend to use in multiple contexts.
