@@ -207,9 +207,7 @@ The framework provides two annotations to define attributes and constraints in t
 
 These annotations are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints.
 
-Both annotations are not inherited by subclasses, but the parser traverse up the class hierarchy of a task to find them.
-This has interesting implications. For instance, you don't have to use `@TaskConstraint` in a task class if the constraint of its superclass is the same.
-On the other hand, you can use it to "override" the constraint of its superclass.
+Note that [TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html) is annotated with `@Inherited` and [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass.
 
 
 ## Behavior Tree Libraries ##
