@@ -148,9 +148,9 @@ All lines in the format have the following syntax (elements within `[` and `]` a
 ````
 where:
 - indent is a sequence of spaces/tabs defining the depth of that task in tree
-- name is in the form of a Java fully qualified class augmented with the possibility to use the character `?`
-- attr is in the form of Java identifier augmented with the possibility to use the character `?`
-- value must be a boolean, a number or a quoted string accepting JSON-like escape sequences
+- name is either a Java fully qualified class name or an imported alias in the form of Java identifier augmented with the possibility to use the character `?`, see `import` in the example below
+- attr is the attribute name in the form of Java identifier
+- value is the attribute value and must be a boolean, a number, a quoted string accepting JSON-like escape sequences or null
 - comment starts with `#` and extends up to the first newline character
 
 As you can notice, everything is optional, meaning that an empty line is legal.
