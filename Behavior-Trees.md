@@ -203,11 +203,13 @@ Notice that you can use the `?` character only inside the alias of an imported t
 You can look into the [ParseAndRunTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/ParseAndRunTest.java) class for a simple example of how to load a behavior tree into memory from a file.
 
 ## Task Attributes and Constraints ##
-The framework provides two annotations to define attributes and constraints in task classes, respectively [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html) and [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html).
+The framework provides two annotations that are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints:
 
-These annotations are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints.
+- [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html): ideally, any task class should be annotated with this annotation to be properly recognized by the parser. However this is not strictly required. Note that `TaskConstraint` is annotated with `@Inherited` and in turn [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass. Also, the annotation `TaskConstraint` has two properties:
+  * [minChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#minChildren--) specifies the minimum number of allowed children
+  * [maxChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#maxChildren--) specifies the maximum number of allowed children
+- [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html): any task attribute must be annotated with this annotation to be properly recognized by the parser. You can even specify whether the attribute is [required](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html#required--) or optional.
 
-Note that [TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html) is annotated with `@Inherited` and [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass.
 
 
 ## Behavior Tree Libraries ##
