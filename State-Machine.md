@@ -4,6 +4,7 @@
 - [A Simple Example](#a-simple-example)
 - [A Complete Example with Messaging](#a-complete-example-with-messaging)
 - [Divide and Conquer](#divide-and-conquer)
+- [Limitations of State Machines](#limitations-of-state-machines)
 
 
 ## Introduction ##
@@ -106,7 +107,7 @@ The `DefaultStateMachine` class provided by the framework is the default impleme
 The `handleMessage` method of the `DefaultStateMachine` first routes the telegram to the current state. If the current state does not deal with the message, it's routed to the global state (if any). Especially, the boolean value returned by the `onMessage` method of the State interface indicates whether or not the message has been handled successfully and enables the state machine to route the message accordingly. This technique is rather interesting. For instance, what if you want a global event response to the message MSG_DEAD in every state but the state STATE_DEAD? The solution is to override the message response MSG_DEAD within STATE_DEAD. Since messages are sent first to the current state you can consume the message by returning true so to prevent it from being sent to the global state.
 
 ### StackStateMachine ###
-The `StackStateMachine` is an alternative implementation. It actually inherits from `DefaultStateMachine` and mostly behaves the same. The only difference is the behaviour of `revertToPreviousState()`. While the default implementation will always change back and forth between the same two states when it is called multiple times, the `StackStateMachine` will instead keep track of all past states, store them in a stack-like manner and is able to revert to those past states in a "last in, first out" (LIFO) order. This is especially useful when using a state machine for hierarchical menu structures.
+The `StackStateMachine` implements a [pushdown automaton](https://en.wikipedia.org/wiki/Pushdown_automaton). It actually inherits from `DefaultStateMachine` and mostly behaves the same. The only difference is the behavior of `revertToPreviousState()`. While the default implementation will always change back and forth between the same two states when it is called multiple times, the `StackStateMachine` will instead keep track of all past states, store them in a stack-like manner and is able to revert to those past states in a "last in, first out" (LIFO) order. This is especially useful when using a state machine for hierarchical menu structures.
 
 Let's assume we have just a single `MenuScreen` to handle all menus. Each menu would be a State. For example `MainMenuState`, `OptionsMenuState`, `GraphicsOptionsMenuState` and `InputOptionsMenuState`. Usually the user would start with the main menu, then navigate to the options menu and choose the graphics options. When he is done, it is common to navigate this hierarchical menu structure backwards by just pressing ESC. With the stack implementation this can now easily be done by just calling `stateMachine.revertToPreviousState()`, whenever the ESC button is pressed. When there is no more "previous" state, the revert method will not change the state and return false.
 
@@ -290,3 +291,15 @@ Rather than combining all the logic into a single state machine, we can separate
 Another way to deal with limiting the size of state machines is to use several different state machines at the same time. For example, you can imagine an AI that has a master FSM to make global decisions and other FSMs that deal with movement, gunnery, or conversations.
 
 Properly combining and structuring these two techniques is an extremely powerful way to limit the complexity of individual state machines.
+
+
+## Limitations of State Machines ##
+
+Even with all the common techniques and extensions mentioned above, state machines are still pretty limited. The trend these days in game AI is more toward exciting things like [behavior trees](https://github.com/libgdx/gdx-ai/wiki/Behavior-Trees) and planning systems. If complex AI is what you're interested in, all this chapter has done is whet your appetite. :yum: 
+
+This doesn't mean finite state machines, pushdown automata, and other simple systems aren't useful at all. They're a good modeling tool for certain kinds of problems. Finite state machines are useful when:
+* You have an entity whose behavior changes based on some internal state.
+* That state can be rigidly divided into one of a relatively small number of distinct options.
+* The entity responds to a series of inputs or events over time.
+
+In games, they are most known for being used in AI, but they are also common in implementations of user input handling, navigating menu screens, parsing text and network protocols.
