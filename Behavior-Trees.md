@@ -99,9 +99,12 @@ There are many more decorators you might want to use when building behavior tree
 
 
 ### Parallel ###
-A parallel is a special branch task that starts or resumes all children every single time. The parallel task will succeed if all the children succeed, fail if one of the children fail. Note that this is the same policy as the sequence task.
+A parallel composite task handles "concurrent" behaviors.
+It's a special branch task that starts or resumes all children every single time. The parallel task will succeed if all the children succeed, fail if one of the children fail. Note that this is the same policy as the sequence task.
 
 One common use of the parallel task is continually check whether certain conditions are met while carrying out an action. The typical use case: make the game entity react on event while sleeping or wandering.
+
+Notice that the above-mentioned word "concurrent" is in quotes for a reason. Some behavior tree implementations provide multi-threading parallel tasks (concurrently executing children at the same time). Our implementation does not use multi-threading at all. Here a parallel task is just a way to conceptually perform several tasks at once. These tasks still run on the same thread one by one following the specified sequence. That sequence should be irrelevant since they will all happen in the same frame, but it is still sometimes important.
 
 T.B.C.
 
