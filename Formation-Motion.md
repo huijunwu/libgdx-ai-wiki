@@ -107,7 +107,7 @@ This should also be done as infrequently as possible, being cached internally un
 
 ## Multi-Level Formation Motion ##
 
-The two-level steering system can be extended to more levels, giving the ability to create formations of formations. This is becomingly increasingly important in military simulation games with lots of units; real armies are organized in this way.
+The two-level steering system can be extended to more levels, giving the ability to create formations of formations. This is becoming increasingly important in military simulation games with lots of units; real armies are organized in this way.
 
 We can just extend the concept to support any depth of formation. Each formation has its own anchor point whose steering is managed in turn by another formation. The anchor point is trying to stay in a slot position of a higher level formation.
 
@@ -196,7 +196,7 @@ The framework supports two kind of strategies:
 - without roles through the [FreeSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/FreeSlotAssignmentStrategy.html)
 - with soft roles through the [SoftRoleSlotAssignmentStrategy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.html). This strategy uses a [SlotCostProvider](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/fma/SoftRoleSlotAssignmentStrategy.SlotCostProvider.html) to get the cost of a given pair member/slot.
 
-Currently hard roles are not supported by the framework. 
+Currently hard role assignment strategy is not provided by the framework, but you should be able to implement it your self quite easily.
 
 ## Dynamic Slots and Plays ##
 So far we have assumed that the slots in a formation pattern are fixed relative to the anchor point. A formation is a fixed pattern that can move around the game level.
