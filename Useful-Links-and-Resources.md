@@ -11,3 +11,4 @@ Given the nature of this page's content it is likely that some of the links belo
 ### Open-Source Projects and Examples
 These are interesting open-source projects found on the web that use gdx-ai.
   * [Game Jam #1 (state machines, message system and formation motion)](https://github.com/libgdx-jam/GDXJam)
+  * [Simple example of indexed A* path finding](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)
