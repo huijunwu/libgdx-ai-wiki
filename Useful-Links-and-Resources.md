@@ -8,5 +8,6 @@ Given the nature of this page's content it is likely that some of the links belo
   * [A* Pathfinding](https://www.youtube.com/watch?v=wu3vzR9k3QA)
   * [Threaded Pathfinding](https://www.youtube.com/watch?v=OVkeB3xAug0)
 
-### Open source projects and examples
+### Open-Source Projects and Examples
+These are interesting open-source projects found on the web that use gdx-ai.
   * [Game Jam #1 (state machines, message system and formation motion)](https://github.com/libgdx-jam/GDXJam)
