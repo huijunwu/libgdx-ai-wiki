@@ -37,7 +37,7 @@ The framework does not support fixed formations because they are so rudimentary 
  
 ## Scalable Formations ##
 
-In many situations the exact structure of a formation will depend on the number of characters that are joining it. For example, a defensive circle () will be wider with 20 defenders than with 5. With 100 defenders, it may be possible to structure the formation in several concentric rings.
+In many situations the exact structure of a formation will depend on the number of characters that are joining it. For example, a defensive circle (characters are around the circumference and their backs are to its center) will be wider with 20 defenders than with 5. With 100 defenders, it may be possible to structure the formation in several concentric rings.
 
 Usually scalable formations do not specify an explicit list of slot positions and orientations, but rather they use a function to dynamically return the slot locations given the total number of characters in the formation. When members are added to or removed from a formation, the formation  accommodates them, changing its distribution of slots accordingly. 
 
