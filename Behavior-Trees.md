@@ -56,6 +56,11 @@ These actions and conditions form the definitions of behavior tasks. For example
 The root task is decomposed into two child tasks, the left child being a condition that an enemy is visible, and the right child being an action which makes the NPC run away.
 Each of these actions and conditions can either succeed or fail, which in turn define whether the high-level behavioral task succeeds or fails.
 
+Some leaf tasks natively provided by the framework are:
+- **Failure** immediately fails.
+- **Success** immediately succeeds.
+- **Wait** keeps running for the specified amount of time then succeeds.
+
 ## Composite Tasks ##
 Composite tasks provide a standard way to describe relationships between child tasks, such as how and when they should be executed. Contrary to leaf tasks, which are defined by the user, composite nodes are predefined and provided by the behavior tree formalism. They allow you to build branches of the tree in order to organise their sub-tasks (the children). 
 Basically, branches keep track of a collection of child tasks (conditions, actions, or other composites), and their behavior is based on the behavior of their children. Unlike actions and conditions, there are normally only a handful of composite tasks because with only a handful of different grouping behaviors we can build very sophisticated behaviors.
@@ -88,19 +93,22 @@ In the context of a behavior tree, a decorator is a task that has one single chi
 There are many different types of useful decorators:
 - **AlwaysFail** will always fail no matter the wrapped task fails or succeeds.
 - **AlwaysSucceed** will always succeed no matter the wrapped task succeeds or fails.
-- **Include** grafts an external subtree. This decorator enhances behavior trees with modularity and reusability.
+- **Include** grafts an external subtree. This decorator enhances behavior trees with modularity and reusability. For more detailed information see [Including Subtrees](#including-subtrees)
 - **Invert** will succeed if the wrapped task fails and will fail if the wrapped task succeeds.
 - **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
+- **Repeat** will repeat the wrapped task a certain number of times, possibly infinite. This task always succeeds when reaches the specified number of repetitions.
 - **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This is a simple mechanism for ensuring that a limited shared resource is not over subscribed. You might have a pool of 5 pathfinders, for example, meaning at most 5 characters can be pathfinding at a time. Or you can associate a semaphore to the player character to ensure that at most 3 enemies can simultaneously attack him. This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource.
-- **UntilFail** will repeat the wrapped task until that task fails.
-- **UntilSuccess** will repeat the wrapped task until that task succeeds.
+- **UntilFail** will repeat the wrapped task until that task fails, which makes this decorator succeed.
+- **UntilSuccess** will repeat the wrapped task until that task succeeds, which makes this decorator succeed.
 
 There are many more decorators you might want to use when building behavior trees, but I think these are enough for now.
 
 
 ### Parallel ###
 A parallel composite task handles "concurrent" behaviors.
-It's a special branch task that starts or resumes all children every single time. The parallel task will succeed if all the children succeed, fail if one of the children fail. Note that this is the same policy as the sequence task.
+It's a special branch task that starts or resumes all children every single time. The actual behavior of this task depends on its policy:
+- **Sequence policy**: the parallel task fails as soon as one child fails; if all its children succeed, then the parallel task succeeds. This is the most common policy.
+- **Selector policy**: the parallel task succeeds as soon as one child succeeds; if all its children fail, then the parallel task fails.
 
 One common use of the parallel task is continually check whether certain conditions are met while carrying out an action. The typical use case: make the game entity react on event while sleeping or wandering.
 
@@ -234,7 +242,7 @@ As previously said, the [Include](http://libgdx.badlogicgames.com/gdx-ai/docs/co
 Internally, the include decorator makes use of the singleton [BehaviorTreeLibraryManager](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeLibraryManager.html) to get a fresh new instance of the required subtree.
 
 Basically, there are two types of inclusion:
-- **Eager inclusion:** It happens when the [lazy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html#lazy) attribute of the include decorator is set to `false`. The archetype behavior tree contains these reference nodes, but as soon as we instantiate our full tree it replaces itself with a copy of the sub-tree, built by the library. Notice that the sub-tree is instantiated when the behavior tree is created, ready for a character's use.
+- **Eager inclusion:** It happens when the [lazy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html#lazy) attribute of the include decorator is set to `false` (default). The archetype behavior tree contains these reference nodes, but as soon as we instantiate our full tree it replaces itself with a copy of the sub-tree, built by the library. Notice that the sub-tree is instantiated when the behavior tree is created, ready for a character's use.
 - **Lazy inclusion:** It happens when the [lazy](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/decorator/Include.html#lazy) attribute of the include decorator is set to `true`. In memory-constrained platforms, or for games with hundreds of AI characters, it may be worth holding off on creating the sub-tree until it is needed, saving memory in cases where parts of a large behavior tree are rarely used. This may be particularly the case where the behavior tree has a lot of branches for special cases: how to use a particular rare weapon, for example. These highly specific sub-trees don't need to be created for every character, wasting memory; instead, they can be created on
 demand if the rare situation arises. Actually, the lazy include task creates its child sub-tree at execution time when it is first needed.
 
