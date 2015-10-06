@@ -75,6 +75,8 @@ For instance, a selector might represent a character wanting to reach safety. Th
 A selector node is graphically represented by a question mark.
 ![selector](https://cloud.githubusercontent.com/assets/2366334/4603480/5f2d3274-516d-11e4-80c5-8e5df55f9fd1.png)
 
+There's a simple variation of the selector task that can make your AI more interesting and varied, the non-deterministic selector. While the standard selector runs each of its children in a strict order defined in advance by who has created the tree, the non-deterministic variation runs its children in a random order. As an example, imagine a dog that wants to rest, it could either sit or lie down. You can quickly implement this behavior by using a random selector with tho children, `Sit Down` and `Lie Down`.
+
 ### Sequence ###
 A sequence is a branch task that runs each of its child behaviors in turn. It will return immediately with a failure status code when one of its children fails. As long as its children are succeeding, it will keep going. If it runs out of children, it will return in success. 
 
@@ -82,6 +84,8 @@ Sequences represent a series of tasks that need to be undertaken. Each of our re
 
 A sequence node is graphically represented by an arrow.
 ![sequence](https://cloud.githubusercontent.com/assets/2366334/4603496/61776ee0-516e-11e4-810a-cdc1a333d50d.png)
+
+Just like for selector, the non-deterministic variation of the sequence task runs its children in a random order. This comes in handy in certain situations. For instance, suppose you want to burn something. To accomplish this task you need matches and gasoline and, of course, the order you get them is irrelevant. This can be easily implemented through a random sequence with two children: `Get Matches` and `Get Gasoline`.
 
 ### Decorator ###
 The name "decorator" is taken from object-oriented software engineering. The decorator pattern refers to a class that wraps another class, modifying its behavior. If the decorator has the same interface as the class it wraps, then the rest of the software doesn't need to know if it is dealing with the original class or the decorator.
