@@ -62,9 +62,9 @@ Some leaf tasks natively provided by the framework are:
 - **Wait** keeps running for the specified amount of time then succeeds.
 
 ## Composite Tasks ##
-Composite tasks provide a standard way to describe relationships between child tasks, such as how and when they should be executed. Contrary to leaf tasks, which are defined by the user, composite nodes are predefined and provided by the behavior tree formalism. They allow you to build branches of the tree in order to organise their sub-tasks (the children). 
-Basically, branches keep track of a collection of child tasks (conditions, actions, or other composites), and their behavior is based on the behavior of their children. Unlike actions and conditions, there are normally only a handful of composite tasks because with only a handful of different grouping behaviors we can build very sophisticated behaviors.
-Especially, the composite tasks consist of *selectors*, *sequences*, *parallels* and *decorators* that will be described in the next subsessions.
+Composite tasks provide a standard way to describe relationships between child tasks, such as how and when they should be executed. Contrary to leaf tasks, which are defined by the user, composite nodes are predefined and provided by the behavior tree formalism. They allow you to build branches of the tree in order to organize their sub-tasks (the children). Basically, branches keep track of a collection of child tasks (conditions, actions, or other composites), and their behavior is based on the behavior of their children.
+
+You can think of composite task as the backbone of the behavior tree formalist. Unlike actions and conditions, there are normally only a handful of composite tasks because with only a handful of different grouping behaviors we can build very sophisticated behaviors. Especially, the composite tasks consist of *selectors*, *sequences*, *parallels* and *decorators* that will be described in the next subsessions.
 
 ### Selector ###
 A selector is a branch task that runs each of its child behaviors in turn. It will return immediately with a success status code when one of its children runs successfully. As long as its children are failing, it will keep on trying. If it runs out of children completely, it will return a failure status code.
@@ -118,7 +118,12 @@ One common use of the parallel task is continually check whether certain conditi
 
 Notice that the above-mentioned word "concurrent" is in quotes for a reason. Some behavior tree implementations provide multi-threading parallel tasks (concurrently executing children at the same time). Our implementation does not use multi-threading at all. Here a parallel task is just a way to conceptually perform several tasks at once. These tasks still run on the same thread one by one following the specified sequence. That sequence should be irrelevant since they will all happen in the same frame, but it is still sometimes important.
 
-T.B.C.
+The parallel task with sequence policy acts in a similar way to the sequence task. It has a set of child tasks, and it runs them until one of them fails. At that point, the parallel task as a whole fails. If all of the child tasks complete successfully, the parallel task returns with success. In this way, it looks like the sequence task. Similarly, the parallel task with selector policy acts in a similar way to the selector task.
+
+Regardless of the actual policy, the difference is that both sequence and selector tasks can have only one child in the running status while parallel, which is a "concurrent" task, can have many children in the running status.
+
+Especially, when one of the child tasks ends in failure (sequence policy) or success (selector policy), parallel will terminate all of the other children that are still running, so cleanly exiting those children with a cancelled status. This prevents serious problems that could leave the game inconsistent maybe not freeing resources (such as acquired semaphores, see decorators above). In order for this to work, all the tasks of the behavior tree formalism need to be able to receive a termination request.
+
 
 # A Simple Example #
 T.B.D.
