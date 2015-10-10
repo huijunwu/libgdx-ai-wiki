@@ -46,7 +46,7 @@ There are a number of ways of implementing finite state machines. A typical naiv
 The code above is a legitimate state machine, however it has some serious weakness:
 * The state changes (also known as transitions) are poorly regulated.
 * States are of type int and would be more robust and debuggable as classes or enums.
-* The omission of a single break keyword would cause hard-to-find bugs.
+* The omission of a single `break` keyword would cause hard-to-find bugs.
 * Redundant logic appears in multiple states.
 * No way to tell that a state has been entered or exited.
 
@@ -54,7 +54,7 @@ The right solution to these issues is to provide a more structured approach.
 Having performance in mind we have chosen to implement FSMs through _embedded rules_, thus hard-coding the rules for the state transitions within the states themselves.
 This architecture is known as the _state design pattern_ and provides an elegant and powerful way of implementing state-driven behavior with minimal overhead.
 
-The state machine implementation provided by LibGDX is mainly based on the approach described by Mat Buckland in his book _"Programming Game AI by Example"_. This same approach, with minor variations, has been supported by hundreds of articles over the years.
+The state machine implementation provided by gdx-ai is mainly based on the approach described by Mat Buckland in his book _"Programming Game AI by Example"_. This same approach, with minor variations, has been supported by hundreds of articles over the years.
 
 **IMPORTANT NOTE:**
 - You don't have to restrict the use of state machines to agents. The state design pattern is also useful for structuring the main components of your game flow. For example, you could have a menu state, a save state, a paused state, an options state, a run state, etc.
