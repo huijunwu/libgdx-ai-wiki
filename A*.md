@@ -67,6 +67,8 @@ Contrast this with a greedy approach, which would only look at `h(n)` before sel
 
 Here the dark green tile represents the start, red is the goal, grey are walls, blue are expanded nodes, and light green are nodes still on open. In the bottom left-hand corner some statistics can be seen. Notice that the this search returns the suboptimal path, and also does so in more time than an A* implementation that considers `g(n)`, which--on the same map--found the optimal solution of length 28.41 in 4.0000 ms.
 
+On the other hand, a greedy search may find a solution when A* simply cannot due to time or memory bounds. A greedy solution may also be optimal in certain circumstances, such as the [knapsack problem](https://en.wikipedia.org/wiki/Knapsack_problem) when real-valued weights are used (for this reason, integer value weights are used in the canonical problem definition). The point is that you should choose the search strategy that best fits your domain; you shouldn't necessarily defer to the worst-case complexity bounds of an algorithm when selecting your approach.
+
 ### Pseudocode ###
 ![A* Pseudocode](http://www.entangledloops.com/img/a-star-pseudocode.png)
 
