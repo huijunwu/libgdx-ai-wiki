@@ -185,7 +185,11 @@ The `Task` class also declares the following abstract methods:
 - **getChildCount()** returns the number of children of the task.
 - **getChild()** returns the child at the given index.
 
-**T.B.C.**
+The are a few other non-final non-abstract methods that subclasses often override:
+- **start()** called when the task is entered, just before `run()` is invoked.
+- **end()** called when the task is exited through `success()`, `fail()` or `cancel()`. This means that this task's status has just been set to `SUCCEEDED`, `FAILED` or `CANCELLED` respectively.
+- **reset()** resets this task to make it restart from scratch on next run. The task is cancelled if it was running. In any case the task status is set to `FRESH`.
+- **cloneTask()** clones this task to a new one. If you don't specify a clone strategy through [TASK_CLONER](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#TASK_CLONER) the new task is instantiated via reflection and `copyTo()` is invoked. In this case, properly overriding the `cloneTo()` method in each task is developer's responsibility. This gives you opportunity to target the GWT backend. On the other hand, `cloneTask()` will use the non-null `TASK_CLONER` instance and `copyTo()` won't be invoked. For instance, if you don't care about GWT, you can let [Kryo](https://github.com/EsotericSoftware/kryo) make a deep copy for you.
 
 
 ## Using Data for Inter-Task Communication ##
