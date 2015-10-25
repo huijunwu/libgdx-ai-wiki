@@ -192,11 +192,19 @@ where:
 - value is the attribute's value that must be one of the following based on the attribute's Java type:
   * `true` or `false` literal for types `boolean`and `Boolean`
   * any number literal for primitive types `byte`, `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
-  * quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
+  * double quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
   * `null`for any non-primitive Java type
 - comment starts with `#` and extends up to the first newline character
 
 As you can notice, everything is optional, meaning that an empty line is legal.
+ 
+Also, notice the special use of strings in case of enumerations and distributions:
+- enums: the string is the name of the enum value like, for instance, "sequence" and "selector" for the parallel's policy.
+- distributions: are a comma-separated string of the form "distributionType,arg1,arg2,..." where 
+  * distributionType can be `constant`, `uniform`, `gaussian` and `triangular`
+  * the number of arguments identify the overloaded constructor to use
+
+  Built-in distributions are represented by distribution classes in package [com.badlogic.gdx.ai.utils.random](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/random/package-frame.html). User defined distributions are supported by customizing the [DitributionAdapters](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/DistributionAdapters.html) instance provided to the parser. Also, it's worth mentioning that, as a shortcut, constant distributions can be directly represented by the corresponding number.
 
 Here is a sample behavior tree expressed in our text format:
 ````
@@ -218,7 +226,7 @@ root
       alwaysFail
         com.badlogic.gdx.ai.tests.btree.dog.RestTask # fully qualified task
     sequence
-      bark times:"uniform,1,3"  # the type of attribute times is a subclass of Distribution 
+      bark times:"uniform,1,3"  # the type of attribute times is a IntegerDistribution 
       walk
       com.badlogic.gdx.ai.tests.btree.dog.BarkTask # fully qualified task
       mark
