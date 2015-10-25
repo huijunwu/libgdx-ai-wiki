@@ -191,7 +191,7 @@ where:
 - attr is the attribute name in the form of Java identifier
 - value is the attribute's value that must be one of the following based on the attribute's Java type:
   * `true` or `false` literal for types `boolean`and `Boolean`
-  * any number literal for primitive types `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
+  * any number literal for primitive types `byte`, `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
   * quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
   * `null`for any non-primitive Java type
 - comment starts with `#` and extends up to the first newline character
