@@ -11,6 +11,7 @@
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
   * [Task Class Hierarchy](#task-class-hierarchy)
+  * [The Task Superclass](#the-task-superclass)
   * [Using Data for Inter-Task Communication](#using-data-for-inter-task-communication)
   * [Task Attributes and Constraints](#task-attributes-and-constraints)
   * [Text Format](#text-format)
@@ -156,6 +157,36 @@ As you can notice from the figure below, everything is a [Task](http://libgdx.ba
 [LeafTask](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/LeafTask.html) is the class that you'll have to extend more often in order to implement your actions and conditions.
 
 ![task class hierarchy](https://cloud.githubusercontent.com/assets/2366334/4607905/d2890894-5265-11e4-901c-ef775c706df5.png)
+
+## The Task Superclass ##
+The [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) class is the abstract base class of all behavior tree tasks.  All tasks have the following properties:
+- **status**: it's the task status which is updated when the task runs or is reset. The possible values are:
+  * `FRESH` if the task has never run or has been reset
+  * `RUNNING` if the task has not completed and needs to run again
+  * `FAILED` if the task returned a failure result
+  * `SUCCEEDED` if the task returned a success result
+  * `CANCELLED` if the task has been terminated by an ancestor
+- **control**: it's the parent of the task. It's set to `null` when the task's status is `FRESH`; set to the parent otherwise.
+- **tree**: it's the reference to the behavior tree the task belongs to. Like the control property, it's set to `null` when the task's status is `FRESH`; set to the tree otherwise.
+
+The `Task` class also declares some final methods causing listeners notification: 
+- **running()** called in `run()` to inform the parent that this task needs to run again. The task status is set to `RUNNING`.
+- **success()** called in `run()` to inform the parent that this task has finished running with a success result. The task status is set to `SUCCEEDED`.
+- **fail()** called in `run()` to inform the parent that this task has finished running with a failure result. The task status is set to `FAILED`.
+- **cancel()** terminates this task and all its running children. This method MUST be called only if this task is running. The task status is set to `CANCELLED`.
+- **addChild()** adds a child by invoking `addChildToTask()` (see below) and notifies listeners if this task status is not `FRESH`.
+
+The `Task` class also declares the following abstract methods:
+- **run()** contains the update logic of the task. The actual implementation MUST call `running()`,  `success()` or `fail()` exactly once.
+- **childSuccess()** called when one of the children of the task succeeds.
+- **childFail()** called when one of the children of the task fails.
+- **childRunning()** called when one of the children of the task needs to run again.
+- **addChildToTask()** adds a child to the list of this task's children. It is called by the final method `addChild()` mentioned above.
+- **getChildCount()** returns the number of children of the task.
+- **getChild()** returns the child at the given index.
+
+**T.B.C.**
+
 
 ## Using Data for Inter-Task Communication ##
 To be effective the behavior tree API must allow tasks to share data with one another. The most sensible approach is to decouple the data that behaviors need from the tasks themselves.The API does this by using an external data store for all the data that the behavior tree needs. In AI literature such a store object is known as *blackboard*. Using this external blackboard, we can write tasks that are still independent of one another but can communicate when needed.
