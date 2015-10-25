@@ -189,11 +189,11 @@ where:
 - indent is a sequence of spaces/tabs defining the depth of that task in tree
 - name is either a Java fully qualified class name or an imported alias in the form of Java identifier augmented with the possibility to use the character `?`, see `import` in the example below
 - attr is the attribute name in the form of Java identifier
-- value is the attribute value that must be one of the following:
+- value is the attribute's value that must be one of the following based on the attribute's Java type:
   * `true` or `false` literal for types `boolean`and `Boolean`
-  * any number literal for primitive types `short`, `int`, `long`, `float`, `double` and their respective boxed types
+  * any number literal for primitive types `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
   * quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
-  * `null`
+  * `null`for any non-primitive Java type
 - comment starts with `#` and extends up to the first newline character
 
 As you can notice, everything is optional, meaning that an empty line is legal.
