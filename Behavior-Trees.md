@@ -199,12 +199,12 @@ where:
 As you can notice, everything is optional, meaning that an empty line is legal.
  
 Also, notice the special use of strings in case of enumerations and distributions:
-- enums: the string is the name of the enum value like, for instance, "sequence" and "selector" for the parallel's policy.
+- enums: the string is the non-case-sensitive name of the enum constant like, for instance, "sequence" and "selector" for the policy attribute of the parallel task.
 - distributions: are a comma-separated string of the form "distributionType,arg1,arg2,..." where 
   * distributionType can be `constant`, `uniform`, `gaussian` and `triangular`
   * the number of arguments identify the overloaded constructor to use
 
-  Built-in distributions are represented by distribution classes in package [com.badlogic.gdx.ai.utils.random](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/random/package-frame.html). User defined distributions are supported by customizing the [DitributionAdapters](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/DistributionAdapters.html) instance provided to the parser. Also, it's worth mentioning that, as a shortcut, constant distributions can be directly represented by the corresponding number.
+  Built-in distributions are represented by distribution classes in package [com.badlogic.gdx.ai.utils.random](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/random/package-frame.html). User defined distributions are supported by customizing the [DitributionAdapters](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/DistributionAdapters.html) instance provided to the parser. Also, it's worth mentioning that, as a shortcut, constant distributions can be directly represented by the corresponding number. For instance, `repeat times:2` is equivalent to `repeat times:"constant,2"`.
 
 Here is a sample behavior tree expressed in our text format:
 ````
