@@ -12,8 +12,8 @@
 - [Behavior Tree API](#behavior-tree-api)
   * [Task Class Hierarchy](#task-class-hierarchy)
   * [Using Data for Inter-Task Communication](#using-data-for-inter-task-communication)
-  * [Text Format](#text-format)
   * [Task Attributes and Constraints](#task-attributes-and-constraints)
+  * [Text Format](#text-format)
   * [Behavior Tree Libraries](#behavior-tree-libraries)
   * [Including Subtrees](#including-subtrees)
 - [Limitations of Behavior Trees](#limitations-of-behavior-trees)
@@ -168,6 +168,16 @@ At the API level, all the classes in the task hierarchy above are characterized 
 
 The [Dog](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/dog/Dog.java) class is a simple example of a blackboard. The action tasks in the same package extend `LeafTask<Dog>`, see the [CareTask](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/dog/CareTask.java) class for example. 
 
+## Task Attributes and Constraints ##
+The framework provides two annotations that are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints:
+
+- [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html): ideally, any task class should be annotated with this annotation to be properly recognized by the parser. However this is not strictly required. Note that `TaskConstraint` is annotated with `@Inherited` and in turn [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass. Also, the annotation `TaskConstraint` has two properties:
+  * [minChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#minChildren--) specifies the minimum number of allowed children; defaults to `0`
+  * [maxChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#maxChildren--) specifies the maximum number of allowed children; defaults to `Integer.MAX_VALUE`
+- [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html): any task attribute must be annotated with this annotation to be properly recognized by the parser. This annotation has two properties:
+  * [name](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html#name--) specifies the name of the attribute; if omitted the field's name is used instead. This gives you the capability to use attribute names that are illegal field names in Java, like for instance reserved keywords such as `switch`, `case`, `class` and so on  
+  * [required](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html#required--) specifies whether the attribute is mandatory or optional; defaults to `false`
+
 ## Text Format ##
 The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
 
@@ -234,16 +244,6 @@ root
 Notice that you can use the `?` character only inside the alias of an imported task (usually a condition). A fully qualified task name can not contain the `?` because its use is illegal in Java class names. Also, notice that the `?` character is not required for conditions, you might want to use a different naming convention such as `isDoorLocked` or the more verbose `doorLockedCondition`. It's totally up to you. Personally, I prefer the final `?` but it's just a matter of taste.
 
 You can look into the [ParseAndRunTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/ParseAndRunTest.java) class for a simple example of how to load a behavior tree into memory from a file.
-
-## Task Attributes and Constraints ##
-The framework provides two annotations that are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints:
-
-- [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html): ideally, any task class should be annotated with this annotation to be properly recognized by the parser. However this is not strictly required. Note that `TaskConstraint` is annotated with `@Inherited` and in turn [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass. Also, the annotation `TaskConstraint` has two properties:
-  * [minChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#minChildren--) specifies the minimum number of allowed children; defaults to `0`
-  * [maxChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#maxChildren--) specifies the maximum number of allowed children; defaults to `Integer.MAX_VALUE`
-- [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html): any task attribute must be annotated with this annotation to be properly recognized by the parser. This annotation has two properties:
-  * [name](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html#name--) specifies the name of the attribute; if omitted the field's name is used instead. This gives you the capability to use attribute names that are illegal field names in Java, like for instance reserved keywords such as `switch`, `case`, `class` and so on  
-  * [required](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html#required--) specifies whether the attribute is mandatory or optional; defaults to `false`
 
 
 ## Behavior Tree Libraries ##
