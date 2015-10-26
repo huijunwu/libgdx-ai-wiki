@@ -27,6 +27,8 @@ Behavior trees have been proposed as an improvement over Hierarchical State Mach
 
 Behavior trees have been originally pioneered by [robotics](http://en.wikipedia.org/wiki/Robotics) and soon adopted for controlling AI behaviors in commercial games such as first-person-shooter [Halo 2](http://www.gamasutra.com/view/feature/130663/gdc_2005_proceeding_handling_.php) and life-simulation game [Spore](http://chrishecker.com/My_liner_notes_for_spore#Behavior_Tree_AI).
 
+**To better understand behavior trees evaluation, it's recommended that you play with our demo [BehaviorTreeTests](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/BehaviorTreeTests.java) that shows you the status of the tasks at each evaluation step. Also, the demo allows you to run the tree indefinitely at regular intervals or step-by-step, load and save a tree snapshot, reset the whole tree to its initial state. We believe that this is a valuable learning tool for beginners.***
+
 # Core Concepts #
 
 The main problem with State Machines is the exponential growth of states and transitions. Even worse, states cannot be reused easily, without having to worry about transitions being invalid when they are reused for different portions of the AI logic. Essentially, State Machines lack a proper level of modularity.
