@@ -17,7 +17,7 @@
   * [Text Format](#text-format)
   * [Behavior Tree Libraries](#behavior-tree-libraries)
   * [Including Subtrees](#including-subtrees)
-- [Limitations of Behavior Trees](#limitations-of-behavior-trees)
+- [Combining Behavior Trees and State Machines](#combining-behavior-trees-and-state-machines)
 
 # Introduction #
 
@@ -317,7 +317,7 @@ Notice that both eager and lazy inclusion are an anomalous decorator that has no
 
 Please, look into the [IncludeSubtreeTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/IncludeSubtreeTest.java) class for a simple example of lazy and eager inclusion.
 
-# Limitations of Behavior Trees #
+# Combining Behavior Trees and State Machines #
 Behavior trees on their own have been a big win for game AI, but you should not consider them as a solution to almost every problem you can imagine in game AI.
 As we have seen, behavior trees work great if your character transitions between types of behavior based on the success or failure of certain actions. However, behavior trees make it more difficult to think and design in terms of states. Actually, they tend to be reasonably clunky when representing state-based behaviors such as:
 - a character who needs to respond to external events, for example, interrupting a patrol route to suddenly go into hiding or to raise an alarm
@@ -325,5 +325,83 @@ As we have seen, behavior trees work great if your character transitions between
 
 We're not claiming those behaviors can't be implemented in behavior trees, just that it would be cumbersome to do so. We have already seen how to mimic state machines in behavior trees, see [Parallel Task](#parallel) and in particular [Condition Checking](#condition-checking).
 
-Of course, you can build a hybrid system where characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running. Using the approach of having behavior tree libraries that we saw above, this provides the best of both worlds. Unfortunately, it also adds considerable extra burden to the AI authors and toolchain developers, since they now need to support two kinds of authoring: state machines and behavior
-trees.
+Of course, you can build a hybrid system where behavior trees and state machines cooperate with each other, providing the best of both worlds. There are at least 2 approaches:
+* characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running.
+* Certain tasks in the tree run an internal state machine. 
+
+What follows is just one possible implementation of the second approach.
+````java
+public class FsmTask extends LeafTask<MyEntity> {
+
+	StateMachine<FsmTask> sm;
+
+	public FsmTask () {
+		this.sm = new DefaultStateMachine<FsmTask>(this);
+	}
+
+	@Override
+	public void start () {
+		sm.setInitialState(FsmTaskState.STATE_1);
+	}
+
+	@Override
+	public void run () {
+		sm.update();
+		switch ((FsmTaskState)sm.getCurrentState()) {
+		case SUCCESS:
+			success();
+			break;
+		case FAIL:
+			fail();
+			break;
+		default:
+			running();
+			break;
+		}
+	}
+
+	@Override
+	protected Task<MyEntity> copyTo (Task<MyEntity> task) {
+		return task;
+	}
+
+	public enum FsmTaskState implements State<FsmTask> {
+
+		STATE_1() { // A certain state
+			@Override
+			public void update (FsmTask smTask) {
+				smTask.sm.changeState(MathUtils.randomBoolean(.1f) ? SUCCESS : STATE_2);
+			}
+		},
+
+		STATE_2() { // A certain state
+			@Override
+			public void update (FsmTask smTask) {
+				smTask.sm.changeState(MathUtils.randomBoolean(.1f) ? FAIL : STATE_1);
+			}
+		},
+
+		SUCCESS(), // Terminal state indicating success
+
+		FAIL(); // Terminal state indicating failure
+
+		@Override
+		public void enter (FsmTask smTask) {
+		}
+
+		@Override
+		public void update (FsmTask smTask) {
+		}
+
+		@Override
+		public void exit (FsmTask smTask) {
+		}
+
+		@Override
+		public boolean onMessage (FsmTask smTask, Telegram telegram) {
+			return false; // We don't use messaging in this example
+		}
+	}
+
+}
+````
