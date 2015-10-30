@@ -27,7 +27,7 @@ Behavior trees have been proposed as an improvement over Hierarchical State Mach
 
 Behavior trees have been originally pioneered by [robotics](http://en.wikipedia.org/wiki/Robotics) and soon adopted for controlling AI behaviors in commercial games such as first-person-shooter [Halo 2](http://www.gamasutra.com/view/feature/130663/gdc_2005_proceeding_handling_.php) and life-simulation game [Spore](http://chrishecker.com/My_liner_notes_for_spore#Behavior_Tree_AI).
 
-**To better understand behavior trees evaluation, it's recommended that you play with our demo [BehaviorTreeTests](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/BehaviorTreeTests.java) that shows you the status of the tasks at each evaluation step. Also, the demo allows you to run the tree indefinitely at regular intervals or step-by-step, load and save a tree snapshot, reset the whole tree to its initial state. We believe that this is a valuable learning tool for beginners.***
+**To better understand behavior trees evaluation, it's recommended that you play with our demo [BehaviorTreeTests](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/BehaviorTreeTests.java) that shows you the status of the tasks at each evaluation step. Also, the demo allows you to run the tree indefinitely at regular intervals or step-by-step, load and save a tree snapshot, reset the whole tree to its initial state. We believe that this is a valuable learning tool for beginners.**
 
 # Core Concepts #
 
@@ -69,7 +69,7 @@ Some leaf tasks natively provided by the framework are:
 ## Composite Tasks ##
 Composite tasks provide a standard way to describe relationships between child tasks, such as how and when they should be executed. Contrary to leaf tasks, which are defined by the user, composite nodes are predefined and provided by the behavior tree formalism. They allow you to build branches of the tree in order to organize their sub-tasks (the children). Basically, branches keep track of a collection of child tasks (conditions, actions, or other composites), and their behavior is based on the behavior of their children.
 
-You can think of composite task as the backbone of the behavior tree formalist. Unlike actions and conditions, there are normally only a handful of composite tasks because with only a handful of different grouping behaviors we can build very sophisticated behaviors. Especially, the composite tasks consist of *selectors*, *sequences*, *parallels* and *decorators* that will be described in the next subsessions.
+You can think of composite tasks as the backbone of the behavior tree formalist. Unlike actions and conditions, there are normally only a handful of composite tasks because with only a handful of different grouping behaviors we can build very sophisticated behaviors. Especially, the composite tasks consist of *selectors*, *sequences*, *parallels* and *decorators* that will be described in the next subsessions.
 
 ### Selector ###
 A selector is a branch task that runs each of its child behaviors in turn. It will return immediately with a success status code when one of its children runs successfully. As long as its children are failing, it will keep on trying. If it runs out of children completely, it will return a failure status code.
@@ -81,7 +81,7 @@ A selector node is graphically represented by a question mark.
 ![selector](https://cloud.githubusercontent.com/assets/2366334/4603480/5f2d3274-516d-11e4-80c5-8e5df55f9fd1.png)
 
 ### Random Selector ###
-There's a simple variation of the selector task that can make your AI more interesting and varied, the non-deterministic selector. While the standard selector runs each of its children in a strict order defined in advance by who has created the tree, the non-deterministic variation runs its children in a random order. As an example, imagine a dog that wants to rest, it could either sit or lie down. You can quickly implement this behavior by using a random selector with tho children, `Sit Down` and `Lie Down`.
+There's a simple variation of the selector task that can make your AI more interesting and varied, the non-deterministic selector. While the standard selector runs each of its children in a strict order defined in advance by who has created the tree, the non-deterministic variation runs its children in a random order. As an example, imagine a dog that wants to rest, it could either sit or lie down. You can quickly implement this behavior by using a random selector with two children, `Sit Down` and `Lie Down`.
 ![random selector](https://cloud.githubusercontent.com/assets/2366334/10428008/881c282e-70ee-11e5-92b4-9d232b066383.png)
 
 ### Sequence ###
@@ -110,7 +110,7 @@ There are many different types of useful decorators:
 - **Invert** will succeed if the wrapped task fails and will fail if the wrapped task succeeds.
 - **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
 - **Repeat** will repeat the wrapped task a certain number of times, possibly infinite. This task always succeeds when reaches the specified number of repetitions.
-- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This is a simple mechanism for ensuring that a limited shared resource is not over subscribed. You might have a pool of 5 pathfinders, for example, meaning at most 5 characters can be pathfinding at a time. Or you can associate a semaphore to the player character to ensure that at most 3 enemies can simultaneously attack him. This decorator fails when it cannot acquire the semaphore. This allows a select task higher up the tree to find a different action that doesn't involve the contested resource.
+- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This is a simple mechanism for ensuring that a limited shared resource is not over subscribed. You might have a pool of 5 pathfinders, for example, meaning at most 5 characters can be pathfinding at a time. Or you can associate a semaphore to the player character to ensure that at most 3 enemies can simultaneously attack him. This decorator fails when it cannot acquire the semaphore. This allows a selector task higher up the tree to find a different action that doesn't involve the contested resource.
 - **UntilFail** will repeat the wrapped task until that task fails, which makes this decorator succeed.
 - **UntilSuccess** will repeat the wrapped task until that task succeeds, which makes this decorator succeed.
 
