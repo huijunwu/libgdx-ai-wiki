@@ -148,7 +148,7 @@ how they are implemented, see the [Task Class Hierarchy](#task-class-hierarchy) 
 The API allows you to create behavior tree instances in four different ways:
 - from external resources in a simple [text format](#text-format)
 - from [libraries](#behavior-tree-libraries)
-- by cloning another tree
+- by [cloning another tree](#clone-task)
 - programmatically, see [javadoc](http://libgdx.badlogicgames.com/gdx-ai/docs/index.html?com/badlogic/gdx/ai/btree/package-summary.html)
 
 You can freely choose the technique you prefer, but the first two options are recommended as we will see.
@@ -191,7 +191,7 @@ The are a few other non-final non-abstract methods that subclasses often overrid
 - **start()** called when the task is entered, just before `run()` is invoked.
 - **end()** called when the task is exited through `success()`, `fail()` or `cancel()`. This means that this task's status has just been set to `SUCCEEDED`, `FAILED` or `CANCELLED` respectively.
 - **reset()** resets this task to make it restart from scratch on next run. The task is cancelled if it was running. In any case the task status is set to `FRESH`.
-- **cloneTask()** clones this task to a new one. If you don't specify a clone strategy through [TASK_CLONER](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#TASK_CLONER) the new task is instantiated via reflection and `copyTo()` is invoked. In this case, properly overriding the `cloneTo()` method in each task is developer's responsibility. This gives you opportunity to target the GWT backend. On the other hand, `cloneTask()` will use the non-null `TASK_CLONER` instance and `copyTo()` won't be invoked. For instance, if you don't care about GWT, you can let [Kryo](https://github.com/EsotericSoftware/kryo) make a deep copy for you.
+- <a name="clone-task"></a>**cloneTask()** clones this task to a new one. If you don't specify a clone strategy through [TASK_CLONER](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#TASK_CLONER) the new task is instantiated via reflection and `copyTo()` is invoked. In this case, properly overriding the `copyTo()` method in each task is developer's responsibility. This gives you opportunity to target the GWT backend. On the other hand, `cloneTask()` will use the non-null `TASK_CLONER` instance and `copyTo()` won't be invoked. For instance, if you don't care about GWT, you can let [Kryo](https://github.com/EsotericSoftware/kryo) make a deep copy for you.
 
 
 ## Using Data for Inter-Task Communication ##
@@ -223,15 +223,15 @@ All lines in the format have the following syntax (elements within `[` and `]` a
 [[indent] [name [attr:value [...]]] [comment]]
 ````
 where:
-- indent is a sequence of spaces/tabs defining the depth of that task in tree
-- name is either a Java fully qualified class name or an imported alias in the form of Java identifier augmented with the possibility to use the character `?`, see `import` in the example below
-- attr is the attribute name in the form of Java identifier
-- value is the attribute's value that must be one of the following based on the attribute's Java type:
+- _indent_ is a sequence of spaces/tabs defining the depth of that task in tree
+- _name_ identifies the task; it's either a Java fully qualified class name or an imported alias in the form of Java identifier augmented with the possibility to use the character `?`, see `import` in the example below
+- _attr_ is the attribute name in the form of Java identifier
+- _value_ is the attribute's value that must be one of the following based on the attribute's Java type:
   * `true` or `false` literal for types `boolean`and `Boolean`
   * any number literal for primitive types `byte`, `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
   * double quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
   * `null`for any non-primitive Java type
-- comment starts with `#` and extends up to the first newline character
+- _comment_ starts with `#` and extends up to the first newline character
 
 As you can notice, everything is optional, meaning that an empty line is legal.
  
