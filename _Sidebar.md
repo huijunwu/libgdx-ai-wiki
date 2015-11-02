@@ -2,7 +2,9 @@
 
 * [[Home]]
 * [[Getting started with gdxAI]]
-* [[Useful Links and Resources]]
+  - [[Setting up your Development Environment]]
+  - [[Initializing and Using gdxAI]]
+  - [[Useful Links and Resources]]
 * [[Infrastructure]]
   - [[Message Handling]]
   - [[Scheduling]]
