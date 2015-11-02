@@ -68,13 +68,13 @@ messageDispatcher.clearListeners();
 ````
 
 ### Updating the Dispatcher ###
-The queued telegrams are examined each update step by the method [MessageDispatcher.update(deltaTime)](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#update-float-) which checks the front of the message queue to see if any telegrams have expired time stamps. If so, they are dispatched to their recipient and removed from the queue.
+The queued telegrams are examined each update step by the method [MessageDispatcher.update()](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#update--) which checks the front of the message queue to see if any telegrams have expired time stamps. If so, they are dispatched to their recipient and removed from the queue.
 The following call
 ````java
-	// deltaTime is the time span between the current frame and the last frame in seconds
-	messageDispatcher.update(deltaTime);
+	messageDispatcher.update();
 ````
 **must be placed in the game's main update loop** to facilitate the correct and timely dispatch of any delayed messages.
+Notice that the message dispatcher internally calls [GdxAI.getTimepiece()](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/GdxAI.html#getTimepiece--) to get the current AI time and properly dispatch delayed messages. This means that the timepiece should be updated before the message dispatcher.
 
 ## Receiving a Message ##
 
