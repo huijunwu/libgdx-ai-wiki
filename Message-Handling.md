@@ -91,7 +91,9 @@ The following call
 	messageDispatcher.update();
 ````
 **must be placed in the game's main update loop** to facilitate the correct and timely dispatch of any delayed messages.
-Notice that the message dispatcher internally calls [GdxAI.getTimepiece()](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/GdxAI.html#getTimepiece--) to get the current AI time and properly dispatch delayed messages. This means that the timepiece should be updated before the message dispatcher.
+Notice that the message dispatcher internally calls [GdxAI.getTimepiece()](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/GdxAI.html#getTimepiece--) to get the current AI time and properly dispatch delayed messages. This means that
+- if you forget to update the timepiece the delayed messages won't be dispatched.
+- the timepiece should be updated before the message dispatcher.
 
 ## Receiving a Message ##
 
