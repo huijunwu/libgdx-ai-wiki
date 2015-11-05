@@ -304,7 +304,7 @@ orientation to its linear velocity on each time step), Face behavior is redundan
 should be used or not through the [setFaceEnabled](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Wander.html#setFaceEnabled-boolean-) method.
 
 Note that this behavior internally calls the [GdxAI.getTimepiece().getTime()](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/Timepiece.html#getTime--) method to get the current AI time and make the [wanderRate](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/behaviors/Wander.html#wanderRate) FPS independent. This means that
-- if you forget to {@link Timepiece#update(float) update the timepiece} the wander orientation won't change.
+- if you forget to [update the timepiece](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/Timepiece.html#update-float-) the wander orientation won't change.
 - the timepiece should be always updated before this steering behavior runs.
 
 This steering behavior can be used to produce a whole range of random motion, from very smooth undulating turns to wild
