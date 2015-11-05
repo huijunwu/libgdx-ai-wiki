@@ -79,7 +79,9 @@ All the other fields, namely [message](https://libgdx.badlogicgames.com/gdx-ai/d
 
 A typical use case of the return receipt is to let the sender release the `extraInfo` (here we're assuming it's pooled, of course).
 
-Also, notice that the return receipt is normally useful for delayed telegrams. Indeed, for instant messages you can just release the `extraInfo` to the pool after the invocation of the dispatchMessage method in the sender's code.
+Also, it's worth noting that
+- the return receipt is normally useful for delayed telegrams. Indeed, for instant messages you can just release the `extraInfo` to the pool after the invocation of the `dispatchMessage` method in the sender's code.
+- if the sender is also one of the receivers, it will receive the telegram twice in the same frame: the first time just like all the other receivers with the field `returnReceiptStatus` set to [RETURN_RECEIPT_NEEDED](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#RETURN_RECEIPT_NEEDED), the second time after all the other receivers with the field `returnReceiptStatus` set to [RETURN_RECEIPT_SENT](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#RETURN_RECEIPT_SENT). The latter is the actual return receipt, so it's when you should release the `extraInfo` object to the pool (or do whatever you need to do). 
 
 
 ### Updating the Dispatcher ###
