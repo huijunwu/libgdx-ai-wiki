@@ -1,6 +1,7 @@
 - [The Concept of Messages](#the-concept-of-messages)
 - [Dispatching a Message](#dispatching-a-message)
 - [Multiple Recipients](#multiple-recipients)
+- [Return Receipt](#return-receipt)
 - [Updating the Dispatcher](#updating-the-dispatcher)
 - [Receiving a Message](#receiving-a-message)
 - [Telegram Providers](#telegram-providers)
@@ -28,14 +29,15 @@ The creation, dispatch, and management of telegrams is handled by the class [Mes
 
 You can instantiate and use how many dispatchers you want at the same time, but if you need just one in your application you can use the singleton class [MessageManager](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageManager.html) instead. This means that all occurrences of `messageDispatcher` below can be replaced with `MessageManager.getInstance()` that returns the singleton instance of the dispatcher.
 
-Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-) method like that
+Whenever an agent needs to send a message, it calls the [dispatchMessage](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#dispatchMessage-float-com.badlogic.gdx.ai.msg.Telegraph-com.badlogic.gdx.ai.msg.Telegraph-int-java.lang.Object-int) method like that
 ````java
 	messageDispatcher.dispatchMessage(
-			delay,        // Immediate message if <= 0; delayed otherwise
-			sender,       // It can be null
-			recipient,    // It can be null, see the "Multiple Recipients" section below
-			messageType,  // Any user-defined int code
-			extraInfo);   // Optional data accompanying the message
+		delay,               // Immediate message if <= 0; delayed otherwise
+		sender,              // It can be null
+		recipient,           // It can be null, see the "Multiple Recipients" section below
+		messageType,         // Any user-defined int code
+		extraInfo,           // Optional data accompanying the message; it can be null
+		needsReturnReceipt); // Whether the sender needs the return receipt or not
 ````
 where _delay_ is expressed in seconds. The MessageDispatcher uses this information to create a [Telegram](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html), which it either dispatches immediately (if the given delay is <= 0) or stores in a queue (when the given delay is > 0) ready to be dispatched at the correct time.
 
@@ -66,6 +68,19 @@ messageDispatcher.clearListeners(msgCode1, msgCode2, ...);
 // Removes all the agents listening to any message type
 messageDispatcher.clearListeners();
 ````
+
+### Return Receipt ###
+The return receipt feature makes the `MessageDispatcher` instantly send the telegram back to the sender as soon as all receivers have processed the message. Just before the telegram is sent back by the MessageDispatcher some of its fields are updated:
+- the field [returnReceiptStatus](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#returnReceiptStatus) is set to [RETURN_RECEIPT_SENT](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#RETURN_RECEIPT_SENT)
+- the field [sender](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#sender) is set to the MessageDispatcher
+- the field [receiver](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#receiver) is set to the original sender
+
+All the other fields, namely [message](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#message) and [extraInfo](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/Telegram.html#extraInfo), remain untouched. 
+
+A typical use case of the return receipt is to let the sender release the `extraInfo` (here we're assuming it's pooled, of course).
+
+Also, notice that the return receipt is normally useful for delayed telegrams. Indeed, for instant messages you can just release the `extraInfo` to the pool after the invocation of the dispatchMessage method in the sender's code.
+
 
 ### Updating the Dispatcher ###
 The queued telegrams are examined each update step by the method [MessageDispatcher.update()](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/msg/MessageDispatcher.html#update--) which checks the front of the message queue to see if any telegrams have expired time stamps. If so, they are dispatched to their recipient and removed from the queue.
