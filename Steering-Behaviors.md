@@ -515,9 +515,10 @@ method and its callback argument.
 **IMPORTANT NOTES:**
 
 - Sharing a Proximity instance among group behaviors having the same owner can save a little time determining the
-neighbors only once from inside the findNeighbors method. Especially, Proximity implementation classes can check
-the [Gdx.graphics.getFrameId()](http://libgdx.badlogicgames.com/nightlies/docs/api/com/badlogic/gdx/Graphics.html#getFrameId--)
-of the current frame in order to calculate neighbors only once per frame.
+neighbors only once from inside the `findNeighbors` method. Especially, Proximity implementation classes can check
+the AI time of the current frame through the [GdxAI.getTimepied().getTime()](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/Timepiece.html#getTime--) method in order to calculate neighbors only once per frame. This means that
+  * if you forget to [update the timepiece](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/Timepiece.html#update-float-) on each frame the proximity instance will be calculated only the very first time, which is not what you want of course.
+  * ideally the timepiece should be updated before the proximity is calculated.
 - If you want to make sure a Proximity doesn't use as a neighbor a given agent, for example the evader or the
 owner itself, you have to implement a callback that prevents it from being considered by returning `false` from the method
 [reportNeighbor](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/steer/Proximity.ProximityCallback.html#reportNeighbor-com.badlogic.gdx.ai.steer.Steerable-).
