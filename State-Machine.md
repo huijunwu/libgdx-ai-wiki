@@ -88,15 +88,15 @@ All the state related data and methods are encapsulated into a state machine obj
 Also, a state machine can be explicitly delegated by its owner to handle the messages it receives.
 A FSM instance implements the following StateMachine interface.
 ````java
-public interface StateMachine<A> {
+public interface StateMachine<E, S extends State<E>> extends Telegraph {
 	public void update();
-	public void changeState(State<A> newState);
+	public void changeState(S newState);
 	public boolean revertToPreviousState();
-	public void setInitialState(State<A> state);
-	public void setGlobalState(State<A> state);
-	public State<A> getCurrentState();
-	public State<A> getGlobalState();
-	public boolean isInState(State<A> state);
+	public void setInitialState(S state);
+	public void setGlobalState(S state);
+	public S getCurrentState();
+	public S getGlobalState();
+	public boolean isInState(S state);
 	public boolean handleMessage(Telegram telegram);
 }
 ````
@@ -120,10 +120,10 @@ A Troll can be given the functionality of a FSM by adding a member variable `sta
 public class Troll {
 
     // An instance of the state machine class
-    public StateMachine<Troll> stateMachine;
+    public StateMachine<Troll, TrollState> stateMachine;
 
 	public Troll() {
-        stateMachine = new DefaultStateMachine<Troll>(this, TrollState.SLEEP);
+        stateMachine = new DefaultStateMachine<Troll, TrollState>(this, TrollState.SLEEP);
     }
 
     @Override
