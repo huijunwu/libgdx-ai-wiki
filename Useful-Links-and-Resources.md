@@ -1,6 +1,16 @@
 ### Preliminary note
 Given the nature of this page's content it is likely that some of the links below might become offline or even change. If you spot some broken link or wrong information please contact us or edit this page (all you need is a github account!) so we can fix it and maintain this page as up-to-date as possible. Please consider also sharing with us new contents that are not currently mentioned here. Thank you.
 
+### Open-Source Projects and Examples
+These are interesting open-source projects found on the web that use gdx-ai.
+
+Project | Description
+------- | ------------
+[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features:  navmesh pathfinding, steering behaviors, state machines and behavior trees
+[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game with state machines, message system and formation motion
+[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding
+
+
 ### Video Tutorials
   * [Message Handling, Telegraphs and Telegrams](https://www.youtube.com/watch?v=z6frjuUHCzI)
   * [Introduction to Finite State Machines](https://www.youtube.com/watch?v=8qXNaVaDGWM)
@@ -10,9 +20,3 @@ Given the nature of this page's content it is likely that some of the links belo
   * [Intro to Steering Behaviors: Arrival (Pt. 2)](https://www.youtube.com/watch?v=JoCZ8hPQnUE)
   * [A* Pathfinding](https://www.youtube.com/watch?v=wu3vzR9k3QA)
   * [Threaded Pathfinding](https://www.youtube.com/watch?v=OVkeB3xAug0)
-
-### Open-Source Projects and Examples
-These are interesting open-source projects found on the web that use gdx-ai.
-  * [GdxDemo3D (navmesh pathfinding and steering behaviors)](https://github.com/jsjolund/GdxDemo3D)
-  * [Game Jam #1 (state machines, message system and formation motion)](https://github.com/libgdx-jam/GDXJam)
-  * [Simple example of indexed A* path finding](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)
