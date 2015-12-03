@@ -3,7 +3,7 @@
 
 ## What is gdxAI?
 
-It's an artificial intelligence framework, entirely written in Java, for game development with [libGDX](https://github.com/libgdx/libgdx).
+It's an artificial intelligence framework, entirely written in Java, for game development with, and now even without, [libGDX](https://github.com/libgdx/libgdx).
 
 The gdxAI framework makes use of a limited number of classes from the libGDX framework, mainly collections which are optimized for mobile platforms by limiting garbage creation and supporting primitive types directly, so avoiding boxing and unboxing. However, the gdxAI framework does not force you to develop your application using the libGDX framework if you do not wish to do so, but the libGDX jar remains an essential requirement.
 
