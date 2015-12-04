@@ -325,9 +325,11 @@ As we have seen, behavior trees work great if your character transitions between
 
 We're not claiming those behaviors can't be implemented in behavior trees, just that it would be cumbersome to do so. We have already seen how to mimic state machines in behavior trees, see [Parallel Task](#parallel) and in particular [Condition Checking](#condition-checking).
 
-Of course, you can build a hybrid system where behavior trees and state machines cooperate with each other, providing the best of both worlds. There are at least 2 approaches:
-* characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running.
-* Certain tasks in the tree run an internal state machine. 
+Of course, you can build a hybrid system where behavior trees and state machines cooperate with each other, providing the best of both worlds. There are 2 common approaches:
+
+1. Characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running. An example of this approach can be found inside the open source project [GdxDemo3D](https://github.com/jsjolund/GdxDemo3D), see the class [DogCharacter.java](https://github.com/jsjolund/GdxDemo3D/blob/master/core/src/com/mygdx/game/objects/DogCharacter.java)
+
+2. Certain tasks in the tree run an internal state machine. 
 
 What follows is just one possible implementation of the second approach.
 ````java
