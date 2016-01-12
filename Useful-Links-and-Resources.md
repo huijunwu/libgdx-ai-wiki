@@ -4,12 +4,13 @@ Given the nature of this page's content it is likely that some of the links belo
 ### Open-Source Projects and Examples
 These are interesting open-source projects found on the web that use gdx-ai.
 
-Project | Description
-------- | ------------
-[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features:  navmesh pathfinding, steering behaviors, state machines and behavior trees
-[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game, made for Ludum Dare 33, using gdx-ai pathfinding
-[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game with state machines, message system and formation motion
-[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding
+Project | Description | Path Finding | Steering Behaviors | Behavior Trees | State Machine | Messaging
+------- | ----------- | ------------ | ------------------ | -------------- | ------------- | ---------
+[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features | Yes (Navmesh) | Yes | Yes | Yes | Yes
+[Pacman](https://github.com/yichen0831/Pacman_libGdx) | Nice Pacman remake | | Yes | | Yes | 
+[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game made for Ludum Dare 33 | Yes | | | | 
+[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game | | Yes with Formation Motion | | Yes | Yes 
+[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding | Yes | | | |
 
 
 ### Video Tutorials
