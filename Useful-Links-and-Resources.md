@@ -34,6 +34,6 @@ Project | Description | Path Finding | Steering Behaviors | Behavior Trees | Sta
 
 
 ### External tools
-  * [Graphical Editor](https://github.com/piotr-j/bteditor)
-  * [FreeMind to gdx-ai converter](https://github.com/klaus7/freemind2gdxai)
+  * [Graphical editor for behavior trees](https://github.com/piotr-j/bteditor)
+  * [FreeMind to gdx-ai behavior tree files](https://github.com/klaus7/freemind2gdxai)
   * [Vim Syntax highlighting for gdx-ai behavior tree files](https://github.com/kba/gdxai-btree.vim)
