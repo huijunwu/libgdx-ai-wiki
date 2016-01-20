@@ -1,3 +1,8 @@
+- [Preliminary note](#preliminary-note)
+- [Open-Source Projects](#open-source-projects)
+- [Video Tutorials](#video-tutorials)
+- [External tools](#external-tools)
+
 ### Preliminary note
 Given the nature of this page's content it is likely that some of the links below might become offline or even change. If you spot some broken link or wrong information please contact us or edit this page (all you need is a github account!) so we can fix it and maintain this page as up-to-date as possible. Please consider also sharing with us new contents that are not currently mentioned here. Thank you.
 
@@ -26,3 +31,9 @@ Project | Description | Path Finding | Steering Behaviors | Behavior Trees | Sta
   * [Intro to Steering Behaviors: Arrival (Pt. 2)](https://www.youtube.com/watch?v=JoCZ8hPQnUE)
   * [A* Pathfinding](https://www.youtube.com/watch?v=wu3vzR9k3QA)
   * [Threaded Pathfinding](https://www.youtube.com/watch?v=OVkeB3xAug0)
+
+
+### External tools
+  * [Graphical Editor](https://github.com/piotr-j/bteditor)
+  * [FreeMind to gdx-ai converter](https://github.com/klaus7/freemind2gdxai)
+  * [Vim Syntax highlighting for gdx-ai behavior tree files](https://github.com/kba/gdxai-btree.vim)
