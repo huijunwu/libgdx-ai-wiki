@@ -4,10 +4,10 @@
 - [External tools](#external-tools)
 
 ### Preliminary note
-Given the nature of this page's content it is likely that some of the links below might become offline or even change. If you spot some broken link or wrong information please contact us or edit this page (all you need is a github account!) so we can fix it and maintain this page as up-to-date as possible. Please consider also sharing with us new contents that are not currently mentioned here. Thank you.
+Given the nature of this page's content it is likely that some of the links below might become out of date, go offline or even change. If you spot some broken link or wrong information please contact us or edit this page (all you need is a github account!) so we can fix it and maintain this page as up-to-date as possible. Please consider also sharing with us new contents that are not currently mentioned here. Thank you.
 
 ### Open-Source Projects
-These are interesting open-source projects found on the web that use gdx-ai.
+These are interesting open-source projects that use gdx-ai.
 
 Project | Description | Path Finding | Steering Behaviors | Behavior Trees | State Machine | Messaging
 ------- | ----------- |:------------:|:------------------:|:--------------:|:-------------:|:---------:
