@@ -218,12 +218,18 @@ The framework provides two annotations that are used at runtime by the [Behavior
 ## Text Format ##
 The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
 
-All lines in the format have the following syntax (elements within `[` and `]` are optional):
+All lines in the text format follow the grammar below (elements within `[` and `]` are optional):
 ```` 
-[[indent] [name [attr:value [...]]] [comment]]
+line = [[indent] [guardableTask] [comment]]
+guardableTask = [guard [...]] task
+guard = '(' task ')'
+task = name [attr:value [...]] | subtreeRef
 ````
 where:
-- _indent_ is a sequence of spaces/tabs defining the depth of that task in tree
+- _indent_ is a sequence of spaces/tabs defining the depth of the task specified by _guardableTask_
+- _guardableTask_ is a sequence of optional _guards_ followed by a _task_
+- _guard_ is just a _task_ within parentheses `(` and `)`
+- _task_ is either a task name with attributes or a subtree reference 
 - _name_ identifies the task; it's either a Java fully qualified class name or an imported alias in the form of Java identifier augmented with the possibility to use the character `?`, see `import` in the example below
 - _attr_ is the attribute name in the form of Java identifier
 - _value_ is the attribute's value that must be one of the following based on the attribute's Java type:
@@ -231,7 +237,9 @@ where:
   * any number literal for primitive types `byte`, `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
   * double quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
   * `null`for any non-primitive Java type
+- _subtreeRef_ is the name of an internal subtree in the form of a Java identifier preceded by the symbol `$` 
 - _comment_ starts with `#` and extends up to the first newline character
+
 
 As you can notice, everything is optional, meaning that an empty line is legal.
  
@@ -271,6 +279,8 @@ root
 And the equivalent tree in a graphical form:
 
 ![dog tree](https://cloud.githubusercontent.com/assets/2366334/4617800/190bc6c4-5303-11e4-8c52-07470f9a36d7.png)
+
+A more complex behavior tree with guards and subtree references can be found [here](https://github.com/jsjolund/GdxDemo3D/blob/master/android/assets/btrees/dog.btree). That behavior tree models a dog that freely moves all around the garden until the owner calls him to play with the stick.
 
 We have previously mentioned the possibility to use the `?` character in the text format. The question mark is just a syntactic sugar; it gives the user the opportunity to improve readability by making it clear when a leaf task is a condition or an action. For instance, take a look at the tree below.
 ````
