@@ -152,7 +152,17 @@ We're not claiming those behaviors can't be implemented in behavior trees by usi
 In order to make up for this drawback, the gdxAI framework adds two interesting extensions to the classical formalism. Especially, the __guards__ and the __dynamic guard selector__ together make it easier to think and design in terms of states.
 
 ### Guards ###
-T.B.D.
+In computer programming, a guard is a boolean expression that must evaluate to true if the program execution is to continue in the branch in question. Similarly, in behavior trees, a guard is a condition that must be met before executing the respective task.
+
+Basically, guards have the following properties:
+- guards are just regular tasks with the only limitation (introduced to keep things simple and clear) that they must complete in one tick 
+- any task at any point of the tree can be guarded
+- guards can be entire subtrees
+- guarding another guard is allowed 
+
+All the guard's properties mentioned above have positive effects on the expressive power of the formalism. Also, using guards effectively helps to reduce the depth of the tree, which as a result makes the behavior tree more intuitive and easier to read.
+
+As we have already seen, in the standard model for behavior trees, conditions are task leaf nodes, which simply do not do anything other than succeed or fail. Although nothing prevents you from using traditional conditional tasks, it is highly recommended that you use guards whenever possible. 
 
 ### Dynamic Guard Selector ###
 T.B.D.
@@ -191,6 +201,7 @@ The [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree
   * `CANCELLED` if the task has been terminated by an ancestor
 - **control**: it's the parent of the task. It's set to `null` when the task's status is `FRESH`; set to the parent otherwise.
 - **tree**: it's the reference to the behavior tree the task belongs to. Like the control property, it's set to `null` when the task's status is `FRESH`; set to the tree otherwise.
+- **guard**: it's the guard of the task. It is `null` for unguarded tasks.
 
 The `Task` class also declares some final methods that, among other things, notify listeners attached to the behavior tree, see [BehaviorTree.Listener](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/BehaviorTree.Listener.html): 
 - **running()** called in `run()` to inform the parent that this task needs to run again. The task status is set to `RUNNING`.
@@ -272,7 +283,9 @@ Also, notice the special use of strings in case of enumerations and distribution
 
   Built-in distributions are represented by distribution classes in package [com.badlogic.gdx.ai.utils.random](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/random/package-frame.html). User defined distributions are supported by customizing the [DitributionAdapters](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/DistributionAdapters.html) instance provided to the parser. Also, it's worth mentioning that, as a shortcut, constant distributions can be directly represented by the corresponding number. For instance, `repeat times:2` is equivalent to `repeat times:"constant,2"`.
 
-Here is a sample behavior tree expressed in our text format:
+Here are some example of behavior trees expressed in our text format.
+
+**Example #1:**
 ````
 #
 # Dog tree
@@ -301,8 +314,10 @@ And the equivalent tree in a graphical form:
 
 ![dog tree](https://cloud.githubusercontent.com/assets/2366334/4617800/190bc6c4-5303-11e4-8c52-07470f9a36d7.png)
 
+**Example #2:**
 A more complex behavior tree with guards and subtree references can be found [here](https://github.com/jsjolund/GdxDemo3D/blob/master/android/assets/btrees/dog.btree). That behavior tree models a dog that freely moves all around the garden until the owner calls him to play with the stick.
 
+**Example #3:**
 We have previously mentioned the possibility to use the `?` character in the text format. The question mark is just a syntactic sugar; it gives the user the opportunity to improve readability by making it clear when a leaf task is a condition or an action. For instance, take a look at the tree below.
 ````
 import doorLocked?:"packageName.DoorLockedCondition"
