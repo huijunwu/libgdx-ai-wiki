@@ -8,6 +8,9 @@
     - [Random Sequence](#random-sequence)
     - [Decorator](#decorator)
     - [Parallel](#parallel)
+- [Formalism Extensions](#formalism-extensions)
+    - [Guards](#guards)
+    - [Dynamic Guard Selector](#dynamic-guard-selector)
 - [A Simple Example](#a-simple-example)
 - [Behavior Tree API](#behavior-tree-api)
   * [Task Class Hierarchy](#task-class-hierarchy)
@@ -135,6 +138,24 @@ Here are some typical uses of the parallel task:
 - **Non conflicting actions**: the parallel task is most obviously used for sets of actions that can occur at the same time. You might, for example, use parallel to have your character roll into cover while shouting an insult and changing primary weapon. These three actions don't conflict (they wouldn't use the same semaphore, for example), and so you could carry them out simultaneously.
 - <a name="condition-checking"></a>**Condition checking**: one very common use of the parallel task is continually check whether certain conditions are met while carrying out an action. For instance, you can make your character react on event while sleeping or wandering. Using parallel tasks to make sure that conditions hold is an important use-case in behavior trees. With it we can get much of the power of a state machine, and in particular the state machine's ability to switch tasks when important events occur and new opportunities arise. Rather than events triggering transitions between states, we can use sub-trees as states and have them running in parallel with a set of conditions. In the case of a state machine, when the condition is met, the transition is triggered. With a behavior tree the behavior runs as long as the condition is met.
 - **Group behavior**:  we can use parallel to control the behavior of a group of characters, such as a fire team in a military shooter. While each member of the group gets its own behavior tree for its individual actions (shooting, taking cover, reloading, animating, and playing audio, for example), these group actions are contained in parallel tasks within a higher level selector that chooses the group's behavior. If one of the team members can't possibly carry out their role in the strategy, then the parallel will return in failure and the selector will have to choose another option.
+
+
+# Formalism Extensions #
+
+Generally speaking, behavior trees work great if your character transitions between types of behavior based on the success or failure of certain actions. However, the classical behavior tree formalism that you usually find in the literature makes it more difficult to think and design in terms of states. Actually, regular behavior trees tend to be reasonably clunky when representing state-based behaviors such as:
+
+- a character who needs to respond to external events, for example, interrupting a patrol route to suddenly go into hiding or to raise an alarm
+- a character that needs to switch strategies when its ammo is looking low
+
+We're not claiming those behaviors can't be implemented in behavior trees by using only the classical tasks we have seen so far. In fact, we have already seen how to mimic state machines in behavior trees, see [Parallel Task](#parallel) and in particular [Condition Checking](#condition-checking). However, it is somewhat cumbersome to do so systematically.
+
+In order to make up for this drawback, the gdxAI framework adds two interesting extensions to the classical formalism. Especially, the __guards__ and the __dynamic guard selector__ together make it easier to think and design in terms of states.
+
+### Guards ###
+T.B.D.
+
+### Dynamic Guard Selector ###
+T.B.D.
 
 
 # A Simple Example #
@@ -327,93 +348,3 @@ Notice that both eager and lazy inclusion are an anomalous decorator that has no
 
 Please, look into the [IncludeSubtreeTest](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gdx/ai/tests/btree/tests/IncludeSubtreeTest.java) class for a simple example of lazy and eager inclusion.
 
-# Combining Behavior Trees and State Machines #
-Behavior trees on their own have been a big win for game AI, but you should not consider them as a solution to almost every problem you can imagine in game AI.
-As we have seen, behavior trees work great if your character transitions between types of behavior based on the success or failure of certain actions. However, behavior trees make it more difficult to think and design in terms of states. Actually, they tend to be reasonably clunky when representing state-based behaviors such as:
-- a character who needs to respond to external events, for example, interrupting a patrol route to suddenly go into hiding or to raise an alarm
-- a character that needs to switch strategies when its ammo is looking low
-
-We're not claiming those behaviors can't be implemented in behavior trees, just that it would be cumbersome to do so. We have already seen how to mimic state machines in behavior trees, see [Parallel Task](#parallel) and in particular [Condition Checking](#condition-checking).
-
-Of course, you can build a hybrid system where behavior trees and state machines cooperate with each other, providing the best of both worlds. There are 2 common approaches:
-
-1. Characters have multiple behavior trees and use a state machine to determine which behavior tree they are currently running. An example of this approach can be found inside the open source project [GdxDemo3D](https://github.com/jsjolund/GdxDemo3D), see the class [DogCharacter.java](https://github.com/jsjolund/GdxDemo3D/blob/master/core/src/com/mygdx/game/objects/DogCharacter.java)
-
-2. Certain tasks in the tree run an internal state machine. 
-
-What follows is just one possible implementation of the second approach.
-````java
-public class FsmTask extends LeafTask<MyEntity> {
-
-	StateMachine<FsmTask> sm;
-
-	public FsmTask () {
-		this.sm = new DefaultStateMachine<FsmTask>(this);
-	}
-
-	@Override
-	public void start () {
-		sm.setInitialState(FsmTaskState.STATE_1);
-	}
-
-	@Override
-	public void run () {
-		sm.update();
-		switch ((FsmTaskState)sm.getCurrentState()) {
-		case SUCCESS:
-			success();
-			break;
-		case FAIL:
-			fail();
-			break;
-		default:
-			running();
-			break;
-		}
-	}
-
-	@Override
-	protected Task<MyEntity> copyTo (Task<MyEntity> task) {
-		return task;
-	}
-
-	public enum FsmTaskState implements State<FsmTask> {
-
-		STATE_1() { // A certain state
-			@Override
-			public void update (FsmTask smTask) {
-				smTask.sm.changeState(MathUtils.randomBoolean(.1f) ? SUCCESS : STATE_2);
-			}
-		},
-
-		STATE_2() { // A certain state
-			@Override
-			public void update (FsmTask smTask) {
-				smTask.sm.changeState(MathUtils.randomBoolean(.1f) ? FAIL : STATE_1);
-			}
-		},
-
-		SUCCESS(), // Terminal state indicating success
-
-		FAIL(); // Terminal state indicating failure
-
-		@Override
-		public void enter (FsmTask smTask) {
-		}
-
-		@Override
-		public void update (FsmTask smTask) {
-		}
-
-		@Override
-		public void exit (FsmTask smTask) {
-		}
-
-		@Override
-		public boolean onMessage (FsmTask smTask, Telegram telegram) {
-			return false; // We don't use messaging in this example
-		}
-	}
-
-}
-````
