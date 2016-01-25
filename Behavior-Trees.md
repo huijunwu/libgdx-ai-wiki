@@ -165,7 +165,9 @@ All the guard's properties mentioned above have positive effects on the expressi
 As we have already seen, in the standard model for behavior trees, conditions are task leaf nodes, which simply do not do anything other than succeed or fail. Although nothing prevents you from using traditional conditional tasks, it is highly recommended that you use guards whenever possible. 
 
 ### Dynamic Guard Selector ###
-T.B.D.
+A dynamic guard selector is a branch task that executes the first child whose guard is evaluated to true.  Especially, at every AI cycle, the children's guards are re-evaluated in order up until one is possibly met. At this point, if there was a running child from the previous AI cycle and its guard either failed or has not been evaluated at all, that child task is immediately cancelled. Finally, the task whose guard has just succeeded is executed (if any).
+
+The dynamic guard selector task finishes when no guard is evaluated to true (thus failing) or when its active child finishes (returning the active child's termination status).
 
 
 # A Simple Example #
