@@ -278,10 +278,10 @@ where:
 - _comment_ starts with `#` and extends up to the first newline character
 
 
-As you can notice, everything is optional, meaning that an empty line is legal.
+As you can notice, everything is optional in a line, meaning that the empty line is legal.
 
-#### Using enumerations and distributions
-It's worth noting the special use of strings in case of enumerations and distributions:
+#### Using enumerations and distributions in attribute values
+It's worth noting the special use of strings for attribute values representing enumerations and distributions:
 - enums: the string is the non-case-sensitive name of the enum constant like, for instance, "sequence" and "selector" for the policy attribute of the parallel task.
 - distributions: are a comma-separated string of the form "distributionType,arg1,arg2,..." where 
   * distributionType can be `constant`, `uniform`, `gaussian` and `triangular`
@@ -300,7 +300,19 @@ import task1:"my.package.Task1"
 import task2:"my.package.Task2" task3:"my.package.Task3"
 ````
 
-#### Internal sub-trees 
+#### Declaring and referencing internal sub-trees
+Internal sub-trees are subtrees only visible within the tree file where they are declared.
+The `subtree` directive allows you to declare an internal sub-tree with its name. You can think of this directive as a kind of macro, which is simply the association of a name with a sub-tree. After the macro is defined, the parser is able to substitute the sub-tree each time is referenced by name.
+
+A sub-tree reference, identified by `$` followed by the tree name, can occur in the source file anywhere a task is legal and as many times as necessary.
+
+````
+subtree name:"myTree"
+  # Specify here the tasks which the subtree is made up of
+
+# From here down you can reference your sub-tree 
+# through the syntax $myTree.
+````
 
 #### Examples
 Here are some example of behavior trees expressed in our text format.
