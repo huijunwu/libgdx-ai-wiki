@@ -314,6 +314,28 @@ subtree name:"myTree"
 # through the syntax $myTree.
 ````
 
+#### Guards as sub-trees
+Because of our in-line text format, sub-tree references are essential in case of task guards that are not just a leaf task. Indeed, using a leaf task to guard another task is trivial:  
+````
+import myLeafGuard:"my.package.MyLeafGuard"
+
+root 
+  (myLeafGuard) myTask arg1:1 arg2:"hello"
+ ```
+However, if your guard is a composite task you can't clearly put it on the same line of the guarded task. In such a situation you can use an internal subtree reference like that: 
+````
+subtree name:"myTreeGuard"
+  ...
+
+root 
+  ($myTreeGuard) myTask arg1:1 arg2:"hello"
+````
+Alternatively, you can use an include decorator to graft an external sub-tree:
+````
+  (include subtree:"path/to/my/subtree") myTask arg1:1 arg2:"hello"
+````
+It's worth noting that the latter is no different than the first solution above. Indeed, at compile-time the include decorator has no child, just like the leaf guard `myLeafGuard`. 
+
 #### Examples
 Here are some example of behavior trees expressed in our text format.
 
