@@ -113,7 +113,7 @@ There are many different types of useful decorators:
 - **Invert** will succeed if the wrapped task fails and will fail if the wrapped task succeeds.
 - **Limit** controls the maximum number of times a task can be run, which could be used to make sure that a character doesn't keep trying to barge through a door that the player has reinforced.
 - **Repeat** will repeat the wrapped task a certain number of times, possibly infinite. This task always succeeds when reaches the specified number of repetitions.
-- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multithreading concurrency). This is a simple mechanism for ensuring that a limited shared resource is not over subscribed. You might have a pool of 5 pathfinders, for example, meaning at most 5 characters can be pathfinding at a time. Or you can associate a semaphore to the player character to ensure that at most 3 enemies can simultaneously attack him. This decorator fails when it cannot acquire the semaphore. This allows a selector task higher up the tree to find a different action that doesn't involve the contested resource.
+- **SemaphoreGuard** allows you to specify how many characters should be allowed to concurrently use the wrapped task which represents a limited resource used in different behavior trees (note that this does not necessarily involve multi-threading concurrency). This is a simple mechanism for ensuring that a limited shared resource is not over subscribed. You might have a pool of 5 pathfinders, for example, meaning at most 5 characters can be pathfinding at a time. Or you can associate a semaphore to the player character to ensure that at most 3 enemies can simultaneously attack him. This decorator fails when it cannot acquire the semaphore. This allows a selector task higher up the tree to find a different action that doesn't involve the contested resource.
 - **UntilFail** will repeat the wrapped task until that task fails, which makes this decorator succeed.
 - **UntilSuccess** will repeat the wrapped task until that task succeeds, which makes this decorator succeed.
 
@@ -157,7 +157,7 @@ In computer programming, a guard is a boolean expression that must evaluate to t
 Basically, guards have the following properties:
 - guards are just regular tasks with the only limitation (introduced to keep things simple and clear) that they must complete in one tick 
 - any task at any point of the tree can be guarded
-- guards can be entire subtrees
+- a guard can be an entire sub-tree
 - guarding another guard is allowed 
 
 All the guard's properties mentioned above have positive effects on the expressive power of the formalism. Also, using guards effectively helps to reduce the depth of the tree, which as a result makes the behavior tree more intuitive and easier to read.
@@ -165,9 +165,11 @@ All the guard's properties mentioned above have positive effects on the expressi
 As we have already seen, in the standard model for behavior trees, conditions are task leaf nodes, which simply do not do anything other than succeed or fail. Although nothing prevents you from using traditional conditional tasks, it is highly recommended that you use guards whenever possible. 
 
 ### Dynamic Guard Selector ###
-A dynamic guard selector is a branch task that executes the first child whose guard is evaluated to true.  Especially, at every AI cycle, the children's guards are re-evaluated in order up until one is possibly met. At this point, if there was a running child from the previous AI cycle and its guard either failed or has not been evaluated at all, that child task is immediately cancelled. Finally, the task whose guard has just succeeded is executed (if any).
+The main advantage behind the usage of guards becomes evident when they are used to guard the children of a dynamic guard selector task.
 
-The dynamic guard selector task finishes when no guard is evaluated to true (thus failing) or when its active child finishes (returning the active child's termination status).
+A dynamic guard selector is a branch task that executes the first child whose guard is evaluated to true.  Especially, at every AI cycle, the children's guards are re-evaluated in order up until one is possibly met. At this point, if there was a running child from the previous AI cycle and its guard either failed or has not been evaluated at all, that child task is immediately cancelled. Finally, the task whose guard has just succeeded is executed (if any). The dynamic guard selector task finishes when no guard is evaluated to true (thus failing) or when its active child finishes (returning the active child's termination status).
+
+Notice that the last child of a dynamic guard selector task is often unguarded. This is a common use case that allows you to define fallback behaviors.
 
 
 # A Simple Example #
@@ -221,11 +223,11 @@ The `Task` class also declares the following abstract methods:
 - **getChildCount()** returns the number of children of the task.
 - **getChild()** returns the child at the given index.
 
-The are a few other non-final non-abstract methods that subclasses often override:
+The are a few other non-final non-abstract methods that sub-classes often override:
 - **start()** called when the task is entered, just before `run()` is invoked.
 - **end()** called when the task is exited through `success()`, `fail()` or `cancel()`. This means that this task's status has just been set to `SUCCEEDED`, `FAILED` or `CANCELLED` respectively.
 - **reset()** resets this task to make it restart from scratch on next run. The task is cancelled if it was running. In any case the task status is set to `FRESH`.
-- <a name="clone-task"></a>**cloneTask()** clones this task to a new one. If you don't specify a clone strategy through [TASK_CLONER](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#TASK_CLONER) the new task is instantiated via reflection and `copyTo()` is invoked. In this case, properly overriding the `copyTo()` method in each task is developer's responsibility. This gives you opportunity to target the GWT backend. On the other hand, `cloneTask()` will use the non-null `TASK_CLONER` instance and `copyTo()` won't be invoked. For instance, if you don't care about GWT, you can let [Kryo](https://github.com/EsotericSoftware/kryo) make a deep copy for you.
+- <a name="clone-task"></a>**cloneTask()** clones this task to a new one. If you don't specify a clone strategy through [TASK_CLONER](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html#TASK_CLONER) the new task is instantiated via reflection and `copyTo()` is invoked. In this case, properly overriding the `copyTo()` method in each task is developer's responsibility. This gives you opportunity to target the GWT back-end. On the other hand, `cloneTask()` will use the non-null `TASK_CLONER` instance and `copyTo()` won't be invoked. For instance, if you don't care about GWT, you can let [Kryo](https://github.com/EsotericSoftware/kryo) make a deep copy for you.
 
 
 ## Using Data for Inter-Task Communication ##
@@ -242,7 +244,7 @@ The [Dog](https://github.com/libgdx/gdx-ai/blob/master/tests/src/com/badlogic/gd
 ## Task Attributes and Constraints ##
 The framework provides two annotations that are used at runtime by the [BehaviorTreeParser](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/BehaviorTreeParser.html) as metadata to identify task attributes and check task constraints:
 
-- [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html): ideally, any task class should be annotated with this annotation to be properly recognized by the parser. However this is not strictly required. Note that `TaskConstraint` is annotated with `@Inherited` and in turn [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its superclass is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its superclass. Also, the annotation `TaskConstraint` has two properties:
+- [@TaskConstraint](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html): ideally, any task class should be annotated with this annotation to be properly recognized by the parser. However this is not strictly required. Note that `TaskConstraint` is annotated with `@Inherited` and in turn [Task](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/Task.html) is annotated with `@TaskConstraint`. This means that you don't have to annotate a task class with `@TaskConstraint` if the constraint of its super-class is the same. On the other hand, you can use `@TaskConstraint` to "override" the constraint of its super-class. Also, the annotation `TaskConstraint` has two properties:
   * [minChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#minChildren--) specifies the minimum number of allowed children; defaults to `0`
   * [maxChildren](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskConstraint.html#maxChildren--) specifies the maximum number of allowed children; defaults to `Integer.MAX_VALUE`
 - [@TaskAttribute](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/annotation/TaskAttribute.html): any task attribute must be annotated with this annotation to be properly recognized by the parser. This annotation has two properties:
@@ -252,6 +254,7 @@ The framework provides two annotations that are used at runtime by the [Behavior
 ## Text Format ##
 The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
 
+#### Syntax of a generic line
 All lines in the text format follow the grammar below (elements within `[` and `]` are optional):
 ```` 
 line = [[indent] [guardableTask] [comment]]
@@ -271,13 +274,14 @@ where:
   * any number literal for primitive types `byte`, `short`, `int`, `long`, `float`, `double` and their respective boxed Java types
   * double quoted string literal (accepting JSON-like escape sequences) for types `char`, `Character`, `String`, `Enum` and `Distribution`
   * `null`for any non-primitive Java type
-- _subtreeRef_ is the name of an internal subtree in the form of a Java identifier preceded by the symbol `$` 
+- _subtreeRef_ is the name of an internal sub-tree in the form of a Java identifier preceded by the symbol `$` 
 - _comment_ starts with `#` and extends up to the first newline character
 
 
 As you can notice, everything is optional, meaning that an empty line is legal.
- 
-Also, notice the special use of strings in case of enumerations and distributions:
+
+#### Using enumerations and distributions
+It's worth noting the special use of strings in case of enumerations and distributions:
 - enums: the string is the non-case-sensitive name of the enum constant like, for instance, "sequence" and "selector" for the policy attribute of the parallel task.
 - distributions: are a comma-separated string of the form "distributionType,arg1,arg2,..." where 
   * distributionType can be `constant`, `uniform`, `gaussian` and `triangular`
@@ -285,6 +289,20 @@ Also, notice the special use of strings in case of enumerations and distribution
 
   Built-in distributions are represented by distribution classes in package [com.badlogic.gdx.ai.utils.random](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/utils/random/package-frame.html). User defined distributions are supported by customizing the [DitributionAdapters](https://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/btree/utils/DistributionAdapters.html) instance provided to the parser. Also, it's worth mentioning that, as a shortcut, constant distributions can be directly represented by the corresponding number. For instance, `repeat times:2` is equivalent to `repeat times:"constant,2"`.
 
+#### Importing user-defined tasks 
+While built-in tasks previously described are ready to use inside the text format, user-defined tasks must be imported through the `import` directive, because the parser does not know them.
+This directive follows the syntax of the generic line that we have seen above and allows you define aliases for your custom tasks in order to avoid using their fully qualified name.
+
+For instance, the import directives below define aliases `task1`, `task2`, and `task3` for their respective fully qualified classes. Also, note that you can import multiple tasks with a single import directive.
+````
+# Alias definitions
+import task1:"my.package.Task1"
+import task2:"my.package.Task2" task3:"my.package.Task3"
+````
+
+#### Internal sub-trees 
+
+#### Examples
 Here are some example of behavior trees expressed in our text format.
 
 **Example #1:**
