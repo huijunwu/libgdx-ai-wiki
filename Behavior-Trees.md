@@ -286,7 +286,7 @@ where:
 
 As you can notice, everything is optional in a line, meaning that the empty line is legal.
 
-Also, you can use multiple guards behind a task like that
+Also, you can use multiple guards before a task like that
 ```` 
 [guard0] [guard1] [guard2] task
 ````
