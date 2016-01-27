@@ -18,6 +18,12 @@
   * [Using Data for Inter-Task Communication](#using-data-for-inter-task-communication)
   * [Task Attributes and Constraints](#task-attributes-and-constraints)
   * [Text Format](#text-format)
+    - [Line syntax](#line-syntax)
+    - [Using enumerations and distributions in attribute values](#using-enumerations-and-distributions-in-attribute-values)
+    - [Importing user-defined tasks](#importing-user-defined-tasks)
+    - [Declaring and referencing internal sub-trees](#declaring-and-referencing-internal-sub-trees)
+    - [Guards as sub-trees](#guards-as-sub-trees)
+    - [Examples](#examples)
   * [Behavior Tree Libraries](#behavior-tree-libraries)
   * [Including Subtrees](#including-subtrees)
 - [Conclusions](#conclusions)
@@ -254,7 +260,7 @@ The framework provides two annotations that are used at runtime by the [Behavior
 ## Text Format ##
 The behavior tree text format recognized by the API is a simple and versatile indentation-based format to load behavior trees from an external resource (usually a file) in a [data-driven programming](http://en.wikipedia.org/wiki/Data-driven_programming) style.
 
-#### Syntax of a generic line
+#### Line syntax
 All lines in the text format follow the grammar below (elements within `[` and `]` are optional):
 ```` 
 line = [[indent] [guardableTask] [comment]]
@@ -330,7 +336,7 @@ subtree name:"myTreeGuard"
 root 
   ($myTreeGuard) myTask arg1:1 arg2:"hello"
 ````
-Alternatively, you can use an include decorator to graft an external sub-tree:
+Alternatively, you can use an include decorator to [graft an external sub-tree](#including-subtrees):
 ````
   (include subtree:"path/to/my/subtree") myTask arg1:1 arg2:"hello"
 ````
