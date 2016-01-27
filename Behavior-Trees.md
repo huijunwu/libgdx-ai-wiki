@@ -286,6 +286,13 @@ where:
 
 As you can notice, everything is optional in a line, meaning that the empty line is legal.
 
+Also, you can use multiple guards behind a task like that
+```` 
+[guard0] [guard1] [guard2] task
+````
+This provide a simple inline syntax for guard sequences, which are a viable alternative to a guard tree whose root is a sequence, see [guards as sub-trees](#guards-as-sub-trees). As long as you use short guard sequences (for instance, 0 to 4 guards) this construct remains pretty readable. But there's nothing stopping you from guarding dozens of guards, apart from common-sense, of course.
+
+
 #### Using enumerations and distributions in attribute values
 It's worth noting the special use of strings for attribute values representing enumerations and distributions:
 - enums: the string is the non-case-sensitive name of the enum constant like, for instance, "sequence" and "selector" for the policy attribute of the parallel task.
