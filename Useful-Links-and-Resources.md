@@ -9,17 +9,17 @@ Given the nature of this page's content it is likely that some of the links belo
 ### Open-Source Projects
 These are interesting open-source projects that use gdx-ai.
 
-Project | Description | Path Finding | Steering Behaviors | Behavior Trees | State Machine | Messaging
-------- | ----------- |:------------:|:------------------:|:--------------:|:-------------:|:---------:
-[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features | :white_check_mark: (Navmesh) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
-[Pacman](https://github.com/yichen0831/Pacman_libGdx) | Nice Pacman remake. [Video](https://www.youtube.com/watch?v=kS8f0y-MrcA) | :white_check_mark: | :white_check_mark: | | :white_check_mark: | 
-[Biosphere](http://semperhilaris.itch.io/biosphere) | Simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | | :white_check_mark: | | | 
-[The Sounds Of Earth](http://itch.io/jam/libgdxjam/rate/51269) | Game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | | | | | :white_check_mark:
-[You Are The Aliens](http://itch.io/jam/libgdxjam/rate/50863) | Scifi real-time strategy game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | | | | :white_check_mark: | :white_check_mark:
-[Solar Colony](http://infectedbytes.itch.io/solarcolony) | Space simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | :white_check_mark: | | | :white_check_mark: | 
-[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game made for Ludum Dare 33 | :white_check_mark: | | | | 
-[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game | | :white_check_mark: Formation Motion | | :white_check_mark: | :white_check_mark: 
-[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding | :white_check_mark: | | | |
+Project | Description | GdxAI Version | Path Finding | Steering Behaviors | Behavior Trees | State Machine | Messaging
+------- | ----------- |:-------------:|:------------:|:------------------:|:--------------:|:-------------:|:---------:
+[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features | 1.8.0 | :white_check_mark: (Navmesh) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+[Pacman](https://github.com/yichen0831/Pacman_libGdx) | Nice Pacman remake. [Video](https://www.youtube.com/watch?v=kS8f0y-MrcA) | 1.8.0 | :white_check_mark: | :white_check_mark: | | :white_check_mark: | 
+[You Are The Aliens](http://itch.io/jam/libgdxjam/rate/50863) | Scifi real-time strategy game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.8.0 | | | | :white_check_mark: | :white_check_mark:
+[Biosphere](http://semperhilaris.itch.io/biosphere) | Simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | | :white_check_mark: | | | 
+[The Sounds Of Earth](http://itch.io/jam/libgdxjam/rate/51269) | Game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | | | | | :white_check_mark:
+[Solar Colony](http://infectedbytes.itch.io/solarcolony) | Space simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | :white_check_mark: | | | :white_check_mark: | 
+[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game made for Ludum Dare 33 | 1.5.0 | :white_check_mark: | | | | 
+[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game | 1.5.1 SNAPSHOT | | :white_check_mark: Formation Motion | | :white_check_mark: | :white_check_mark: 
+[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding | 1.6.0 | :white_check_mark: | | | |
 
 
 ### Video Tutorials
