@@ -11,15 +11,15 @@ These are interesting open-source projects that use gdx-ai.
 
 <sub>Project</sub> | <sub>Description</sub> | <sub>GdxAI Version</sub> | <sub>Path Finding</sub> | <sub>Steering Behaviors</sub> | <sub>Behavior Trees</sub> | <sub>State Machine</sub> | <sub>Messaging</sub>
 ------- | ----------- |:-------------:|:------------:|:------------------:|:--------------:|:-------------:|:---------:
-[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features | 1.8.0 | :white_check_mark: (Navmesh) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
-[Pacman](https://github.com/yichen0831/Pacman_libGdx) | Nice Pacman remake. [Video](https://www.youtube.com/watch?v=kS8f0y-MrcA) | 1.8.0 | :white_check_mark: | :white_check_mark: | | :white_check_mark: | 
-[You Are The Aliens](http://itch.io/jam/libgdxjam/rate/50863) | Scifi real-time strategy game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.8.0 | | | | :white_check_mark: | :white_check_mark:
-[Biosphere](http://semperhilaris.itch.io/biosphere) | Simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | | :white_check_mark: | | | 
-[The Sounds Of Earth](http://itch.io/jam/libgdxjam/rate/51269) | Game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | | | | | :white_check_mark:
-[Solar Colony](http://infectedbytes.itch.io/solarcolony) | Space simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | 1.7.0 | :white_check_mark: | | | :white_check_mark: | 
-[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game made for [Ludum Dare 33](http://ludumdare.com/compo/2015/08/19/welcome-to-ludum-dare-33/) | 1.5.0 | :white_check_mark: | | | | 
-[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game | 1.5.1 SNAPSHOT | | :white_check_mark: Formation Motion | | :white_check_mark: | :white_check_mark: 
-[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding | 1.6.0 | :white_check_mark: | | | |
+[GdxDemo3D](https://github.com/jsjolund/GdxDemo3D) | Cool 3D demo that smartly exploits the main gdx-ai features | <sub>1.8.0</sub> | <sub>:white_check_mark: (Navmesh)</sub> | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark:
+[Pacman](https://github.com/yichen0831/Pacman_libGdx) | Nice Pacman remake. [Video](https://www.youtube.com/watch?v=kS8f0y-MrcA) | <sub>1.8.0</sub> | :white_check_mark: | :white_check_mark: | | :white_check_mark: | 
+[You Are The Aliens](http://itch.io/jam/libgdxjam/rate/50863) | Scifi real-time strategy game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | <sub>1.8.0</sub> | | | | :white_check_mark: | :white_check_mark:
+[Biosphere](http://semperhilaris.itch.io/biosphere) | Simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | <sub>1.7.0</sub> | | :white_check_mark: | | | 
+[The Sounds Of Earth](http://itch.io/jam/libgdxjam/rate/51269) | Game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | <sub>1.7.0</sub> | | | | | :white_check_mark:
+[Solar Colony](http://infectedbytes.itch.io/solarcolony) | Space simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam) | <sub>1.7.0</sub> | :white_check_mark: | | | :white_check_mark: | 
+[The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/) | A reverse tower defense game made for [Ludum Dare 33](http://ludumdare.com/compo/2015/08/19/welcome-to-ludum-dare-33/) | <sub>1.5.0</sub> | :white_check_mark: | | | | 
+[Game Jam #1](https://github.com/libgdx-jam/GDXJam) | 2D game | <sub>1.5.1 SNAPSHOT</sub> | | <sub>:white_check_mark: Formation Motion</sub> | | :white_check_mark: | :white_check_mark: 
+[Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)|Simple example of indexed A* path finding | <sub>1.6.0</sub> | :white_check_mark: | | | |
 
 
 ### Video Tutorials
