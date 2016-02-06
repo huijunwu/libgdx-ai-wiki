@@ -1,5 +1,6 @@
 - [Preliminary note](#preliminary-note)
 - [Open-Source Projects](#open-source-projects)
+- [Tutorials](#tutorials)
 - [Video Tutorials](#video-tutorials)
 - [External tools](#external-tools)
 
@@ -22,6 +23,13 @@ These are interesting open-source projects that use gdx-ai.
 [Simple A* example](https://github.com/chrizdekok/AStarPathFindingsSimpleExample)<br><sub>Simple example of indexed A* path finding</sub> | <sub>1.6.0</sub> | :white_check_mark: | | | |
 
 
+### Tutorials
+* [Fighting Kitten](http://fightingkitten.webcindario.com/)
+  - [Artificial Intelligence I – Arrive behavior](http://fightingkitten.webcindario.com/?p=302)
+  - [Artificial Intelligence II – Pursuing behaviorr](http://fightingkitten.webcindario.com/?p=480)
+  - [Artificial Intelligence III – Repulsion behavior](http://fightingkitten.webcindario.com/?p=610) 
+
+ 
 ### Video Tutorials
   * [Message Handling, Telegraphs and Telegrams](https://www.youtube.com/watch?v=z6frjuUHCzI)
   * [Introduction to Finite State Machines](https://www.youtube.com/watch?v=8qXNaVaDGWM)
