@@ -16,7 +16,7 @@ These are interesting open-source projects that use gdx-ai.
 [Pacman](https://github.com/yichen0831/Pacman_libGdx)<br><sub>Nice Pacman remake. [Video](https://www.youtube.com/watch?v=kS8f0y-MrcA)</sub> | <sub>1.8.0</sub> | :white_check_mark: | :white_check_mark: | | :white_check_mark: | 
 [You Are The Aliens](http://itch.io/jam/libgdxjam/rate/50863)<br><sub>Scifi real-time strategy game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam)</sub> | <sub>1.8.0</sub> | | | | :white_check_mark: | :white_check_mark:
 [Biosphere](http://semperhilaris.itch.io/biosphere)<br><sub>Simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam)</sub> | <sub>1.7.0</sub> | | :white_check_mark: | | | 
-[Ritualball](http://globalgamejam.org/2016/games/ritualball)<br><sub>Local multiplayer sport game made for the [Glabal Game Jam 2016](http://globalgamejam.org/)</sub> | <sub>1.7.0</sub> | | :white_check_mark: | | | 
+[Ritualball](http://globalgamejam.org/2016/games/ritualball)<br><sub>Local multiplayer sport game made for the [Global Game Jam 2016](http://globalgamejam.org/)</sub> | <sub>1.7.0</sub> | | :white_check_mark: | | | 
 [The Sounds Of Earth](http://itch.io/jam/libgdxjam/rate/51269)<br><sub>Game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam)</sub> | <sub>1.7.0</sub> | | | | | :white_check_mark:
 [Solar Colony](http://infectedbytes.itch.io/solarcolony)<br><sub>Space simulation game made for the [LibGDX Jam #1](http://itch.io/jam/libgdxjam)</sub> | <sub>1.7.0</sub> | :white_check_mark: | | | :white_check_mark: | 
 [The Holly Matter](http://overlap2d.com/ld33-postmortem-what-works-and-what-does-not-with-overlap2d/)<br><sub>A reverse tower defense game made for [Ludum Dare 33](http://ludumdare.com/compo/2015/08/19/welcome-to-ludum-dare-33/)</sub> | <sub>1.5.0</sub> | :white_check_mark: | | | | 
@@ -28,7 +28,8 @@ These are interesting open-source projects that use gdx-ai.
 * [Fighting Kitten](http://fightingkitten.webcindario.com/)
   - [Artificial Intelligence I – Arrive behavior](http://fightingkitten.webcindario.com/?p=302)
   - [Artificial Intelligence II – Pursuing behaviorr](http://fightingkitten.webcindario.com/?p=480)
-  - [Artificial Intelligence III – Repulsion behavior](http://fightingkitten.webcindario.com/?p=610) 
+  - [Artificial Intelligence III – Repulsion behavior](http://fightingkitten.webcindario.com/?p=610)
+  - [Artificial Intelligence IV – Pathfinding](http://fightingkitten.webcindario.com/?p=690)
 
  
 ### Video Tutorials
