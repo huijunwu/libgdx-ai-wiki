@@ -44,6 +44,6 @@ These are interesting open-source projects that use gdx-ai.
 
 
 ### External tools
-  * [Graphical editor for behavior trees](https://github.com/piotr-j/bteditor)
+  * Graphical editor for behavior trees [v1](https://github.com/piotr-j/bteditor) and [v2](https://github.com/piotr-j/bte2)
   * [FreeMind to gdx-ai behavior tree files](https://github.com/klaus7/freemind2gdxai)
   * [Vim Syntax highlighting for gdx-ai behavior tree files](https://github.com/kba/gdxai-btree.vim)
