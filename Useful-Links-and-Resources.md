@@ -34,11 +34,11 @@ These are interesting open-source projects that use gdx-ai.
  
 ### Video Tutorials
   * [Message Handling, Telegraphs and Telegrams](https://www.youtube.com/watch?v=z6frjuUHCzI)
+  * Immediate Telegrams, Delayed Telegrams and TimePiece [part #1](https://www.youtube.com/watch?v=cDY1sRFhOFM) and [part #2](https://www.youtube.com/watch?v=0MNA2bNByn0)
   * [Introduction to Finite State Machines](https://www.youtube.com/watch?v=8qXNaVaDGWM)
   * [Using Finite State Machines to control Player Movement ](https://www.youtube.com/watch?v=JTb2e-vr2cU)
   * [Basic Steering Behaviors](https://www.youtube.com/watch?v=nKY1aJ9ensI)
-  * [Intro to Steering Behaviors: Arrival (Pt. 1)](https://www.youtube.com/watch?v=pnKcuJQT31A)
-  * [Intro to Steering Behaviors: Arrival (Pt. 2)](https://www.youtube.com/watch?v=JoCZ8hPQnUE)
+  * Intro to Steering Behaviors: Arrival [part #1](https://www.youtube.com/watch?v=pnKcuJQT31A) and [part #2](https://www.youtube.com/watch?v=JoCZ8hPQnUE)
   * [A* Pathfinding](https://www.youtube.com/watch?v=wu3vzR9k3QA)
   * [Threaded Pathfinding](https://www.youtube.com/watch?v=OVkeB3xAug0)
 
