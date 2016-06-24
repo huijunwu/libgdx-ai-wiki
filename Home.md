@@ -1,28 +1,25 @@
 ![gdxai logo](https://cloud.githubusercontent.com/assets/2366334/4677025/64ae592a-55e2-11e4-8a31-31c2941ff995.png)
 
 
-## What is gdxAI?
+## 神马是gdxAI?
 
-It's an artificial intelligence framework, entirely written in Java, for game development with, and now even without, [libGDX](https://github.com/libgdx/libgdx).
+它是一个artificial intelligence框架, 整个用java写的, 给游戏开发用的, 可以跟libGDX一起也可以不一起用, [libGDX](https://github.com/libgdx/libgdx).
 
-The gdxAI framework makes use of a limited number of classes from the libGDX framework, mainly collections which are optimized for mobile platforms by limiting garbage creation and supporting primitive types directly, so avoiding boxing and unboxing. However, the gdxAI framework does not force you to develop your application using the libGDX framework if you do not wish to do so, but the libGDX jar remains an essential requirement.
+这个ai框架只使用最少的libGDX classes, 主要是一些collection classes, 因为这些classes被libGDX优化过. 这个ai框架不强制你使用libGDX, 但是libGDX jar还是要包含在项目里面的.
 
-GdxAI tries to be a high-performance framework providing some of the most common AI techniques used by game industry.
-However, in the present state of the art, the gdxAI framework covers only part of the entire game AI area, which is really huge. We've tried to focus on what matters most in game AI development, though. And more stuff will come soon.
+这个ai框架努力提供游戏业界常用的功能.
+但是游戏要的功能太多，这个框架只提供部分先，日后再扩
 
-## About this wiki
+## 这个wiki的内容
 
-Throughout this wiki, we will cover the entirety of the gdxAI framework, its fundamentals, the theory behind it and how to design intelligent agents.
+这个wiki将讲述这个ai框架的方方面面
 
-This is a manual, for a comprehensive API reference, check the [official javadocs](http://libgdx.badlogicgames.com/gdx-ai/docs/).
+这个wiki只是一个手册, 完整的api请戳这里 [official javadocs](http://libgdx.badlogicgames.com/gdx-ai/docs/).
 
-## Technical considerations
+## 技术小注
 
-GdxAI is compatible with Java 6 and [GWT](http://www.gwtproject.org/), which means you can also target the browser.
+GdxAI 兼容 Java 6 和 [GWT](http://www.gwtproject.org/), 所以支持浏览器.
 
-Thanks to its [Apache 2.0](https://github.com/libgdx/gdx-ai/blob/master/LICENSE) license, users have the freedom to use it, modify it and redistribute as they please. Commercial purposes are perfectly allowed.
+因为用了 [Apache 2.0](https://github.com/libgdx/gdx-ai/blob/master/LICENSE) 授权, 你可以自由使用（包括商用）.
 
-We're continuously testing and building GdxAI with Jenkins.
-
-[![Build Status](http://144.76.220.132:8080/job/gdx-ai/badge/icon)](http://144.76.220.132:8080/job/gdx-ai/)
-
+这个ai框架用了持续集成Jenkins, 戳这里[![Build Status](http://144.76.220.132:8080/job/gdx-ai/badge/icon)](http://144.76.220.132:8080/job/gdx-ai/)
