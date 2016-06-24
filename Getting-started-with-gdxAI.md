@@ -1,3 +1,0 @@
-- [[Setting up your Development Environment]]
-- [[Initializing and Using gdxAI]]
-- [[Useful Links and Resources]]

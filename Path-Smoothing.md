@@ -1,9 +1,0 @@
-A [PathSmoother](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/pfa/PathSmoother.html) takes a [SmoothableGraphPath](http://libgdx.badlogicgames.com/gdx-ai/docs/com/badlogic/gdx/ai/pfa/SmoothableGraphPath.html) and transforms it by linking directly the nodes that are in line of sight. The smoothed path contains at most as many nodes as the original path. Also, the nodes in the smoothed path are unlikely to have any connections between them (if they were connected in the graph, the pathfinder would have found the smoothed route directly, unless their connections had dramatically large costs).
-
-Some world representations are more prone to rough paths than others. For example, tile-based graphs tend to be highly erratic. The final appearance also depends on how characters act on the path. If they are using some kind of path following steering behavior, then the path will be gently smoothed by the steering. It is worth testing your game before assuming the path will need smoothing.
-
-For some games, path smoothing is essential to get the AI looking smart. The path smoothing algorithm is rather simple but involves raycast and can be somewhat time-consuming.
-
-The algorithm assumes that there is a clear route between any two adjacent nodes in the given path. Although this algorithm produces a smooth path, it doesn't search all possible smoothed paths to find the best one, but the final result is usually much more satisfactory than the original path.
-
-![pathsmoothing](https://cloud.githubusercontent.com/assets/2366334/4967722/607250ae-6821-11e4-96d4-1ef3dd193240.png)
